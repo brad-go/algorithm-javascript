@@ -6,9 +6,9 @@ const [n, ...input] = require("fs")
   .split("\n")
   .map((v) => +v);
 
-function Solution(n, input) {
+function Solution(input) {
   const answer = input.sort((a, b) => a - b);
-  answer.forEach((num) => console.log(num));
+  console.log(answer.join("\n"));
 }
 
-Solution(n, input);
+Solution(input);
