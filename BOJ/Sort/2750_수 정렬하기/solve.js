@@ -36,14 +36,34 @@ const [n, ...input] = require("fs")
 
 // 선택 정렬
 
-function Solution(n, input) {
-  const answer = [];
+// function Solution(n, input) {
+//   const answer = [];
 
-  for (let i = 0; i < n; i++) {
-    const min = input.indexOf(Math.min(...input));
-    answer.push(...input.splice(min, 1));
+//   for (let i = 0; i < n; i++) {
+//     const min = input.indexOf(Math.min(...input));
+//     answer.push(...input.splice(min, 1));
+//   }
+//   console.log(answer.join("\n"));
+// }
+
+// Solution(n, input);
+
+// 삽입 정렬
+
+function Solution(input) {
+  const answer = [...input];
+  for (let i = 1; i < answer.length; i++) {
+    let cur = answer[i];
+    let prev = i - 1;
+
+    while (prev >= 0 && answer[prev] > cur) {
+      answer[prev + 1] = answer[prev];
+      prev--;
+    }
+
+    answer[prev + 1] = cur;
   }
   console.log(answer.join("\n"));
 }
 
-Solution(n, input);
+Solution(input);
