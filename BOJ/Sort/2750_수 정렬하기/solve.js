@@ -16,19 +16,33 @@ const [n, ...input] = require("fs")
 
 // 버블 정렬
 
+// function Solution(n, input) {
+//   const answer = [...input];
+
+//   for (let i = 0; i < n - 1; i++) {
+//     for (let j = n - 1; j > i; j--) {
+//       const temp = answer[j];
+//       if (answer[j] < answer[j - 1]) {
+//         answer[j] = answer[j - 1];
+//         answer[j - 1] = temp;
+//       }
+//     }
+//   }
+
+//   console.log(answer.join("\n"));
+// }
+
+// Solution(n, input);
+
+// 선택 정렬
+
 function Solution(n, input) {
-  const answer = [...input];
+  const answer = [];
 
-  for (let i = 0; i < n - 1; i++) {
-    for (let j = n - 1; j > i; j--) {
-      const temp = answer[j];
-      if (answer[j] < answer[j - 1]) {
-        answer[j] = answer[j - 1];
-        answer[j - 1] = temp;
-      }
-    }
+  for (let i = 0; i < n; i++) {
+    const min = input.indexOf(Math.min(...input));
+    answer.push(...input.splice(min, 1));
   }
-
   console.log(answer.join("\n"));
 }
 
