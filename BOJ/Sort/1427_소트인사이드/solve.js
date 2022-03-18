@@ -17,6 +17,36 @@
 
 // 선택 정렬 - 내림차순이니까 최댓값을 찾는 방법으로 구현, 메모리 제일 적게 소모
 
+// const input = require("fs")
+//   .readFileSync("./input4.txt")
+//   .toString()
+//   .trim()
+//   .split("")
+//   .map((v) => +v);
+
+// function Solution(input) {
+//   for (let i = 0; i < input.length; i++) {
+//     let maxIdx = i;
+
+//     for (let j = i + 1; j < input.length; j++) {
+//       if (input[maxIdx] < input[j]) {
+//         maxIdx = j;
+//       }
+//     }
+
+//     if (maxIdx !== i) {
+//       const max = input[maxIdx];
+//       input[maxIdx] = input[i];
+//       input[i] = max;
+//     }
+//   }
+//   console.log(input.join(""));
+// }
+
+// Solution(input);
+
+// 버블 정렬
+
 const input = require("fs")
   .readFileSync("./input4.txt")
   .toString()
@@ -25,19 +55,13 @@ const input = require("fs")
   .map((v) => +v);
 
 function Solution(input) {
-  for (let i = 0; i < input.length; i++) {
-    let maxIdx = i;
-
-    for (let j = i + 1; j < input.length; j++) {
-      if (input[maxIdx] < input[j]) {
-        maxIdx = j;
+  for (let i = 0; i < input.length - 1; i++) {
+    for (let j = input.length - 1; j > i; j--) {
+      if (input[j] > input[j - 1]) {
+        const temp = input[j - 1];
+        input[j - 1] = input[j];
+        input[j] = temp;
       }
-    }
-
-    if (maxIdx !== i) {
-      const max = input[maxIdx];
-      input[maxIdx] = input[i];
-      input[i] = max;
     }
   }
   console.log(input.join(""));
