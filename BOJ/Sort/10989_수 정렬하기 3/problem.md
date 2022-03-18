@@ -1,6 +1,6 @@
-# 수 정렬하기 2 - 10989
+# 수 정렬하기 3 - 10989
 
-[문제 링크](https://www.acmicpc.net/problem/2751)
+[문제 링크](https://www.acmicpc.net/problem/10989)
 
 ### 성능 요약
 

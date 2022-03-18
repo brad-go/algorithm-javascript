@@ -1,6 +1,6 @@
-# 수 정렬하기 - 2750
+# 통계학 - 2108
 
-[문제 링크](https://www.acmicpc.net/problem/2750)
+[문제 링크](https://www.acmicpc.net/problem/2108)
 
 ### 성능 요약
 
