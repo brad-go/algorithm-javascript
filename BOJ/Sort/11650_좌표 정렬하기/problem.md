@@ -38,3 +38,89 @@
 3 3
 3 4
 ```
+
+<details><summary><b>문제 풀이</b></summary>
+<div markdown="1">
+
+### 실패
+
+#### 시간 초과로 실패
+
+```js
+const [n, ...input] = require("fs")
+  .readFileSync("/dev/stdin")
+  .toString()
+  .trim()
+  .split("\n");
+
+function Solution(n, input) {
+  const coordiantes = input.map((item) => item.split(" ").map((v) => +v));
+
+  const compare = (coordA, coordB) => {
+    if (coordA[0] > coordB[0]) {
+      return 1;
+    }
+    if (coordA[0] < coordB[0]) {
+      return -1;
+    }
+    if (coordA[1] > coordB[1]) {
+      return 1;
+    }
+    if (coordA[1] < coordB[1]) {
+      return -1;
+    }
+    return 0;
+  };
+
+  const sortedCoordintes = coordiantes.sort(compare);
+  sortedCoordintes.forEach((item) => console.log(item.join(" ")));
+}
+
+Solution(n, input);
+```
+
+### 해결
+
+#### 가독성을 위해 객체로 만들기
+
+##### 기존 코드
+
+```js
+const coordiantes = input.map((item) => item.split(" ").map((v) => +v));
+```
+
+##### 수정 코드
+
+```js
+const coordinates = input.map((item) => {
+  const coords = item.split(" ");
+  const x = Number(coords[0]);
+  const y = Number(coords[1]);
+  return { x, y };
+});
+```
+
+sort 메서드를 사용할 때, 좌표를 비교하려면 `arr[0]` 이런식으로 사용해야 하는데 객체로 만들어 `arr.x`, `arr.y`로 만들어 가독성을 높였다. 그리고 `map`을 두 번 사용하게 되면 시간 복잡도가 더 높아지게 되므로 위와 같이 작성했다.
+
+#### console.log() 한번만 사용하기
+
+##### 기존 코드
+
+```js
+const sortedCoordintes = coordiantes.sort(compare);
+sortedCoordintes.forEach((item) => console.log(item.join(" ")));
+```
+
+##### 수정 코드
+
+```js
+let result = "";
+const sortedCoordintes = coordinates.sort(compare);
+sortedCoordintes.forEach((item) => (result += `${item.x} ${item.y}\n`));
+console.log(result.trim());
+```
+
+`result`라는 문자열 변수를 만들어 `console.log()`를 한 번만 사용함으로 해결할 수 있었다.
+
+</div>
+</details>

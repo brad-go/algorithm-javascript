@@ -9,23 +9,18 @@ const [n, ...input] = require("fs")
 
 function Solution(input) {
   const coordinates = input.map((item) => {
-    const x = Number(item.split(" ")[0]);
-    const y = Number(item.split(" ")[1]);
+    const coords = item.split(" ");
+    const x = Number(coords[0]);
+    const y = Number(coords[1]);
     return { x, y };
   });
 
   const compare = (coordA, coordB) => {
-    if (coordA.x > coordB.x) {
-      return 1;
+    if (coordA.x !== coordB.x) {
+      return coordA.x - coordB.x;
     }
-    if (coordA.x < coordB.x) {
-      return -1;
-    }
-    if (coordA.y > coordB.y) {
-      return 1;
-    }
-    if (coordA.y < coordB.y) {
-      return -1;
+    if (coordA.y !== coordB.y) {
+      return coordA.y - coordB.y;
     }
     return 0;
   };
