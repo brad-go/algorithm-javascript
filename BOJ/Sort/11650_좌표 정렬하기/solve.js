@@ -7,27 +7,33 @@ const [n, ...input] = require("fs")
 
 // 내 제출
 
-function Solution(n, input) {
-  const coordiantes = input.map((item) => item.split(" ").map((v) => +v));
+function Solution(input) {
+  const coordinates = input.map((item) => {
+    const x = Number(item.split(" ")[0]);
+    const y = Number(item.split(" ")[1]);
+    return { x, y };
+  });
 
   const compare = (coordA, coordB) => {
-    if (coordA[0] > coordB[0]) {
+    if (coordA.x > coordB.x) {
       return 1;
     }
-    if (coordA[0] < coordB[0]) {
+    if (coordA.x < coordB.x) {
       return -1;
     }
-    if (coordA[1] > coordB[1]) {
+    if (coordA.y > coordB.y) {
       return 1;
     }
-    if (coordA[1] < coordB[1]) {
+    if (coordA.y < coordB.y) {
       return -1;
     }
     return 0;
   };
 
-  const sortedCoordintes = coordiantes.sort(compare);
-  sortedCoordintes.forEach((item) => console.log(item.join(" ")));
+  let result = "";
+  const sortedCoordintes = coordinates.sort(compare);
+  sortedCoordintes.forEach((item) => (result += `${item.x} ${item.y}\n`));
+  console.log(result.trim());
 }
 
-Solution(n, input);
+Solution(input);
