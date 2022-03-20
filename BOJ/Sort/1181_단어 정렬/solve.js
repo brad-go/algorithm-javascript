@@ -7,22 +7,40 @@ const [n, ...input] = require("fs")
 
 // 내 제출
 
-function Solution(words) {
-  const uniqueWords = words.filter((word, idx) => {
-    return words.indexOf(word) === idx;
-  });
+// function Solution(words) {
+//   const uniqueWords = words.filter((word, idx) => {
+//     return words.indexOf(word) === idx;
+//   });
 
-  const sortedWords = uniqueWords.sort().sort((curWord, prevWord) => {
-    if (curWord.length !== prevWord.length) {
-      return curWord.length - prevWord.length;
+//   const sortedWords = uniqueWords.sort().sort((a, b) => a.length - b.length);
+//   console.log(sortedWords.join("\n"));
+// }
+
+// Solution(input);
+
+// Solution 2
+
+function Solution(n, words) {
+  const sorted = [];
+  const wordsLength = words.map((word) => word.length);
+  const max = Math.max(...wordsLength);
+  const min = Math.min(...wordsLength);
+
+  for (let i = min; i <= max; i++) {
+    const group = [];
+    for (let j = 0; j < n; j++) {
+      if (input[j].length === i) {
+        if (group.indexOf(input[j]) === -1) group.push(input[j]);
+      }
     }
-  });
 
-  let result = "";
-  sortedWords.forEach((word) => {
-    result += `${word}\n`;
-  });
-  console.log(result.trim());
+    if (group.length > 1) {
+      sorted.push(...group.sort());
+      continue;
+    }
+    sorted.push(...group);
+  }
+  console.log(sorted.join("\n"));
 }
 
-Solution(input);
+Solution(n, input);

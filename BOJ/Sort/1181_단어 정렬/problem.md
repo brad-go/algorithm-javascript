@@ -97,5 +97,53 @@ console.log(result.trim());
 
 - 메모리와 시간을 아끼기 위해 `result` 문자열을 만들어 한 번에 출력했다.
 
+```js
+console.log(sortedWord.join('\n');
+```
+
+- 이렇게 하면 메모리가 줄어들지만 시간이 늘어난다. 하지만 깔끔해서 좋은 것 같다.
+
+### 해결 2
+
+다른 사람들은 어떻게 풀어보나 찾아보다 아래와 같은 코드를 발견했다.
+
+```js
+function Solution(n, words) {
+  const sorted = [];
+
+  // 단어의 길이가 담긴 배열만들기
+  const wordsLength = words.map((word) => word.length);
+  // 제일 짧은 것과 제일 긴 길이를 뽑아냄
+  const max = Math.max(...wordsLength);
+  const min = Math.min(...wordsLength);
+
+  // 단어의 길이만큼 반복
+  for (let i = min; i <= max; i++) {
+    // 같은 길이를 가진 단어가 담길 배열
+    const group = [];
+    // 단어 수만큼 반복
+    for (let j = 0; j < n; j++) {
+      // 단어의 길이가 같다면
+      if (input[j].length === i) {
+        // 그룹에 같은 단어가 없다면 집어넣음
+        if (group.indexOf(input[j]) === -1) group.push(input[j]);
+      }
+    }
+
+    // 같은 길이를 가진 단어들이 있다면
+    if (group.length > 1) {
+      // 유니코드 순으로 정렬해서 넣어줌
+      sorted.push(...group.sort());
+      continue;
+    }
+    // 그냥 넣어줌
+    sorted.push(...group);
+  }
+  console.log(sorted.join("\n"));
+}
+
+Solution(n, input);
+```
+
 </div>
 </details>
