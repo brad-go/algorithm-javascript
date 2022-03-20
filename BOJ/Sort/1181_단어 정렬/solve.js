@@ -20,27 +20,39 @@ const [n, ...input] = require("fs")
 
 // Solution 2
 
-function Solution(n, words) {
-  const sorted = [];
-  const wordsLength = words.map((word) => word.length);
-  const max = Math.max(...wordsLength);
-  const min = Math.min(...wordsLength);
+// function Solution(n, words) {
+//   const sorted = [];
+//   const wordsLength = words.map((word) => word.length);
+//   const max = Math.max(...wordsLength);
+//   const min = Math.min(...wordsLength);
 
-  for (let i = min; i <= max; i++) {
-    const group = [];
-    for (let j = 0; j < n; j++) {
-      if (input[j].length === i) {
-        if (group.indexOf(input[j]) === -1) group.push(input[j]);
-      }
-    }
+//   for (let i = min; i <= max; i++) {
+//     const group = [];
+//     for (let j = 0; j < n; j++) {
+//       if (input[j].length === i) {
+//         if (group.indexOf(input[j]) === -1) group.push(input[j]);
+//       }
+//     }
 
-    if (group.length > 1) {
-      sorted.push(...group.sort());
-      continue;
-    }
-    sorted.push(...group);
-  }
-  console.log(sorted.join("\n"));
+//     if (group.length > 1) {
+//       sorted.push(...group.sort());
+//       continue;
+//     }
+//     sorted.push(...group);
+//   }
+//   console.log(sorted.join("\n"));
+// }
+
+// Solution(n, input);
+
+// Solution 3
+
+function Solution(words) {
+  const sortedWords = words.sort(
+    (a, b) => a.length - b.length || a.localeCompare(b)
+  );
+  const uniqueWords = new Set(sortedWords);
+  console.log(Array.from(uniqueWords).join("\n"));
 }
 
-Solution(n, input);
+Solution(input);

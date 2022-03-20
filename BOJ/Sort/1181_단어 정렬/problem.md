@@ -145,5 +145,42 @@ function Solution(n, words) {
 Solution(n, input);
 ```
 
+### 해결 3
+
+```js
+function Solution(words) {
+  const sortedWords = words.sort(
+    (a, b) => a.length - b.length || a.localeCompare(b)
+  );
+  const uniqueWords = new Set(sortedWords);
+  console.log(Array.from(uniqueWords).join("\n"));
+}
+
+Solution(input);
+```
+
+- 코드도 정말 깔끔하고, 압도적인 속도 차이를 보여준다. 메모리는 비록 가장 많이 사용하나, 속도가 20배 정도 빠르다.
+
+#### 사전 순 정렬
+
+##### **localeCompare()**
+
+```js
+참조문자열.localeCompare(비교문자열);
+```
+
+- 참조 문자열이 비교 문자열보다 앞에 있으면 음수, 그렇지 않으면 양수, 동등하면 0을 반환한다.
+- 사전 순으로 배열을 정리해야 하다보니 `sort()`를 안에서 한 번 더 쓸수 없을까 생각했는데, 이 내장 메서드를 이용하면 쉽게 해결할 수 있었다.
+
+#### 중복 제거
+
+```js
+const uniqueWords = new Set(sortedWords);
+console.log(Array.from(uniqueWords).join("\n"));
+```
+
+- 고유값만 배열로 만들기 위해 `Set`을 사용했다.
+- Set을 사용한 객체는 유사 배열 객체이므로 `Array.from`을 통해서 얕은 복사를 통해 새로운 배열을 만든다.
+
 </div>
 </details>
