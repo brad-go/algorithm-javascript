@@ -92,7 +92,87 @@ Solution(n, input);
 
 - 생각보다 쉽게 풀린다 했는데, 메모리 초과가 발생했다. 어디서 메모리가 초과된건지 알 수 없다...
 
+#### 시간 초과
+
+```js
+const [n, input] = require("fs")
+  .readFileSync("./input2.txt")
+  .toString()
+  .trim()
+  .split("\n");
+
+function Solution(input) {
+  const nums = input.split(" ").map((v) => +v);
+  const set = new Set(nums);
+  const unique = [...set];
+
+  const sorted = unique.sort((a, b) => a - b);
+
+  for (let i = 0; i < nums.length; i++) {
+    for (let j = 0; j < sorted.length; j++) {
+      if (nums[i] === sorted[j]) {
+        nums[i] = j;
+      }
+    }
+  }
+  console.log(nums.join(" "));
+}
+
+Solution(input);
+```
+
+메모리 초과문제인거라 생각해서 메모리를 줄이는 쪽으로 생각해봤는데, 이번에는 시간 초과가 발생했다.
+
 ### 해결
+
+```js
+const [n, input] = require("fs")
+  .readFileSync("./input2.txt")
+  .toString()
+  .trim()
+  .split("\n");
+
+function Solution(n, input) {
+  const nums = input.split(" ").map((v) => +v);
+  const set = new Set(nums);
+  const unique = [...set].sort((a, b) => a - b);
+
+  const numbers = {};
+  unique.forEach((num, idx) => (numbers[num] = idx));
+
+  for (let i = 0; i < n; i++) {
+    nums[i] = numbers[nums[i]];
+  }
+
+  console.log(nums.join(" "));
+}
+
+Solution(n, input);
+```
+
+문제 푸는데 정말 오래걸렸다. 메모리 초과, 시간 초과 때문에 고생했는데, 문제에서 제시된 수의 범위가 너무 커서였다. 좌표를 압축한다는게 어떤 의미인건지.. ㅠ 풀이는 다음과 같다.
+
+내가 해석한 문제는 이렇다. 배열의 각 원소값들의 순서를 나타내라. 즉, **순위**를 매기는 것과 같았다.
+
+- 받아온 수들을 쪼개서 배열에 담기
+- 중복된 숫자 없이, 오름차순으로 정렬
+
+여기서 원본 배열을 놔두고 **새 배열**을 얻어야 했다. 그리고 순위를 매길 것이므로 오름차순으로 정렬해주었다.
+
+- 배열의 인덱스는 정렬된 수들의 크기 비교 결과이다.
+- numbers란 객체에 키값으로 수를 value로 인덱스 번호(정렬 결과)를 넣는다.
+
+이 과정이 각 수들에게 순위를 부여하는 과정이었다.
+
+- 다시 처음의 정렬 전의 배열을 순회하면서 각 수를 객체의 키 값으로 넣어서 value를 얻어 저장한다.
+
+#### 좌표 압축 기법
+
+찾아본 결과 좌표 압축 기법은 다음과 같다.
+
+- 모든 구간이 아니라, 중요한 구간이나, 숫자만 들고있는 기법.
+- 순위가 중요한 알고리즘에서 입력값의 개수 < 입력값의 범위일때 사용한다.
+- 값보다는 값의 순위만 중요하기 때문에, 값을 임의로 변경해도 되는 것!
 
 </div>
 </details>
