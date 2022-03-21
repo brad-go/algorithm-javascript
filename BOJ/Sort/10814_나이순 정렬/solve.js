@@ -7,26 +7,44 @@ const [n, ...input] = require("fs")
 
 // 내 제출
 
+// function Solution(input) {
+//   const users = input.reduce((acc, cur, idx) => {
+//     const [age, name] = cur.split(" ");
+//     acc.push({ name: name, age: Number(age), join: idx + 1 });
+//     return acc;
+//   }, []);
+
+//   const sortedUsers = users.sort((a, b) => {
+//     if (a.age !== b.age) {
+//       return a.age - b.age;
+//     }
+//     if (a.join !== b.join) {
+//       return a.join - b.join;
+//     }
+//     return 0;
+//   });
+
+//   sortedUsers.forEach((user) => {
+//     console.log(`${user.age} ${user.name}`);
+//   });
+// }
+
+// Solution(input);
+
+// Solution 2
+
+// function Solution(input) {
+//   input.sort((a, b) => a.split(" ")[0] - b.split(" ")[0]);
+//   console.log(input.join("\n"));
+// }
+
+// Solution(input);
+
+// Solution 3
+
 function Solution(input) {
-  const users = input.reduce((acc, cur, idx) => {
-    const [age, name] = cur.split(" ");
-    acc.push({ name: name, age: Number(age), join: idx + 1 });
-    return acc;
-  }, []);
-
-  const sortedUsers = users.sort((a, b) => {
-    if (a.age !== b.age) {
-      return a.age - b.age;
-    }
-    if (a.join !== b.join) {
-      return a.join - b.join;
-    }
-    return 0;
-  });
-
-  sortedUsers.forEach((user) => {
-    console.log(`${user.age} ${user.name}`);
-  });
+  input.sort((a, b) => parseFloat(a) - parseFloat(b));
+  console.log(input.join("\n"));
 }
 
 Solution(input);

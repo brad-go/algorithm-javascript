@@ -42,126 +42,71 @@
 
 ### 해결
 
-#### 배열 중복값 제거하기
+#### 유저를 객체로 만들어서 풀기
 
 ```js
-const uniqueWords = input.filter((word, idx) => {
-  return input.indexOf(word) === idx;
-});
-```
+function Solution(input) {
+  const users = input.reduce((acc, cur, idx) => {
+    const [age, name] = cur.split(" ");
+    acc.push({ name: name, age: Number(age), join: idx + 1 });
+    return acc;
+  }, []);
 
-- `indexOf()`의 동일한 요소가 존재할 경우 맨 앞의 index를 반환하는 특징을 이용
-- 현재 단어의 인덱스 번호와 현재 순서의 인덱스 같다면 uniqueWords 배열에 추가. 단어가 같을 경우 먼저 들어간 인덱스 번호와 비교하게 되어 들어가지 않음.
-
-#### 단어 정렬하기
-
-```js
-const sortedWords = uniqueWords.sort().sort((curWord, prevWord) => {
-  if (curWord.length !== prevWord.length) {
-    return curWord.length - prevWord.length;
-  }
-});
-```
-
-- 일단 단어를 사전 순(unicode순)으로 정렬하기 위해 `sort()`를 사용했다.
-- 한번 더 sort를 통해서 길이를 비교해서 정렬햇다.
-
-#### console.log 한번만 사용
-
-```js
-let result = "";
-sortedWords.forEach((word) => {
-  result += `${word}\n`;
-});
-console.log(result.trim());
-```
-
-- 메모리와 시간을 아끼기 위해 `result` 문자열을 만들어 한 번에 출력했다.
-
-```js
-console.log(sortedWord.join('\n');
-```
-
-- 이렇게 하면 메모리가 줄어들지만 시간이 늘어난다. 하지만 깔끔해서 좋은 것 같다.
-
-### 해결 2
-
-다른 사람들은 어떻게 풀어보나 찾아보다 아래와 같은 코드를 발견했다.
-
-```js
-function Solution(n, words) {
-  const sorted = [];
-
-  // 단어의 길이가 담긴 배열만들기
-  const wordsLength = words.map((word) => word.length);
-  // 제일 짧은 것과 제일 긴 길이를 뽑아냄
-  const max = Math.max(...wordsLength);
-  const min = Math.min(...wordsLength);
-
-  // 단어의 길이만큼 반복
-  for (let i = min; i <= max; i++) {
-    // 같은 길이를 가진 단어가 담길 배열
-    const group = [];
-    // 단어 수만큼 반복
-    for (let j = 0; j < n; j++) {
-      // 단어의 길이가 같다면
-      if (input[j].length === i) {
-        // 그룹에 같은 단어가 없다면 집어넣음
-        if (group.indexOf(input[j]) === -1) group.push(input[j]);
-      }
+  const sortedUsers = users.sort((a, b) => {
+    if (a.age !== b.age) {
+      return a.age - b.age;
     }
-
-    // 같은 길이를 가진 단어들이 있다면
-    if (group.length > 1) {
-      // 유니코드 순으로 정렬해서 넣어줌
-      sorted.push(...group.sort());
-      continue;
+    if (a.join !== b.join) {
+      return a.join - b.join;
     }
-    // 그냥 넣어줌
-    sorted.push(...group);
-  }
-  console.log(sorted.join("\n"));
-}
+    return 0;
+  });
 
-Solution(n, input);
-```
-
-### 해결 3
-
-```js
-function Solution(words) {
-  const sortedWords = words.sort(
-    (a, b) => a.length - b.length || a.localeCompare(b)
-  );
-  const uniqueWords = new Set(sortedWords);
-  console.log(Array.from(uniqueWords).join("\n"));
+  sortedUsers.forEach((user) => {
+    console.log(`${user.age} ${user.name}`);
+  });
 }
 
 Solution(input);
 ```
 
-- 코드도 정말 깔끔하고, 압도적인 속도 차이를 보여준다. 메모리는 비록 가장 많이 사용하나, 속도가 20배 정도 빠르다.
+- 문제 그대로 풀기 위해 users라는 배열을 만들어서 각각의 유저를 객체로 만들어 저장
+- 가입일 순으로 정렬하기 위해 인덱스 번호로 유저의 가입 순서 저장
+- 나이 순으로 정렬하고, 가입일 순으로 정렬
 
-#### 사전 순 정렬
+#### 유저의 나이만 고려하기
 
-##### **localeCompare()**
-
-```js
-참조문자열.localeCompare(비교문자열);
-```
-
-- 참조 문자열이 비교 문자열보다 앞에 있으면 음수, 그렇지 않으면 양수, 동등하면 0을 반환한다.
-- 사전 순으로 배열을 정리해야 하다보니 `sort()`를 안에서 한 번 더 쓸수 없을까 생각했는데, 이 내장 메서드를 이용하면 쉽게 해결할 수 있었다.
-
-#### 중복 제거
+객체로 만드는 방식으로 풀었더니 메모리나 시간이 너무나 많이 소모되었다. 그래서 다른 방식으로 풀어보았다.
 
 ```js
-const uniqueWords = new Set(sortedWords);
-console.log(Array.from(uniqueWords).join("\n"));
+function Solution(input) {
+  input.sort((a, b) => a.split(" ")[0] - b.split(" ")[0]);
+  console.log(input.join("\n"));
+}
+
+Solution(input);
 ```
 
-- 고유값만 배열로 만들기 위해 `Set`을 사용했다.
-- Set을 사용한 객체는 유사 배열 객체이므로 `Array.from`을 통해서 얕은 복사를 통해 새로운 배열을 만든다.
+위의 긴 코드가 사실 단 두줄이면 해결되었다. 어차피 이미 문제에서 **유저는 가입한 순서대로 주어진다**고 되어있기 때문에
+내가 특별히 인덱스를 넣어서 고려할 필요가 없었다. `sort()` 안에서 각 문장을 split해서 유저의 나이만 비교한 결과다.
+
+#### parseFloat 이용하기
+
+위 방식도 첫번째보다는 충분히 빨랐지만, `parseFloat()`을 이용하면 메모리도 덜 소모되고, 무엇보다 속도가 훨씬 빨랐다.
+
+```js
+function Solution(input) {
+  input.sort((a, b) => parseFloat(a) - parseFloat(b));
+  console.log(input.join("\n"));
+}
+
+Solution(input);
+```
+
+- `parseFloat()`은 문자열을 받는 메서드다. 그러나 문자열이 아닐 경우 `toString`을 사용해 추상 문자열로 변환한다.
+- 반환값은 문자열에서 파싱한 부동 소수점 실수다.
+- 공백이 아닌 첫글자를 숫자로 변환할 수 없는 경우 `NaN`을 반환한다.
+- 즉, 사용할 수 있는 곳은 **숫자나, 공백이나 숫자가 먼저온 문자열**이다!
 
 </div>
 </details>
