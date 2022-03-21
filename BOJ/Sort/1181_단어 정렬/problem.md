@@ -1,4 +1,4 @@
-# 좌표 정렬하기 - 1181
+# 단어 정렬 - 1181
 
 [문제 링크](https://www.acmicpc.net/problem/1181)
 
