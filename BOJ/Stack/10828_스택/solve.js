@@ -11,28 +11,25 @@ function Solution(n, input) {
   const commands = [...input];
 
   const stack = [];
-  const result = [];
 
-  for (let i = 0; i < n; i++) {
-    switch (commands[i]) {
-      case "pop":
-        result.push(stack.pop() || -1);
-        break;
-      case "size":
-        result.push(stack.length);
-        break;
-      case "empty":
-        result.push(stack.length ? 0 : 1);
-        break;
-      case "top":
-        result.push(stack[stack.length - 1] || -1);
-        break;
-      default:
-        stack.push(commands[i].split(" ")[1]);
-    }
-  }
+  const execution = {
+    pop: () => stack.pop() || -1,
+    size: () => stack.length,
+    empty: () => (stack.length === 0 ? 1 : 0),
+    top: () => stack[stack.length - 1] || -1,
+    push: (item) => {
+      stack.push(item.split(" ")[1]);
+      return "";
+    },
+  };
 
-  console.log(result.join("\n"));
+  const result = commands.reduce(
+    (acc, cur) =>
+      acc + (execution[cur] ? `${execution[cur]()}\n` : execution.push(cur)),
+    ""
+  );
+
+  console.log(result.trim());
 }
 
 Solution(n, input);

@@ -175,5 +175,57 @@ Solution(n, input);
 
 더 나은 방법이 없을까 생각하다가 if 문을 switch문으로 변경해서 해결했다. 훨씬 코드가 깔끔하고 보기 좋아졌다.
 
+### Solution 3
+
+```js
+function Solution(input) {
+  const commands = [...input];
+
+  const stack = [];
+
+  const execution = {
+    pop: () => stack.pop() || -1,
+    size: () => stack.length,
+    empty: () => (stack.length === 0 ? 1 : 0),
+    top: () => stack[stack.length - 1] || -1,
+    push: (item) => {
+      stack.push(item.split(" ")[1]);
+      return "";
+    },
+  };
+
+  const result = commands.reduce(
+    (acc, cur) =>
+      acc + (execution[cur] ? `${execution[cur]()}\n` : execution.push(cur)),
+    ""
+  );
+
+  console.log(result.trim());
+}
+
+Solution(input);
+```
+
+더 좋은 방법을 찾다가 내가 원하던 방법을 발견했다. 객체를 이용하는 방법이었는데, 이렇게 하면 조건문 없이 깔끔하게 해결할 수 있었다.
+
+```js
+const result = commands.reduce(
+  (acc, cur) =>
+    acc + (execution[cur] ? `${execution[cur]()}\n` : execution.push(cur)),
+  ""
+);
+```
+
+- push만 다르게 들어오기 때문에 예외처리를 해주었다. (execution[cur]에서 push n 이 들어와서 false가 된다)
+
+```js
+push: (item) => {
+    stack.push(item.split(" ")[1]);
+    return "";
+  },
+```
+
+return 처리를 해주지 않으면 undefined가 같이 들어가게 되므로 `return '';`처리를 해준다.
+
 </div>
 </details>
