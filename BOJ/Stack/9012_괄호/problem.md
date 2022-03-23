@@ -131,5 +131,75 @@ Solution(input);
   - 스택에는 ')'밖에 없으니까 '('를 만나면 유효한 괄호 모양이 된다.
 - 반복문을 돌고 스택의 길이가 0보다 크다면 유효하지 않은 배열, 0이라면 유효한 배열이므로 각각 NO, YES를 result 문자열에 담아 출력한다.
 
+### Solution 2
+
+```js
+function Solution(n, input) {
+  let result = "";
+  for (let i = 0; i < n; i++) {
+    let stack = 0;
+
+    for (let parenthesis of input[i]) {
+      stack += parenthesis === "(" ? 1 : -1;
+
+      if (stack < 0) break;
+    }
+
+    result += stack === 0 ? "YES\n" : "NO\n";
+  }
+  console.log(result.trim());
+}
+
+Solution(n, input);
+```
+
+- 기호 '(' 와 ')'의 개수를 세서 '('일시 1을 더해주고, ')' 이면 1을 뺐다.
+- 괄호가 굳이 사용되야 할 필요가 없었으므로, 스택을 추상화.
+- 만약 유효한 괄호를 가진 문자열이면 0이되야함.
+- 만약 stack이 0 이하로 내려가면 유효하지 않은 문자열이므로 예외처리
+
+### Solution 3
+
+```js
+const [n, ...input] = require("fs")
+  .readFileSync("./input2.txt")
+  .toString()
+  .trim()
+  .split("\n");
+
+function Solution(n, input) {
+  const result = [];
+
+  const validation = (parenthesis) => {
+    const validateResult = parenthesis.replace(/\(\)/g, "");
+
+    if (parenthesis.length !== validateResult.length) {
+      return validation(validateResult);
+    }
+
+    return parenthesis[0] === ")" || parenthesis[parenthesis.length - 1] === "("
+      ? "NO"
+      : "YES";
+  };
+
+  for (let i = 0; i < n; i++) {
+    result.push(validation(input[i]));
+  }
+
+  console.log(result.join("\n"));
+}
+
+Solution(n, input);
+```
+
+재귀로 푸는 방식을 보게되었다. 다들 정말 대단한 것 같다.
+
+- 반복문을 돌면서 한 줄씩 유효한 괄호를 검사하는 함수의 결과를 result 배열에 넣는다.
+- validation 함수는 정규식을 이용해 '()' 괄호를 제거한다.
+- 제거한 결과와 들어온 문자열의 길이가 다르면 괄호를 더 제거해야 하므로 다시 validation 함수에 제거한 결과를 넣어준다. (재귀)
+- 길이가 같아지면 남은 문자열이 있다면 유효하지 않은 괄호이다.
+
 </div>
 </details>
+
+- 참고 : https://gurtn.tistory.com/68
