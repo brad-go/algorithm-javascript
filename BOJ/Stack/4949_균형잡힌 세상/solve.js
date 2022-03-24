@@ -8,47 +8,36 @@ const [...input] = require("fs")
 // 내 제출
 
 function Solution(input) {
-  const string = input.slice(0, -1);
-  let result = "";
+  const lines = input.slice(0, -1);
 
-  for (let line of string) {
-    const regex = /[^\(\)\[\].]/g;
-    const parenthesis = line.replace(regex, "");
+  const open = ["(", "["];
+  const close = [")", "]"];
+
+  const result = [];
+
+  for (let line of lines) {
     const stack = [];
+    let valid = true;
 
-    for (let i = 0; i < parenthesis.length; i++) {
-      const cur = parenthesis[i];
-
-      if (cur === ".") {
-        result += stack.length === 0 ? "yes\n" : "no\n";
-        break;
+    for (let i = 0; i < line.length; i++) {
+      const char = line[i];
+      if (open.includes(char)) stack.push(char);
+      else if (close.includes(char)) {
+        if (stack.pop() !== open[close.indexOf(char)]) {
+          result.push("no");
+          valid = false;
+          break;
+        }
       }
+    }
 
-      if (cur === "(" || cur === "[") {
-        stack.push(cur);
-
-        continue;
-      }
-
-      if (cur === "]" && stack[stack.length - 1] === "[") {
-        stack.pop();
-        continue;
-      } else if (cur === "]" && stack[stack.length - 1] === "(") {
-        result += "no\n";
-        break;
-      }
-
-      if (cur === ")" && stack[stack.length - 1] === "(") {
-        stack.pop();
-        continue;
-      } else if (cur === ")" && stack[stack.length - 1] === "[") {
-        result += "no\n";
-        break;
-      }
+    if (valid) {
+      if (stack.length === 0) result.push("yes");
+      else result.push("no");
     }
   }
 
-  console.log(result.trim());
+  console.log(result.join("\n"));
 }
 
 Solution(input);
