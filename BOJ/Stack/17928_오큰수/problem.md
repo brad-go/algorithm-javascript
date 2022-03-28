@@ -92,9 +92,44 @@ function Solution(n, input) {
 Solution(n, input);
 ```
 
+##### 풀이
+
+- 수열의 각 인덱스를 반복문을 통해 돈다.
+- 가장 큰 수 인지 확인하고 가장 큰 수라면 오큰수가 존재하지 않으므로 result에 -1을 추가
+- 해당 인덱스의 번호를 찾아서 해당 인덱스 이후의 수만으로 배열을 만든다.
+- 이 배열에서 가장 현재 인덱스의 수보다 가장 먼저오는 큰 수를 찾는다.
+- 없다면 result에 -1추가, 있다면 result에 찾은 수를 추가
+
+##### 느낀점
+
 - 문제를 보고 너무 쉽다고 생각했고, 그냥 한 번에 정답이 출력되었다. 다른 input으로 바꿔봐도 마찬가지였다.
 - 그러나 괜히 스택으로 풀 수 있는 어려운 문제라고 설명이 써있는게 아니었다.
-- 메모리 초과로 실패
+- **메모리 초과**로 실패
+
+#### Solution
+
+```js
+function Solution(n, input) {
+  const numbers = input.split(" ").map((v) => +v);
+  const stack = [];
+  const result = new Array(Number(n)).fill(-1);
+
+  for (let i = 0; i < n; i++) {
+    while (stack.length && numbers[i] > numbers[stack[stack.length - 1]]) {
+      result[stack.pop()] = numbers[i];
+    }
+    stack.push(i);
+  }
+  console.log(result.join(" "));
+}
+
+Solution(n, input);
+```
+
+- 수열의 길이만큼 -1로 채운 새로운 배열(result)을 만든다.
+- 수열의 길이만큼 반복문을 돈다.
+- 스택에 현재 인덱스 번호를 넣는다.
+- 스택에 수가 있고, 수열의 현재 인덱스가 이전 인덱스보다 크다면 -1로 채워진 result 배열의 스택에서 꺼낸 인덱스에 현재 인덱스를 넣는다.
 
 </div>
 </details>
