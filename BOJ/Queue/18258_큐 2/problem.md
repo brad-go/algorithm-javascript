@@ -1,4 +1,4 @@
-# 균형잡힌 세상 - 18258
+# 큐 2 - 18258
 
 [문제 링크](https://www.acmicpc.net/problem/18258)
 
@@ -114,6 +114,186 @@ Solution(n, input);
 
 - 10828 스택을 풀이했던 방식대로 객체를 이용하는 방법과 스위치문을 이용하는 방법을 사용했는데, 시간초과가 났다.
 - 큐를 이용할 때, shift(), push()등을 이용할 때 연산 시간이 많이 걸리는 듯하다...
+
+### Solution
+
+- [JS 알고리즘 구현: 큐(Queue) 구현 vs Array 메서드(shift, splice) 사용했을때 속도 비교](https://velog.io/@grap3fruit/JS-%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98-%EA%B5%AC%ED%98%84-%ED%81%90Queue-%EA%B5%AC%ED%98%84%ED%96%88%EC%9D%84%EB%95%8C-vs-Array-%EB%A9%94%EC%84%9C%EB%93%9Cshift-splice-%EC%82%AC%EC%9A%A9%ED%96%88%EC%9D%84%EB%95%8C-%EC%86%8D%EB%8F%84-%EB%B9%84%EA%B5%90)
+
+위 글을 참고해서 직접 큐를 직접 구현해서 문제를 해결했다.
+
+```js
+class Node {
+  constructor(item) {
+    this.item = item;
+    this.next = null;
+  }
+}
+
+class Queue {
+  constructor() {
+    this.head = null;
+    this.tail = null;
+    this.length = 0;
+  }
+
+  push(item) {
+    const node = new Node(item);
+    if (!this.head) {
+      this.head = node;
+      this.head.next = this.tail;
+    } else this.tail.next = node;
+
+    this.tail = node;
+    this.length++;
+  }
+
+  size() {
+    return this.length;
+  }
+
+  pop() {
+    if (this.length > 2) {
+      const popedItem = this.head.item;
+      const newHead = this.head.next;
+      this.head = newHead;
+      this.length--;
+      return popedItem;
+    }
+    if (this.length === 2) {
+      const popedItem = this.head.item;
+      const newHead = this.head.next;
+      this.head = newHead;
+      this.tail = newHead;
+      this.length--;
+      return popedItem;
+    }
+    if (this.length === 1) {
+      const popedItem = this.head.item;
+      this.head = null;
+      this.tail = null;
+      this.length--;
+      return popedItem;
+    }
+    return -1;
+  }
+
+  empty() {
+    return this.length ? 0 : 1;
+  }
+
+  front() {
+    return this.length ? this.head.item : -1;
+  }
+
+  back() {
+    return this.length ? this.tail.item : -1;
+  }
+}
+
+function Solution(commands) {
+  const queue = new Queue();
+  let result = "";
+
+  commands.forEach((commandline) => {
+    const [command, value] = commandline.split(" ");
+    if (command === "push") return queue[command](value);
+    result += `${queue[command]()}\n`;
+  });
+
+  console.log(result.trim());
+}
+
+Solution(input);
+```
+
+- 다른 언어는 쉽게 풀 수 있던 것 같은데, 자바스크립트는 시간복잡도 O(1)을 보장하는 내장 라이브러리가 없어서 큐를 구현해야 했다.
+- 실제로 위의 링크를 걸어놓은 글에서 자세히 볼 수 있고, 구현한다면 속도 차이는 엄청났다.
+
+```js
+class Node {
+  constructor(item) {
+    this.item = item;
+    this.next = null;
+  }
+}
+```
+
+- 큐에 들어갈 각 노드를 표현한 클래스
+- item을 인자로 받고 큐에 linked list 방식으로 item을 받게 된다.
+
+```js
+class Queue {
+  constructor() {
+    this.head = null;
+    this.tail = null;
+    this.length = 0;
+  }
+```
+
+- 큐라는 클래스를 생성한다.
+- 큐의 맨 앞으로 표현한 head, 맨 뒤 tail, 큐의 길이를 표현한 length를 가진다.
+
+```js
+push(item) {
+  const node = new Node(item);
+  if (!this.head) {
+    this.head = node;
+    this.head.next = this.tail;
+  } else this.tail.next = node;
+
+  this.tail = node;
+  this.length++;
+}
+```
+
+- push를 할 때 위에서 만들었던 클래스를 이용해 노드를 하나 만든다.
+- 큐의 head가 비어있다면 head에 노드를 넣어준다.
+- tail부분에도 노드를 넣어주고, head가 있을 때 head의 next에 tail을 넣어준다.
+
+```bash
+Queue {
+  head: Node { item: '1', next: Node { item: '2', next: null } },
+  tail: Node { item: '2', next: null },
+  length: 2
+}
+```
+
+- 이러한 모습을 띠게 된다.
+
+```js
+pop() {
+  if (this.length > 2) {
+    const popedItem = this.head.item;
+    const newHead = this.head.next;
+    this.head = newHead;
+    this.length--;
+    return popedItem;
+  }
+  if (this.length === 2) {
+    const popedItem = this.head.item;
+    const newHead = this.head.next;
+    this.head = newHead;
+    this.tail = newHead;
+    this.length--;
+    return popedItem;
+  }
+  if (this.length === 1) {
+    const popedItem = this.head.item;
+    this.head = null;
+    this.tail = null;
+    this.length--;
+    return popedItem;
+  }
+  return -1;
+}
+```
+
+- pop메서드의 경우 조건에 따라 달리 해줘야 한다.
+- 길이가 2이상이라면 head의 next에 있는 노드를 head로 바꿔준다.
+- 길이가 2라면 head와 tail을 모두 head의 next에 있는 노드로 바꿔준다.
+- 길이가 1이라면 pop을 진행하면 큐가 비어야 하므로 null로 만들어준다.
+- 현재 head의 맨 앞에 위치한 item을 반환한다.
+- 큐가 비어있다면 -1을 반환한다.
 
 </div>
 </details>

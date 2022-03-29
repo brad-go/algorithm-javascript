@@ -7,33 +7,85 @@ const [n, ...input] = require("fs")
 
 // 내 제출
 
-function Solution(n, commands) {
-  const queue = [];
-  const result = [];
-
-  for (let i = 0; i < n; i++) {
-    switch (commands[i]) {
-      case "pop":
-        result.push(queue.shift() || -1);
-        break;
-      case "size":
-        result.push(queue.length);
-        break;
-      case "empty":
-        result.push(queue.length ? 1 : 0);
-        break;
-      case "front":
-        result.push(queue[0] || -1);
-        break;
-      case "back":
-        result.push(queue[queue.length - 1] || -1);
-        break;
-      default:
-        queue.push(commands[i].split(" ")[1]);
-    }
+class Node {
+  constructor(item) {
+    this.item = item;
+    this.next = null;
   }
-
-  console.log(result.join("\n"));
 }
 
-Solution(n, input);
+class Queue {
+  constructor() {
+    this.head = null;
+    this.tail = null;
+    this.length = 0;
+  }
+
+  push(item) {
+    const node = new Node(item);
+    if (!this.head) {
+      this.head = node;
+      this.head.next = this.tail;
+    } else this.tail.next = node;
+
+    this.tail = node;
+    this.length++;
+  }
+
+  size() {
+    return this.length;
+  }
+
+  pop() {
+    if (this.length > 2) {
+      const popedItem = this.head.item;
+      const newHead = this.head.next;
+      this.head = newHead;
+      this.length--;
+      return popedItem;
+    }
+    if (this.length === 2) {
+      const popedItem = this.head.item;
+      const newHead = this.head.next;
+      this.head = newHead;
+      this.tail = newHead;
+      this.length--;
+      return popedItem;
+    }
+    if (this.length === 1) {
+      const popedItem = this.head.item;
+      this.head = null;
+      this.tail = null;
+      this.length--;
+      return popedItem;
+    }
+    return -1;
+  }
+
+  empty() {
+    return this.length ? 0 : 1;
+  }
+
+  front() {
+    return this.length ? this.head.item : -1;
+  }
+
+  back() {
+    return this.length ? this.tail.item : -1;
+  }
+}
+
+function Solution(commands) {
+  const queue = new Queue();
+  let result = "";
+
+  commands.forEach((commandline) => {
+    const [command, value] = commandline.split(" ");
+    if (command === "push") return queue[command](value);
+    result += `${queue[command]()}\n`;
+  });
+
+  console.log(result.trim());
+}
+
+Solution(input);
