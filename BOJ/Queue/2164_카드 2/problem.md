@@ -39,6 +39,8 @@ N이 주어졌을 때, 제일 마지막에 남게 되는 카드를 구하는 프
 <details><summary><b>문제 풀이</b></summary>
 <div markdown="1">
 
+### Solution 1
+
 ```js
 const input = Number(require("fs").readFileSync("dev/stdin").toString().trim());
 
@@ -156,6 +158,38 @@ console.log(deck.head.item);
 - deQueue로 카드를 한장 버리고
 - 덱이 한장보다 많다면 제일 위에 카드를 빼내서 아래로 넣어준다.
 - 한장이 남는다면 제일 위에 있는 카드를 출력한다.
+
+### Solution 2
+
+문제를 풀고 다른 사람들은 어떻게 풀어보나 찾았다가 내가 처음 생각한 풀이 방식과 굉장히 비슷한 코드를 발견했다. 나는 이렇게 풀이하는 것에 실패하고 큐를 구현하자 했는데, 구현에 성공한 사람이 있었다니..!
+
+생각보다 해법은 간단했다.
+
+```js
+function Solution(input) {
+  const deck = new Array(input).fill().map((_, idx) => idx + 1);
+
+  let top = 0;
+  while (top < deck.length - 1) {
+    deck.push(deck[top + 1]);
+    top += 2;
+  }
+
+  console.log(deck[deck.length - 1]);
+}
+
+Solution(input);
+```
+
+- input만큼의 수로 덱을 채운다.
+- 카드의 첫번째 장은 무조건 버리므로 top은 무조건 2씩 증가한다.
+- top이 덱의 길이보다 작을 때까지 반복한다.
+- 덱에 버린 카드 밑에 오는 수를 추가한다.
+- top이 2 증가한다.
+- deck보다 top이 1씩 더 크게 증가하므로 조건은 곧 성립하지 않게 되고 반복문을 빠져나온다.
+- 마지막 카드를 출력한다.
+
+나는 이 방법을 구현할 때, 카드를 빼내는 동작을 `shift()`로 구현했었는데, 시간 초과가 났었다. 그러나 위 방법으로 `shift()` 연산을 스킵해버리고 문제를 해결할 수 있었다니... 대단쓰...!
 
 </div>
 </details>

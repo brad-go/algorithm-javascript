@@ -2,6 +2,8 @@ const input = Number(
   require("fs").readFileSync("./input.txt").toString().trim()
 );
 
+// Solution 1
+
 class Node {
   constructor(item) {
     this.item = item;
@@ -54,3 +56,19 @@ function Solution(input) {
 }
 
 Solution(input);
+
+// Solution 2
+
+// function Solution(input) {
+//   const deck = new Array(input).fill().map((_, idx) => idx + 1);
+
+//   let start = 0;
+//   while (start < deck.length - 1) {
+//     deck.push(deck[start + 1]);
+//     start += 2;
+//   }
+
+//   console.log(deck[deck.length - 1]);
+// }
+
+// Solution(input);
