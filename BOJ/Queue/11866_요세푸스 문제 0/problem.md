@@ -37,5 +37,41 @@ N과 K가 주어지면 (N, K)-요세푸스 순열을 구하는 프로그램을 �
 <details><summary><b>문제 풀이</b></summary>
 <div markdown="1">
 
+### Solution
+
+```js
+const [N, K] = require("fs")
+  .readFileSync("./input.txt")
+  .toString()
+  .trim()
+  .split(" ")
+  .map((v) => +v);
+
+function Solution(N, K) {
+  const queue = new Array(N).fill().map((v, idx) => idx + 1);
+  const result = [];
+
+  while (queue.length > 0) {
+    for (let i = 0; i < K - 1; i++) {
+      const deq = queue.shift();
+      queue.push(deq);
+    }
+    const cur = queue.shift();
+    result.push(cur);
+  }
+  console.log(`<${result.join(", ")}>`);
+}
+
+Solution(N, K);
+```
+
+요세푸스 문제를 잘 이해하지 못해서 실패를 했었지만, 이전까지 문제들보다 메모리나 시간이 넉넉해서
+내장 메서드만을 이용해서 쉽게 풀 수 있었다.
+
+- queue를 7까지 수를 채운 배열로 만든다.
+- K - 1번까지 queue의 앞에서 빼내준 후에 뒤에 넣어준다.
+- K번째 수를 제거하고 result 배열에 넣어준다.
+- 위 과정을 queue의 길이가 0이 될때까지 while문에서 반복한다.
+
 </div>
 </details>

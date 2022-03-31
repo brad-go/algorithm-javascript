@@ -6,19 +6,17 @@ const [N, K] = require("fs")
   .map((v) => +v);
 
 function Solution(N, K) {
-  const people = new Array(N).fill().map((v, idx) => idx + 1);
+  const queue = new Array(N).fill().map((v, idx) => idx + 1);
   const result = [];
 
-  while (people.length > 2) {
+  while (queue.length > 0) {
     for (let i = 0; i < K - 1; i++) {
-      const cur = people.shift();
-      people.push(cur);
+      const deq = queue.shift();
+      queue.push(deq);
     }
-    const pop = people.shift();
-    result.push(pop);
+    const cur = queue.shift();
+    result.push(cur);
   }
-
-  people.forEach((num) => result.push(num));
   console.log(`<${result.join(", ")}>`);
 }
 
