@@ -119,7 +119,195 @@ pop_back
 <details><summary><b>문제 풀이</b></summary>
 <div markdown="1">
 
+### 실패
+
+```js
+const [n, ...input] = require("fs")
+  .readFileSync("dev/stdin")
+  .toString()
+  .trim()
+  .split("\n");
+
+function Solution(n, commands) {
+  class Node {
+    constructor(item) {
+      this.prev = null;
+      this.item = item;
+      this.next = null;
+    }
+  }
+
+  class Deque {
+    constructor() {
+      this.head = null;
+      this.tail = null;
+      this.length = 0;
+    }
+
+    pushFront(item) {
+      const node = new Node(item);
+      if (!this.length) {
+        this.head = node;
+        this.tail = node;
+      } else {
+        this.head.prev = node;
+        node.next = this.head;
+        this.head = node;
+      }
+
+      this.length++;
+    }
+
+    pushBack(item) {
+      const node = new Node(item);
+      if (!this.length) {
+        this.head = node;
+        this.tail = node;
+      } else {
+        this.tail.next = node;
+        node.prev = this.tail;
+        this.tail = node;
+      }
+
+      this.length++;
+    }
+
+    popFront() {
+      if (!this.length) return -1;
+
+      const popItem = this.head.item;
+      this.head = this.head.next;
+
+      if (this.length == 1) this.head = null;
+      else this.head.prev = null;
+
+      this.length--;
+      return popItem;
+    }
+
+    popBack() {
+      if (!this.length) return -1;
+
+      const popItem = this.tail.item;
+      this.tail = this.tail.prev;
+
+      if (this.length == 1) this.tail = null;
+      else this.tail.prev = null;
+
+      this.length--;
+      return popItem;
+    }
+
+    size() {
+      return this.length;
+    }
+
+    empty() {
+      return this.length ? 0 : 1;
+    }
+
+    front() {
+      return this.length ? this.head.item : -1;
+    }
+
+    back() {
+      return this.length ? this.tail.item : -1;
+    }
+  }
+
+  let answer = "";
+  const deque = new Deque();
+
+  commands.forEach((commandLine) => {
+    const [command, item] = commandLine.split(" ");
+
+    switch (command) {
+      case "push_front":
+        deque.pushFront(item);
+        break;
+      case "push_back":
+        deque.pushBack(item);
+        break;
+      case "pop_front":
+        answer += `${deque.popFront()}\n`;
+        break;
+      case "pop_back":
+        answer += `${deque.popBack()}\n`;
+        break;
+      case "size":
+        answer += `${deque.size()}\n`;
+        break;
+      case "empty":
+        answer += `${deque.empty()}\n`;
+        break;
+      case "front":
+        answer += `${deque.front()}\n`;
+        break;
+      case "back":
+        answer += `${deque.back()}\n`;
+        break;
+      default:
+        break;
+    }
+  });
+  console.log(answer.trim());
+}
+
+Solution(n, input);
+```
+
+제출하면 런타임에러(타입 에러)가 뜨는데 이유를 도저히 못찾겠다. vscode에서는 답이 잘 나오는데, 어떤 문제일까...
+
 ### Solution
+
+```js
+const [n, ...input] = require("fs")
+  .readFileSync("dev/stdin")
+  .toString()
+  .trim()
+  .split("\n");
+
+function Solution(n, commands) {
+  let answer = "";
+  const queue = [];
+
+  commands.forEach((line) => {
+    const [command, value] = line.split(" ");
+
+    switch (command) {
+      case "push_front":
+        queue.unshift(value);
+        break;
+      case "push_back":
+        queue.push(value);
+        break;
+      case "pop_front":
+        answer += `${queue.shift() || -1}\n`;
+        break;
+      case "pop_back":
+        answer += `${queue.pop() || -1}\n`;
+        break;
+      case "size":
+        answer += `${queue.length}\n`;
+        break;
+      case "empty":
+        answer += `${queue.length ? 0 : 1}\n`;
+        break;
+      case "front":
+        answer += `${queue.length ? queue[0] : -1}\n`;
+        break;
+      case "back":
+        answer += `${queue.length ? queue[queue.length - 1] : -1}\n`;
+        break;
+    }
+  });
+  console.log(answer.trim());
+}
+
+Solution(n, input);
+```
+
+결국 덱을 구현하는 것을 포기하고, switch문을 통해서 해결했다. 다른 사람들이 덱을 구현한 것을 좀 찾아보고 시도해봐야 겠다.
 
 </div>
 </details>
