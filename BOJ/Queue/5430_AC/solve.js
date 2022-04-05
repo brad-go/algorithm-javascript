@@ -12,19 +12,24 @@ function Solution(T, input) {
     const n = input.shift();
     const arr = JSON.parse(input.shift());
 
+    let reverse = false;
+    let isError = false;
+
     for (let j = 0; j < p.length; j++) {
-      if (p[j] === "R") arr.reverse();
+      if (p[j] === "R") reverse = !reverse;
       if (p[j] === "D") {
         if (!arr.length) {
-          answer.push("error");
+          isError = true;
           break;
-        } else {
-          arr.shift();
         }
+
+        if (reverse) arr.pop();
+        else arr.shift();
       }
     }
 
-    if (arr.length) answer.push(JSON.stringify(arr));
+    if (isError) answer.push("error");
+    else answer.push(JSON.stringify(reverse ? arr.reverse() : arr));
   }
   console.log(answer.join("\n"));
 }

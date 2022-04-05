@@ -62,5 +62,56 @@ error
 <details><summary><b>문제 풀이</b></summary>
 <div markdown="1">
 
+```js
+const [T, ...input] = require("fs")
+  .readFileSync("./input.txt")
+  .toString()
+  .trim()
+  .split("\n");
+
+function Solution(T, input) {
+  const answer = [];
+
+  for (let i = 0; i < T; i++) {
+    const p = input.shift().split("");
+    const n = input.shift();
+    const arr = JSON.parse(input.shift());
+
+    let reverse = false;
+    let isError = false;
+
+    for (let j = 0; j < p.length; j++) {
+      if (p[j] === "R") reverse = !reverse;
+      if (p[j] === "D") {
+        if (!arr.length) {
+          isError = true;
+          break;
+        }
+
+        if (reverse) arr.pop();
+        else arr.shift();
+      }
+    }
+
+    if (isError) answer.push("error");
+    else answer.push(JSON.stringify(reverse ? arr.reverse() : arr));
+  }
+  console.log(answer.join("\n"));
+}
+
+Solution(T, input);
+```
+
+이번 문제는 정답 비율을 보고 조금 걱정했다. 덱을 구현해야 하나 싶었다. 큐까지는 괜찮았는데, 덱을 구현할 때 순환참조(?) 하는 부분이 이해가 잘 되지 않고 구현을 무작정 따라하고 싶지 않았다.
+그래서 내가 할 수 있는 방식으로 풀어봤는데, 다행히 금방 풀 수 있었다!!
+
+- 우선 console을 찍어보다 보니 배열 때문에 JSON을 통한 파싱을 하거나 직렬화가 필요했다.
+- reverse라는 변수를 만들어서 문제를 해결했는데, 원래는 'R'이 들어올 때마다 `reverse()` 메서드를 이용해서 배열 자체를 뒤집었더니 시간초과가 나서 이런 방식을 생각해봤다.
+- 함수 p의 길이만큼 반복한다.
+- R을 만나면 reverse 변수를 변화시킨다.
+- D를 만났을 때 길이가 없다면 error 상태로 만들고 반복문 종료
+- 길이가 있다면 reverse를 체크한다. reverse 가 true이면 뒤에서 부터 빼고, 아니면 앞에서 부터 빼준다.
+- 에러 상태면 정답에 에러를 넣어주고, 아니라면 직렬화해서 배열을 뒤집거나 원 상태로 넣어준다.
+
 </div>
 </details>
