@@ -6,38 +6,15 @@ const [T, ...input] = require("fs")
   .map((v) => +v);
 
 // 상향식
-// function Solution(input) {
-//   for (let n of input) {
-//     const dp = new Array(n + 1).fill(-1);
-//     dp[0] = 0;
-//     dp[1] = 1;
-
-//     for (let i = 2; i <= n; i++) {
-//       dp[i] = dp[i - 1] + dp[i - 2];
-//     }
-
-//     if (n === 0) dp.reverse();
-//     console.log(dp[dp.length - 2], dp[dp.length - 1]);
-//   }
-// }
-
-// Solution(input);
-
-// 하향식
 function Solution(input) {
   for (let n of input) {
     const dp = new Array(n + 1).fill(-1);
     dp[0] = 0;
     dp[1] = 1;
 
-    const fibonacci = (n) => {
-      if (dp[n] === -1) {
-        dp[n] = fibonacci(n - 1) + fibonacci(n - 2);
-      }
-      return dp[n];
-    };
-
-    fibonacci(n);
+    for (let i = 2; i <= n; i++) {
+      dp[i] = dp[i - 1] + dp[i - 2];
+    }
 
     if (n === 0) dp.reverse();
     console.log(dp[dp.length - 2], dp[dp.length - 1]);
@@ -45,6 +22,29 @@ function Solution(input) {
 }
 
 Solution(input);
+
+// 하향식
+// function Solution(input) {
+//   for (let n of input) {
+//     const dp = new Array(n + 1).fill(-1);
+//     dp[0] = 0;
+//     dp[1] = 1;
+
+//     const fibonacci = (n) => {
+//       if (dp[n] === -1) {
+//         dp[n] = fibonacci(n - 1) + fibonacci(n - 2);
+//       }
+//       return dp[n];
+//     };
+
+//     fibonacci(n);
+
+//     if (n === 0) dp.reverse();
+//     console.log(dp[dp.length - 2], dp[dp.length - 1]);
+//   }
+// }
+
+// Solution(input);
 
 // 단순 재귀
 

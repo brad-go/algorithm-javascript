@@ -153,5 +153,29 @@ Solution(input);
   - 만약 -1이라면(채워져 있지 않다면) 피보나치 수열의 패턴을 이용해 이전 두수를 더한 값을 채워준다.
   - 이렇게 하게 되면 이미 구한 재귀 함수의 값은 더 이상 체크할 필요가 없어진다.
 
+### Solution 2 - 상향식
+
+```js
+function Solution(input) {
+  for (let n of input) {
+    const dp = new Array(n + 1).fill(-1);
+    dp[0] = 0;
+    dp[1] = 1;
+
+    for (let i = 2; i <= n; i++) {
+      dp[i] = dp[i - 1] + dp[i - 2];
+    }
+
+    if (n === 0) dp.reverse();
+    console.log(dp[dp.length - 2], dp[dp.length - 1]);
+  }
+}
+
+Solution(input);
+```
+
+상향식 기법을 이용하면 코드가 조금 더 깔끔해진다.
+미리 구한 답을 이용해서 다음의 답을 구하는 방식을 통해 중복되는 문제들의 연산을 최소화할 수 있다.
+
 </div>
 </details>
