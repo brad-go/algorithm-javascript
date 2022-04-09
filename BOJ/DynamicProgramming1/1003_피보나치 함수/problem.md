@@ -116,7 +116,7 @@ Solution(input);
 
 역시나 했지만, 시간초과가 났다. 어떻게 풀어야 할까..?
 
-### Solution 1
+### Solution 1 - 하향식
 
 ```js
 function Solution(input) {
