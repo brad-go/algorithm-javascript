@@ -6,6 +6,8 @@
 
 #### - :open_file_folder: [백준](./BOJ/)
 
+#### - :open_file_folder: [기타](./Others/)
+
 ## Rule
 
 ### Solving
