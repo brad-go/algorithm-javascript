@@ -6,16 +6,33 @@ const [n, ...soldiers] = require("fs")
   .map((v) => +v);
 
 function Solution(n, soldiers) {
-  const dp = new Array(n).fill(0);
+  soldiers.reverse();
 
-  let count = 0;
+  const dp = new Array(n).fill(1);
+
   for (let i = 1; i < n; i++) {
-    if (soldiers[i] > soldiers[i - 1]) count++;
-
-    dp[i] = count;
+    for (let j = 0; j < i; j++) {
+      if (soldiers[j] < soldiers[i]) dp[i] = Math.max(dp[i], dp[j] + 1);
+      console.log(dp);
+    }
   }
 
-  console.log(dp);
+  console.log(n - Math.max(...dp));
 }
 
 Solution(n, soldiers);
+
+// function Solution(n, soldiers) {
+//   const dp = new Array(n).fill(0);
+
+//   let count = 0;
+//   for (let i = 1; i < n; i++) {
+//     if (soldiers[i] > soldiers[i - 1]) count++;
+
+//     dp[i] = count;
+//   }
+
+//   console.log(dp);
+// }
+
+// Solution(n, soldiers);

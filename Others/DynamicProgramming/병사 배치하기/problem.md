@@ -112,5 +112,48 @@ Solution(n, soldiers);
 
 이렇게 푸는게 맞나?? 문제의 정답을 체크할 수 없으니 아쉽다. 하지만 그냥 한 번에 답에 도달해서 이게 맞는 것 같은데, 뭘까...?
 
+### Solution 2
+
+```js
+const [n, ...soldiers] = require("fs")
+  .readFileSync("./input.txt")
+  .toString()
+  .trim()
+  .split(/\s/)
+  .map((v) => +v);
+
+function Solution(n, soldiers) {
+  soldiers.reverse();
+
+  const dp = new Array(n).fill(1);
+
+  for (let i = 1; i < n; i++) {
+    for (let j = 0; j < i; j++) {
+      if (soldiers[j] < soldiers[i]) dp[i] = Math.max(dp[i], dp[j] + 1);
+      console.log(dp);
+    }
+  }
+
+  console.log(n - Math.max(...dp));
+}
+
+Solution(n, soldiers);
+```
+
+가장 긴 증가하는 부분 수열(Longest Increasing Subsequence, LIS)
+예를 들어 하나의 수열 arr = [4, 2, 5, 8, 4, 11, 15]
+이 수열의 가장 긴 증가하는 부분 수열은 [4, 5, 8, 11, 15]
+이 문제는 가장 긴 감소하는 부분 수열을 찾는 문제로 치환할 수 있다. LIS 알고리즘을 조금 수정하여 적용함으로 정답을 도출할 수 있다.
+
+#### LIS 알고리즘
+
+`dp[i] = arr[i]`를 마지막 원소로 가지는 부분 수열의 최대 길이
+
+점화식 - 모든 `0 <= j < i`에 대해
+
+```js
+if (arr[j] < arr[i]) dp[i] = Math.max(dp[i], dp[j] + 1);
+```
+
 </div>
 </details>
