@@ -70,6 +70,7 @@ function Solution(t, input) {
       .split(" ")
       .map((v) => +v);
 
+    // 각 금광의 위치에 맞게 골드들을 채워줌
     const goldMine = new Array(n).fill(0);
 
     for (let j = 0; j < n; j++) {
@@ -81,6 +82,7 @@ function Solution(t, input) {
 
     const dp = Array.from(Array(n), () => Array(m).fill(0));
 
+    // 첫번재 열을 채워줌
     for (let j = 0; j < n; j++) {
       dp[j][0] = goldMine[j][0];
     }
@@ -120,6 +122,7 @@ Solution(t, input);
 1. **이전 열의 왼쪽 위, 왼쪽, 왼쪽 아래 중 가장 큰 수**를 구한다.
 2. 조회할 때마다 이전 열의 인덱스가 비어있는지 체크한다.
 3. 구한 큰 수와 현재 금광 인덱스의 금의 크기를 더해서 dp배열의 인덱스를 채운다.
+4. **반복문을 진행할 때 열 기준으로 먼저 진**행할 수 있도록 한다!!
 
 - 그리고 가장 큰 수를 출력한다.
 
@@ -129,6 +132,53 @@ Solution(t, input);
 dp[i][j] =
   goldMine[i][j] + Math.max(dp[i - 1][j - 1], dp[i][j - 1], dp[i + 1][j - 1]);
 ```
+
+### Solution 2
+
+```js
+function Solution(t, input) {
+  for (let tc = 0; tc < t; tc++) {
+    const [n, m] = input
+      .shift()
+      .split(" ")
+      .map((v) => +v);
+    const golds = input
+      .shift()
+      .split(" ")
+      .map((v) => +v);
+
+    const dp = new Array(n);
+    for (let i = 0; i < n; i++) {
+      dp[i] = new Array(m).fill().map((_, idx) => golds[idx + i * 4]);
+    }
+
+    for (let i = 1; i < m; i++) {
+      for (let j = 0; j < n; j++) {
+        let leftUp = 0;
+        let leftDown = 0;
+        let left = dp[j][i - 1];
+
+        if (j !== 0) leftUp = dp[j - 1][i - 1];
+        if (j !== n - 1) leftDown = dp[j + 1][i - 1];
+
+        dp[j][i] = dp[j][i] + Math.max(leftUp, left, leftDown);
+      }
+    }
+
+    let result = 0;
+
+    for (let i = 0; i < n; i++) {
+      result = Math.max(result, dp[i][m - 1]);
+    }
+    console.log(result);
+  }
+}
+
+Solution(t, input);
+```
+
+같은 풀이 방식인데 정답 코드를 보니 조금 더 깔끔하다.
+dp배열 자체에 금광의 각 위치에 해당하는 골드들을 미리 대입해 두어서 따로 금광 배열을 생성할 필요가 없었다.
 
 </div>
 </details>
