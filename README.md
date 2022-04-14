@@ -1,5 +1,3 @@
-<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=default"></script>
-
 # algorithm-javascript
 
 알고리즘에 대해 공부하고 정리하며 문제 풀이들을 기록하는 저장소
