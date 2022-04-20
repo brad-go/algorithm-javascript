@@ -107,5 +107,35 @@ if (j >= 1 && dp[i].length - 1 > j) {
 }
 ```
 
+### Solution 2
+
+```js
+function Solution(n, input) {
+  const dp = new Array(n);
+
+  for (let i = 0; i < n; i++) {
+    dp[i] = input[i].split(" ").map((v) => +v);
+  }
+
+  for (let i = n - 2; i >= 0; i--) {
+    for (let j = 0; j <= i; j++) {
+      dp[i][j] += Math.max(dp[i + 1][j], dp[i + 1][j + 1]);
+    }
+  }
+
+  console.log(dp[0][0]);
+}
+
+Solution(n, input);
+```
+
+혹시 더 좋은 코드가 있을까 찾아보았는데, 이 코드가 더 깔끔하고 간결한 것 같다. 위에서 아래가 아니라 아래에서 위로 더해 나가는 방식인데, 이렇게 하게 되면 따로 조건 분기문이 필요하지 않고 간단해진다. 마지막에 출력도 다른 연산이 필요하지 않게 된다.
+시간이나 메모리에서 효율이 조금이나마 차이가 날 것 같았는데, 오히려 시간은 원래 코드가 빨랐고, 메모리 측면에서 아주 작은 이점이 있었다.
+하지만 둘다 정말 얼마 차이가 나지 않고 더해져 나가는 과정을 보여줄 필요가 있다면 원래 코드를 아니라면 이 코드를 사용하는게 좋을 것 같다.
+
+#### 참고
+
+[현수 세상](https://leylaoriduck.tistory.com/530)
+
 </div>
 </details>

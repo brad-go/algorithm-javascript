@@ -28,4 +28,22 @@ function Solution(n, input) {
   console.log(answer);
 }
 
-Solution(n, input);
+// Solution(n, input);
+
+// function Solution(n, input) {
+// const dp = new Array(n);
+
+// for (let i = 0; i < n; i++) {
+//   dp[i] = input[i].split(" ").map((v) => +v);
+// }
+
+// for (let i = n - 2; i >= 0; i--) {
+//   for (let j = 0; j <= i; j++) {
+//     dp[i][j] += Math.max(dp[i + 1][j], dp[i + 1][j + 1]);
+//   }
+// }
+
+// console.log(dp[0][0]);
+// }
+
+// Solution(n, input);
