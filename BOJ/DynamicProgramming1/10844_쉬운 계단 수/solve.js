@@ -4,14 +4,19 @@ const input = Number(
 
 function Solution(n) {
   const BILLION = 1000000000;
-  const dp = new Array(n + 1).fill(0);
-  dp[1] = 9;
+  const MAX_NATURAL_NUM = 9;
 
-  for (let i = 2; i < n + 1; i++) {
-    dp[i] = (dp[i - 1] * 2 - (i - 1)) % BILLION;
+  const dp = Array.from(Array(n), () => [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
+  dp[0] = [0, 1, 1, 1, 1, 1, 1, 1, 1, 1];
+
+  for (let i = 1; i < n; i++) {
+    for (let j = 0; j <= MAX_NATURAL_NUM; j++) {
+      dp[i][j] = (dp[i - 1][j - 1] || 0) + ((dp[i - 1][j + 1] || 0) % BILLION);
+    }
   }
 
-  console.log(dp[n]);
+  const answer = dp[n - 1].reduce((acc, cur) => (acc + cur) % BILLION, 0);
+  console.log(answer % BILLION);
 }
 
 Solution(input);
