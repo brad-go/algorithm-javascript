@@ -1,30 +1,26 @@
 const [n, ...input] = require("fs")
-  .readFileSync("./input2.txt")
+  .readFileSync("./input.txt")
   .toString()
   .trim()
   .split(/\s/)
   .map((v) => +v);
 
 function Solution(n, arr) {
-  const dp = Array.from(Array(n), () => []);
-  dp[0][0] = arr[0];
+  const dp = new Array(n).fill(1);
 
   for (let i = 1; i < n; i++) {
-    const prev = dp[i - 1];
-    dp[i] = prev;
+    const cur = arr[i];
+    const values = [1];
 
-    if (arr[i] > prev[prev.length - 2] && arr[i] < prev[prev.length - 1]) {
-      dp[i] = prev
-        .filter((num) => num !== prev[prev.length - 1])
-        .concat(arr[i]);
+    for (let j = 0; j < i; j++) {
+      const prev = arr[j];
+
+      if (cur > prev) values.push(dp[j] + 1);
     }
 
-    if (arr[i] > prev[prev.length - 1]) dp[i] = prev.concat(arr[i]);
-
-    console.log(dp);
+    dp[i] = Math.max(...values);
   }
-
-  console.log(dp[n - 1].length);
+  console.log(Math.max(...dp));
 }
 
 Solution(n, input);
