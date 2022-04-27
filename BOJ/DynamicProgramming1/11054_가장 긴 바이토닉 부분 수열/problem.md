@@ -118,5 +118,32 @@ function Solution(n, arr) {
 Solution(n, input);
 ```
 
+### 다른 풀이
+
+```js
+function Solution(n, arr) {
+  const [increaseDP, decreaseDP] = Array.from(Array(2), () => Array(n).fill(1));
+
+  for (let i = 0; i < n; i++) {
+    for (let j = 0; j <= i; j++) {
+      if (arr[i] > arr[j])
+        increaseDP[i] = Math.max(increaseDP[i], increaseDP[j] + 1);
+      if (arr[n - 1 - i] > arr[n - 1 - i + j])
+        decreaseDP[n - 1 - i] = Math.max(
+          decreaseDP[n - 1 - i],
+          decreaseDP[n - 1 - i + j] + 1
+        );
+    }
+  }
+
+  const dp = increaseDP.map((item, idx) => item + decreaseDP[idx] - 1);
+  console.log(Math.max(...dp));
+}
+
+Solution(n, input);
+```
+
+코드가 더 짧지만 이해하기는 위 코드가 더 쉬운 것 같다.
+
 </div>
 </details>

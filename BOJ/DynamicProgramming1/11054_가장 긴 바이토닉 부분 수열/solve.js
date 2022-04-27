@@ -28,3 +28,26 @@ function Solution(n, arr) {
 }
 
 Solution(n, input);
+
+// Solution 2
+
+function Solution(n, arr) {
+  const [increaseDP, decreaseDP] = Array.from(Array(2), () => Array(n).fill(1));
+
+  for (let i = 0; i < n; i++) {
+    for (let j = 0; j <= i; j++) {
+      if (arr[i] > arr[j])
+        increaseDP[i] = Math.max(increaseDP[i], increaseDP[j] + 1);
+      if (arr[n - 1 - i] > arr[n - 1 - i + j])
+        decreaseDP[n - 1 - i] = Math.max(
+          decreaseDP[n - 1 - i],
+          decreaseDP[n - 1 - i + j] + 1
+        );
+    }
+  }
+
+  const dp = increaseDP.map((item, idx) => item + decreaseDP[idx] - 1);
+  console.log(Math.max(...dp));
+}
+
+Solution(n, input);
