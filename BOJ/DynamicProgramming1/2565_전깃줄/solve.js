@@ -6,30 +6,20 @@ const [n, ...input] = require("fs")
 
 function Solution(n, input) {
   const N = Number(n);
-  const pole = input.map((line) => line.split(" ").map((v) => +v));
-  let count = 0;
+  const pole = input
+    .map((line) => line.split(" ").map((v) => +v))
+    .sort((a, b) => a[0] - b[0]);
 
-  while (true) {
-    const dp = new Array(N).fill(0);
+  const dp = new Array(N).fill(1);
 
-    for (let i = 0; i < N; i++) {
-      const cur = pole[i];
-      for (let j = 0; j < N; j++) {
-        if (i === j) continue;
-        const compare = pole[j];
-        if (compare[0] > cur[0] && compare[1] < cur[1]) dp[i]++;
-        if (compare[0] < cur[0] && compare[1] > cur[1]) dp[i]++;
-      }
+  for (let i = 1; i < N; i++) {
+    for (let j = 0; j < i; j++) {
+      if (pole[j][1] < pole[i][1]) dp[i] = Math.max(dp[i], dp[j] + 1);
     }
-
-    let maxIdx = dp.indexOf(Math.max(...dp));
-    pole[maxIdx] = [0, 0];
-
-    if (!Math.max(...dp)) break;
-    count++;
   }
 
-  console.log(count);
+  const answer = N - Math.max(...dp);
+  console.log(answer);
 }
 
 Solution(n, input);
