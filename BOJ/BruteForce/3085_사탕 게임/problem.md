@@ -95,6 +95,112 @@ YYCCYY
 <details><summary><b>문제 풀이</b></summary>
 <div markdown="1">
 
+### Solution
+
+```js
+const [n, ...input] = require("fs")
+  .readFileSync("./input4.txt")
+  .toString()
+  .trim()
+  .split("\n");
+
+function Solution(n, input) {
+  const board = input.map((line) => line.split(""));
+
+  let maxCandies = 0;
+  let isMaxCandies = false;
+
+  // 보드를 확인하면서 최대로 연속된 사탕의 개수를 반환하는 함수
+  const checkBoard = (board) => {
+    // 현재 보드에서 얻을 수 있는 최대로 연속된 사탕의 개수
+    let candies = 0;
+
+    for (let i = 0; i < n; i++) {
+      let cntRow = 1;
+      let cntCol = 1;
+
+      for (let j = 0; j < n - 1; j++) {
+        // 열 검사
+        if (board[j][i] === board[j + 1][i]) {
+          cntCol++;
+          candies = Math.max(candies, cntCol);
+        } else cntCol = 1;
+
+        // 행 검사
+        if (board[i][j] === board[i][j + 1]) {
+          cntRow++;
+          candies = Math.max(candies, cntRow);
+        } else cntRow = 1;
+      }
+    }
+
+    return candies;
+  };
+
+  // 열 스왑 - 가로로 사탕 위치 변경
+  const swapColumn = (board, row, col) => {
+    const temp = board[row][col];
+    board[row][col] = board[row][col + 1];
+    board[row][col + 1] = temp;
+  };
+
+  // 행 스왑 - 세로로 사탕 위치 변경
+  const swapRow = (board, row, col) => {
+    const temp = board[row][col];
+    board[row][col] = board[row + 1][col];
+    board[row + 1][col] = temp;
+  };
+
+  // 교환하기 전에 최대 길이의 사탕을 구할 수 있는지 체크하기
+  maxCandies = checkBoard(board);
+
+  // 구한 사탕의 길이와 최대 길이를 비교해서 같다면 출력하고 함수 종료
+  if (maxCandies === n) {
+    console.log(maxCandies);
+    return;
+  }
+
+  // 보드를 순회하기
+  for (let i = 0; i < n; i++) {
+    if (isMaxCandies) break;
+
+    for (let j = 0; j < n - 1; j++) {
+      if (maxCandies === n) {
+        isMaxCandies = true;
+        break;
+      }
+
+      // 가로 스왑
+      if (board[i][j] !== board[i][j + 1]) {
+        swapColumn(board, i, j);
+        maxCandies = Math.max(maxCandies, checkBoard(board));
+        swapColumn(board, i, j);
+      }
+
+      // 세로 스왑
+      if (board[j][i] !== board[j + 1][i]) {
+        swapRow(board, j, i);
+        maxCandies = Math.max(maxCandies, checkBoard(board));
+        swapRow(board, j, i);
+      }
+    }
+  }
+  console.log(maxCandies);
+}
+
+Solution(Number(n), input);
+```
+
+중복되는 부분을 함수로 변경하고, 행검사, 열검사를 배열 인덱스를 조정해, 하나로 통합했다. 열과 행이 자꾸 헷갈려서 조금 오래 걸렸지만, 코드가 많이 깔끔해진 것 같다. 보드를 순회하는 부분도 함수로 만들면 더 깔끔할 수도 있지만, 이 문제의 메인 부분이라 Solution 함수의 주 역할로 놔두고 싶었다.
+
+핵심은 다음과 같다.
+
+1. 보드를 순회하면서 검사를 통해 최대 길이의 사탕 갯수를 반환하는 함수
+2. 보드를 순회하면서 서로 다른 인접한 사탕의 위치를 바꿔주고, 검사하고, 되돌리기
+
+<details><summary><b>이전 풀이</b></summary>
+<div markdown="2">
+
 브루트 포스에 대한 개념없이 문제를 풀기 시작했는데, 정말 난감했다. 지금까지 푼 문제들은 문제 해결 핵심 아이디어를 찾으면, 코드로 구현해내는 것은 어렵지 않은 일이었는데, 이건 쉽지 않았다.
 
 ### 코드
@@ -286,6 +392,8 @@ loop: for (let i = 0; i < n; i++) {
 가로로 위치를 변경하고, 다음은 세로로 위치를 변경하면서 위의 로직이 반복된다.
 
 어떻게 정답을 받아냈지만, 정말 코드가 깔끔하지 못하고 지저분한 것 같다. 중복되는 코드도 많고, `loop break`를 쓰는 것이 좋은 코드인지 모르겠다. 더 나은 코드를 찾아봐야 겠다.
+
+</div></details>
 
 </div>
 </details>
