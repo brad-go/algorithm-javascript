@@ -1,5 +1,5 @@
 const [n, ...input] = require("fs")
-  .readFileSync("./input.txt")
+  .readFileSync("./input5.txt")
   .toString()
   .trim()
   .split(/\s/)
@@ -10,7 +10,7 @@ function Solution(n, arr) {
   dp[0] = arr[0];
 
   for (let i = 1; i < n; i++) {
-    dp[i] = Math.max(dp[i - 1] + arr[i], arr[i - 1] + arr[i], arr[i]);
+    dp[i] = Math.max(dp[i - 1] + arr[i], arr[i]);
   }
 
   console.log(Math.max(...dp));
