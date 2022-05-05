@@ -51,46 +51,46 @@ function Solution(N, R) {
   // 부분집합 - 모든 숫자의 경우의 수
 
   // Solution 1
-  const subset = (cnt, start) => {
-    if (cnt === R) {
-      console.log(nums);
-      return;
-    }
-
-    for (let i = start; i < N; i++) {
-      if (selected[i]) continue;
-
-      selected[i] = true;
-      nums[cnt] = arr[i];
-      subset(cnt + 1, i);
-      selected[i] = false;
-    }
-  };
-
-  for (let i = 0; i <= N; i++) {
-    R = i;
-    const nums = new Array(R);
-    subset(0, 0);
-  }
-
-  // Solution 2
-  // const subset = (cnt) => {
-  //   if (cnt === N) {
-  //     let result = "";
-  //     for (let i = 0; i < N; i++) {
-  //       result += selected[i] ? arr[i] + " " : "X" + " ";
-  //     }
-  //     console.log(result);
+  // const subset = (cnt, start) => {
+  //   if (cnt === R) {
+  //     console.log(nums);
   //     return;
   //   }
 
-  //   selected[cnt] = true;
-  //   subset(cnt + 1);
-  //   selected[cnt] = false;
-  //   subset(cnt + 1);
+  //   for (let i = start; i < N; i++) {
+  //     if (selected[i]) continue;
+
+  //     selected[i] = true;
+  //     nums[cnt] = arr[i];
+  //     subset(cnt + 1, i);
+  //     selected[i] = false;
+  //   }
   // };
 
-  // subset(0);
+  // for (let i = 0; i <= N; i++) {
+  //   R = i;
+  //   const nums = new Array(R);
+  //   subset(0, 0);
+  // }
+
+  // Solution 2
+  const subset = (cnt) => {
+    if (cnt === N) {
+      let result = "";
+      for (let i = 0; i < N; i++) {
+        result += selected[i] ? arr[i] + " " : "X" + " ";
+      }
+      console.log(result);
+      return;
+    }
+
+    selected[cnt] = true;
+    subset(cnt + 1);
+    selected[cnt] = false;
+    subset(cnt + 1);
+  };
+
+  subset(0);
 }
 
 Solution(N, R);
