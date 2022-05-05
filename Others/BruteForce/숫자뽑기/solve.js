@@ -30,7 +30,28 @@ function Solution(N, R) {
   // perm(0);
 
   // 서로 다른 N개의 원소를 가지는 어떤 집합 에서 순서에 상관없이 R개의 원소를 선택하는 것
-  const comb = (cnt, start) => {
+  // const comb = (cnt, start) => {
+  // if (cnt === R) {
+  //   console.log(nums);
+  //   return;
+  // }
+
+  // for (let i = start; i < N; i++) {
+  //   if (selected[i]) continue;
+
+  //   selected[i] = true;
+  //   nums[cnt] = arr[i];
+  //   comb(cnt + 1, i);
+  //   selected[i] = false;
+  // }
+  // };
+
+  // comb(0, 0);
+
+  // 부분집합 - 모든 숫자의 경우의 수
+
+  // Solution 1
+  const subset = (cnt, start) => {
     if (cnt === R) {
       console.log(nums);
       return;
@@ -41,21 +62,16 @@ function Solution(N, R) {
 
       selected[i] = true;
       nums[cnt] = arr[i];
-      comb(cnt + 1, i);
+      subset(cnt + 1, i);
       selected[i] = false;
     }
   };
 
-  comb(0, 0);
-
-  // 부분집합 - 모든 숫자의 경우의 수
-
-  // Solution 1
-  // for (let i = 0; i <= N; i++) {
-  //   R = i;
-  //   const nums = new Array(R);
-  //   comb(0, 0);
-  // }
+  for (let i = 0; i <= N; i++) {
+    R = i;
+    const nums = new Array(R);
+    subset(0, 0);
+  }
 
   // Solution 2
   // const subset = (cnt) => {
