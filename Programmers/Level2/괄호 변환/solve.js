@@ -25,8 +25,7 @@ function Solution(p) {
 
     for (let i = 0; i < p.length; i++) {
       if (p[i] === brackets.open) stack.push(p[i]);
-      if (p[i] === brackets.close && stack[stack.length - 1] === brackets.open)
-        stack.pop();
+      else stack.pop();
     }
 
     return stack.length === 0;
@@ -46,13 +45,17 @@ function Solution(p) {
   const convertBrakets = (p) => {
     if (isCorrect(p)) return p;
 
-    let txt = "";
     const [u, v] = seperateBrakets(p);
 
     if (isCorrect(u)) {
       return u + convertBrakets(v);
     } else {
-      let u2 = u.slice(1, -1).split("").reverse().join("");
+      let u2 = u
+        .slice(1, -1)
+        .split("")
+        .map((el) => (el === brackets.open ? brackets.close : brackets.open))
+        .join("");
+
       let string = brackets.open + convertBrakets(v) + brackets.close + u2;
 
       return string;

@@ -106,8 +106,7 @@ function Solution(p) {
 
     for (let i = 0; i < p.length; i++) {
       if (p[i] === brackets.open) stack.push(p[i]);
-      if (p[i] === brackets.close && stack[stack.length - 1] === brackets.open)
-        stack.pop();
+      else stack.pop();
     }
 
     return stack.length === 0;
@@ -148,5 +147,114 @@ Solution(p);
 ```
 
 한참을 걸려서 문제를 이해하고 제출했는데, 12번부터 통과가 되지 않는다.
+
+### Solution
+
+정말 오래 걸려서 해답을 찾았다. 문제는 문제를 제대로 이해하지 못한 것이었다.
+문제에서 "괄호의 방향을 바꾸고"라는 말이 있는데, 이는 괄호 문자열의 순서를 뒤집으란 소리가 아니라
+말그대로 괄호들 각각의 방향을 바꾸라는 뜻이었다. 그 부분을 고치니 바로 해결되었다.
+
+기존의 괄호를 뒤집는 코드는 아래와 같다.
+
+```js
+let u2 = u.slice(1, -1).split("").reverse().join("");
+```
+
+위 코드를 다음과 같이 바꿔주었다.
+
+```js
+let u2 = u
+  .slice(1, -1)
+  .split("")
+  .map((el) => (el === brackets.open ? brackets.close : brackets.open))
+  .join("");
+```
+
+이 부분도 중요한 것 같다. u, v를 나눌 때, 둘다 균형잡힌 것인지 확인하고 분할을 하는 함수 부분이다.
+
+```js
+const seperateBrakets = (p) => {
+  for (let i = 0; i < p.length; i++) {
+    if (isBalanced(p.slice(0, i + 1)) && isBalanced(p.slice(i + 1))) {
+      return [p.slice(0, i + 1), p.slice(i + 1)];
+    }
+  }
+  return [p, ""];
+};
+```
+
+사실 이 문제는 다시 풀라면 풀 수 있을지 모르겠다. 정말 이게 돼? 왜 안돼? 하며 조마조마 하면서 문제를 풀었다.
+
+전체 코드는 다음과 같다.
+
+```js
+function Solution(p) {
+  const brackets = {
+    open: "(",
+    close: ")",
+  };
+
+  // 균형잡힌 괄호인지 체크하는 함수
+  const isBalanced = (p) => {
+    let open = 0;
+    let close = 0;
+
+    for (let i = 0; i < p.length; i++) {
+      if (p[i] === brackets.open) open++;
+      else close++;
+    }
+
+    return open === close;
+  };
+
+  // 올바른 괄호인지 체크하는 함수
+  const isCorrect = (p) => {
+    const stack = [];
+
+    for (let i = 0; i < p.length; i++) {
+      if (p[i] === brackets.open) stack.push(p[i]);
+      if (p[i] === brackets.close && stack[stack.length - 1] === brackets.open)
+        stack.pop();
+    }
+
+    return stack.length === 0;
+  };
+
+  // 괄호를 u, v로 나누기
+  const seperateBrakets = (p) => {
+    for (let i = 0; i < p.length; i++) {
+      if (isBalanced(p.slice(0, i + 1)) && isBalanced(p.slice(i + 1))) {
+        return [p.slice(0, i + 1), p.slice(i + 1)];
+      }
+    }
+    return [p, ""];
+  };
+
+  // 괄호가 올바르지 않다면 변환하기
+  const convertBrakets = (p) => {
+    if (isCorrect(p)) return p;
+
+    let txt = "";
+    const [u, v] = seperateBrakets(p);
+
+    if (isCorrect(u)) {
+      return u + convertBrakets(v);
+    } else {
+      let u2 = u
+        .slice(1, -1)
+        .split("")
+        .map((el) => (el === brackets.open ? brackets.close : brackets.open))
+        .join("");
+
+      let string = brackets.open + convertBrakets(v) + brackets.close + u2;
+
+      return string;
+    }
+  };
+
+  const answer = convertBrakets(p);
+  return answer;
+}
+```
 
 </div></details>
