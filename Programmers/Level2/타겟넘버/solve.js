@@ -12,14 +12,14 @@ const target = Number(input[1]);
 function Solution(numbers, target) {
   let answer = 0;
 
-  const dfs = (x, value) => {
-    if (x === numbers.length) {
-      if (value === target) answer++;
+  const dfs = (idx, sum) => {
+    if (idx === numbers.length) {
+      if (sum === target) answer++;
       return;
     }
 
-    dfs(x + 1, value + numbers[x]);
-    dfs(x + 1, value - numbers[x]);
+    dfs(idx + 1, sum + numbers[idx]);
+    dfs(idx + 1, sum - numbers[idx]);
   };
 
   dfs(0, 0);
