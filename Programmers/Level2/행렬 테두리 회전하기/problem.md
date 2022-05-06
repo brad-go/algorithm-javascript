@@ -58,17 +58,6 @@ rows x columns 크기인 행렬이 있습니다. 행렬에는 1부터 rows x col
 <details><summary><b>문제 풀이</b></summary><div markdown="1">
 
 ```js
-const [rows, columns, ...input] = require("fs")
-  .readFileSync("./input3.txt")
-  .toString()
-  .trim()
-  .split(/\s/)
-  .map((v) => +v);
-
-const queries = new Array(input.length / 4)
-  .fill()
-  .map((_, r) => new Array(4).fill().map((_, c) => input[c + r * 4]));
-
 function Solution(rows, columns, queries) {
   const matrix = Array.from(Array(rows), (_, r) =>
     Array(columns)
@@ -131,8 +120,58 @@ function Solution(rows, columns, queries) {
 
   console.log(answer);
 }
+```
 
-Solution(rows, columns, queries);
+테스트 케이스를 모두 통과하지만 실패한다. 제출하면 1, 2, 5번을 제외한 모든 테스트 케이스에서 실패한다. 반례를 찾아봐야 겠다.
+
+### Solution
+
+반례를 찾지 못하고 결국 다른 풀이 방법을 택했다.
+
+- 큐를 이용해서 행렬의 행과 열의 수들을 하나씩 큐에 넣어준다.
+- 시계 방향으로 돌리기 위해 마지막에서 하나 수를 꺼내 앞에 넣어준다.
+- 이 수들 중 가장 작은 수로 최소값을 업데이트 한다.
+- 다시 이 수들을 각 위치에 맞게 하나씩 큐에서 꺼내 넣어준다.
+- 쿼리의 수만큼 이를 반복하며 answer 배열에 최소값을 각각 넣어준다.
+
+```js
+function Solution(rows, columns, queries) {
+  const matrix = Array.from(Array(rows), (_, r) =>
+    Array(columns)
+      .fill()
+      .map((_, c) => c + r * columns + 1)
+  );
+
+  const answer = [];
+
+  const rotateMatrix = (matrix, query) => {
+    const [x1, y1, x2, y2] = query.map((pos) => pos - 1);
+
+    const queue = [];
+
+    for (let i = y1; i < y2; i++) queue.push(matrix[x1][i]);
+    for (let i = x1; i < x2; i++) queue.push(matrix[i][y2]);
+    for (let i = y2; i > y1; i--) queue.push(matrix[x2][i]);
+    for (let i = x2; i > x1; i--) queue.push(matrix[i][y1]);
+
+    queue.unshift(queue.pop());
+    const minValue = Math.min(...queue);
+
+    for (let i = y1; i < y2; i++) matrix[x1][i] = queue.shift();
+    for (let i = x1; i < x2; i++) matrix[i][y2] = queue.shift();
+    for (let i = y2; i > y1; i--) matrix[x2][i] = queue.shift();
+    for (let i = x2; i > x1; i--) matrix[i][y1] = queue.shift();
+
+    return minValue;
+  };
+
+  queries.forEach((query) => {
+    const minValue = rotateMatrix(matrix, query);
+    answer.push(minValue);
+  });
+
+  console.log(answer);
+}
 ```
 
 </div></details>
