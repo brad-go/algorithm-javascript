@@ -1,15 +1,11 @@
-const input = require("fs")
-  .readFileSync("./input.txt")
-  .toString()
-  .trim()
-  .split("");
+const input = require("fs").readFileSync("./input2.txt").toString().trim();
 
 function Solution(numbers) {
   // 소수 판별함수
   const isPrime = (num) => {
     if (num < 2) return false;
 
-    for (let i = 2; i < num; i++) {
+    for (let i = 2; i < Math.sqrt(num); i++) {
       if (num % i === 0) return false;
     }
 
