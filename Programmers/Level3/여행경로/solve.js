@@ -1,42 +1,40 @@
 const input = JSON.parse(
-  require("fs").readFileSync("./input2.txt").toString().trim()
+  require("fs").readFileSync("./input3.txt").toString().trim()
 );
 
 function Solution(tickets) {
-  const answer = [];
+  let answer = [];
+  const route = [];
+  const vistied = [];
 
-  const findTicket = (destination) => {
-    const currentTickets = [];
+  tickets.sort();
 
-    // 티켓 중에 입력받은 도착지가 출발지와 같은 경우 현재 티켓 후보에 추가
-    tickets.forEach((ticket) => {
-      if (ticket[0] === destination) currentTickets.push(ticket);
-    });
+  const travel = (stopover, count) => {
+    route.push(stopover);
 
-    return currentTickets.sort()[0];
+    if (count === tickets.length) {
+      answer = route;
+      return true;
+    }
+
+    for (let i = 0; i < tickets.length; i++) {
+      const [departure, destination] = tickets[i];
+
+      if (!vistied[i] && departure === stopover) {
+        vistied[i] = true;
+
+        if (travel(destination, count + 1)) return true;
+
+        vistied[i] = false;
+      }
+    }
+
+    route.pop();
+
+    return false;
   };
 
-  const useTicket = (ticket) => {
-    tickets.splice(tickets.indexOf(ticket), 1);
-  };
-
-  const travel = (destination) => {
-    if (tickets.length < 1) return;
-
-    // 현재 티켓 찾기
-    const currentTicket = findTicket(destination);
-    // 티켓 소모
-    useTicket(currentTicket);
-    // 경유지 추가
-    answer.push(currentTicket[1]);
-
-    travel(currentTicket[1]);
-  };
-
-  const departTicket = findTicket("ICN");
-  useTicket(departTicket);
-  answer.push(departTicket[0], departTicket[1]);
-  travel(departTicket[1]);
+  travel("ICN", 0);
 
   console.log(answer);
 }
