@@ -20,28 +20,43 @@ function Solution(V, M, edges) {
     graph[to].push(from);
   }
 
-  // bfs
-  const bfs = (start) => {
-    const q = [];
-    q.push(graph[start]);
-    visited[start] = 1;
+  // dfs
+  const dfs = (v) => {
+    if (visited[v]) return;
 
-    while (q.length) {
-      const candidates = q.shift();
-
-      for (let vertex of candidates) {
-        if (visited[vertex]) continue;
-
-        visited[vertex] = 1;
-        answer++;
-        q.push(graph[vertex]);
-      }
-    }
+    visited[v] = 1;
+    answer++;
+    graph[v].forEach((vertex) => {
+      if (!visited[vertex]) dfs(vertex);
+    });
   };
 
-  bfs(VIRUS_COM);
+  dfs(VIRUS_COM);
 
-  console.log(answer);
+  console.log(answer - 1);
+
+  // bfs
+  // const bfs = (start) => {
+  //   const q = [];
+  //   q.push(graph[start]);
+  //   visited[start] = 1;
+
+  //   while (q.length) {
+  //     const candidates = q.shift();
+
+  //     for (let vertex of candidates) {
+  //       if (visited[vertex]) continue;
+
+  //       visited[vertex] = 1;
+  //       answer++;
+  //       q.push(graph[vertex]);
+  //     }
+  //   }
+  // };
+
+  // bfs(VIRUS_COM);
+
+  // console.log(answer);
 }
 
 Solution(V, M, edges);
