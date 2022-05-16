@@ -1,5 +1,5 @@
 const input = require("fs")
-  .readFileSync("./input.txt")
+  .readFileSync("./input3.txt")
   .toString()
   .trim()
   .split("\n");
@@ -10,59 +10,135 @@ const [n, m, r] = input
   .map((v) => +v);
 const edges = input.map((edge) => edge.split(" ").map((v) => +v));
 
-class unDirectedGraph {
+class Node {
+  constructor(item) {
+    this.item = item;
+    this.next = null;
+  }
+}
+
+class LinkedList {
   constructor() {
-    this.edges = {};
+    this.head = null;
+    this.tail = null;
+    this.length = 0;
   }
 
-  addVertex(vertex) {
-    this.edges[vertex] = {};
+  size() {
+    return this.length;
   }
 
-  addEdge(vertex1, vertex2, weight = 1) {
-    this.edges[vertex1][vertex2] = weight;
-    this.edges[vertex2][vertex1] = weight;
+  isEmpty() {
+    return !this.length;
+  }
+
+  add(value) {
+    const node = new Node(value);
+
+    if (this.tail) this.tail.next = node;
+    else this.head = node;
+
+    this.tail = node;
+    this.length++;
+  }
+
+  remove() {
+    if (!this.tail) return;
+
+    const value = this.tail.item;
+    let current = this.head;
+    let i = 0;
+
+    while (i < this.length - 2) {
+      current = current.next;
+      i++;
+    }
+
+    current.next = null;
+    this.tail = current;
+    this.length--;
+
+    return value;
+  }
+
+  *iterator() {
+    if (!this.head) return;
+
+    let current = this.head;
+
+    while (current) {
+      yield current.value;
+      current = current.next;
+    }
+  }
+
+  [Symbol.iterator]() {
+    return this.iterator();
+  }
+}
+
+class Stack {
+  constructor() {
+    this.list = new LinkedList();
+  }
+
+  size() {
+    return this.list.size();
+  }
+
+  isEmpty() {
+    return this.list.isEmpty();
+  }
+
+  push(element) {
+    this.list.add(element);
+  }
+
+  pop() {
+    if (this.isEmpty()) return null;
+    return this.list.remove();
+  }
+
+  [Symbol.iterator]() {
+    return this.list.iterator();
   }
 }
 
 function Solution(n, m, r, edges) {
-  const graph = new unDirectedGraph();
-
-  for (let i = 0; i < n; i++) {
-    graph.addVertex(i + 1);
-  }
-
-  for (let i = 0; i < m; i++) {
-    const [v1, v2] = edges[i];
-    graph.addEdge(v1, v2, 1);
-  }
-
+  const graph = Array.from(Array(n + 1), () => []);
   const visited = new Array(n + 1).fill(0);
-  const answer = [];
+  const answer = new Array(n + 1).fill(0);
 
-  const dfs = (v) => {
-    if (visited[v]) return;
-
-    visited[v] = 1;
-    answer.push(v);
-
-    const nextNodes = Object.keys(graph.edges[v]).map((v) => +v);
-
-    for (let node of nextNodes) {
-      if (visited[node]) continue;
-      dfs(node);
-    }
-  };
-
-  dfs(r);
-
-  if (answer.length === 1) {
-    console.log(0);
-    return;
+  for (let edge of edges) {
+    const [key, value] = edge;
+    graph[key].push(value);
+    graph[value].push(key);
   }
 
   for (let i = 1; i <= n; i++) {
-    console.log(answer.indexOf(i) + 1);
+    graph[i].sort((a, b) => b - a);
+  }
+
+  const stack = new Stack();
+  stack.push(r);
+
+  let cnt = 1;
+  while (stack.size()) {
+    let currentNode = stack.pop();
+    visited[currentNode] = 1;
+
+    if (answer[currentNode] === 0) {
+      answer[currentNode] = cnt;
+      cnt++;
+    }
+
+    for (nextNode of graph[currentNode]) {
+      if (!visited[nextNode]) stack.push(nextNode);
+    }
+  }
+
+  for (let i = 1; i < answer.length; i++) {
+    console.log(answer[i]);
   }
 }
 
