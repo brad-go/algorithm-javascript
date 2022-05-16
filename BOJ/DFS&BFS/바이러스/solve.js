@@ -12,6 +12,7 @@ const VIRUS_COM = 1;
 function Solution(V, M, edges) {
   const graph = Array.from(Array(V + 1), () => []);
   const visited = new Array(V + 1).fill(0);
+  let answer = 0;
 
   for (let edge of edges) {
     const [from, to] = edge;
@@ -19,7 +20,8 @@ function Solution(V, M, edges) {
     graph[to].push(from);
   }
 
-  const spread = (start) => {
+  // bfs
+  const bfs = (start) => {
     const q = [];
     q.push(graph[start]);
     visited[start] = 1;
@@ -31,14 +33,14 @@ function Solution(V, M, edges) {
         if (visited[vertex]) continue;
 
         visited[vertex] = 1;
+        answer++;
         q.push(graph[vertex]);
       }
     }
   };
 
-  spread(VIRUS_COM);
+  bfs(VIRUS_COM);
 
-  const answer = visited.filter((v) => v === 1).length - 1;
   console.log(answer);
 }
 
