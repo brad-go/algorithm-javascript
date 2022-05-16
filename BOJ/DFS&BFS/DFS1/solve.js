@@ -4,6 +4,12 @@ const input = require("fs")
   .trim()
   .split("\n");
 
+const [n, m, r] = input
+  .shift()
+  .split(" ")
+  .map((v) => +v);
+const edges = input.map((edge) => edge.split(" ").map((v) => +v));
+
 class unDirectedGraph {
   constructor() {
     this.edges = {};
@@ -19,12 +25,7 @@ class unDirectedGraph {
   }
 }
 
-function Solution(input) {
-  const [n, m, r] = input
-    .shift()
-    .split(" ")
-    .map((v) => +v);
-  const edges = input.map((edge) => edge.split(" ").map((v) => +v));
+function Solution(n, m, r, edges) {
   const graph = new unDirectedGraph();
 
   for (let i = 0; i < n; i++) {
@@ -32,73 +33,37 @@ function Solution(input) {
   }
 
   for (let i = 0; i < m; i++) {
-    const [vertex1, vertex2] = edges[i];
-    graph.addEdge(vertex1, vertex2, 1);
+    const [v1, v2] = edges[i];
+    graph.addEdge(v1, v2, 1);
   }
 
-  const dfs = (v, visited) => {
-    visited[v] = true;
-    console.log(v >= n ? 0 : v);
+  const visited = new Array(n + 1).fill(0);
+  const answer = [];
 
-    const vertices = Object.keys(graph.edges[v]).map((v) => +v);
+  const dfs = (v) => {
+    if (visited[v]) return;
 
-    for (const n of vertices) {
-      if (!visited[n]) dfs(n, visited);
+    visited[v] = 1;
+    answer.push(v);
+
+    const nextNodes = Object.keys(graph.edges[v]).map((v) => +v);
+
+    for (let node of nextNodes) {
+      if (visited[node]) continue;
+      dfs(node);
     }
   };
 
-  const dfsStart = () => {
-    const visited = new Array(n + 1).fill(false);
+  dfs(r);
 
-    for (let i = 1; i <= n; i++) {
-      if (!visited[i]) dfs(i, visited);
-    }
-  };
+  if (answer.length === 1) {
+    console.log(0);
+    return;
+  }
 
-  dfsStart();
+  for (let i = 1; i <= n; i++) {
+    console.log(answer.indexOf(i) + 1);
+  }
 }
 
-Solution(input);
-
-// function Solution(input) {
-// const [n, m, r] = input
-//   .shift()
-//   .split(" ")
-//   .map((v) => +v);
-// const edges = input.map((edge) => edge.split(" ").map((v) => +v));
-// const graph = new unDirectedGraph();
-
-// for (let i = 0; i < n; i++) {
-//   graph.addVertex(i + 1);
-// }
-
-// for (let i = 0; i < m; i++) {
-//   const [vertex1, vertex2] = edges[i];
-//   graph.addEdge(vertex1, vertex2, 0);
-// }
-
-//   const answer = new Array(n).fill(0);
-//   let cnt = 1;
-
-//   const dfs = (r) => {
-// const vertices = Object.keys(graph.edges[r]).map((v) => +v);
-
-//     if (!answer[r - 1]) {
-//       answer[r - 1] = cnt;
-//       cnt++;
-//     }
-
-//     for (const vertex of vertices) {
-//       if (graph.edges[r][vertex]) continue;
-//       graph.edges[r][vertex] = 1;
-//       graph.edges[vertex][r] = 1;
-//       dfs(vertex);
-//     }
-//   };
-
-//   dfs(r);
-
-//   answer.forEach((a) => console.log(a));
-// }
-
-// Solution(input);
+Solution(n, m, r, edges);
