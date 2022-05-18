@@ -179,5 +179,68 @@ function Solution(N, map) {
 Solution(N, map);
 ```
 
+### Solution - DFS
+
+dfs 풀이 방식의 처음 접근 방식은 단지마다 다른 수로 방문 배열에 표시하고, 그 수를 각각 세어서 정답을 도출해내는 것이었는데, 이번에는 간단하게 전역변수 cnt를 이용했다.
+
+for문 안에 변수 cnt를 만들어 매개변수로 전달하면 제대로된 탈출조건을 설정하기가 애매해서 전역변수로 초기화한 후에 탐색이 끝날 때마다 0으로 다시 초기화해서 개수를 세는 방식으로 풀이했다.
+
+```js
+const [n, ...input] = require("fs")
+  .readFileSync("./input.txt")
+  .toString()
+  .trim()
+  .split("\n");
+const N = Number(n);
+const map = input.map((line) => line.split("").map((v) => +v));
+
+function Solution(N, map) {
+  const visited = Array.from(Array(N), () => Array(N).fill(0));
+  const DR = [0, 1, 0, -1];
+  const DC = [1, 0, -1, 0];
+  let cnt = 0;
+
+  const dfs = (r, c) => {
+    visited[r][c] = 1;
+    cnt++;
+
+    for (let i = 0; i < 4; i++) {
+      let nr = r + DR[i];
+      let nc = c + DC[i];
+
+      if (
+        nr < N &&
+        nc < N &&
+        nr >= 0 &&
+        nc >= 0 &&
+        map[nr][nc] &&
+        !visited[nr][nc]
+      ) {
+        dfs(nr, nc);
+      }
+    }
+  };
+
+  const answer = [];
+
+  for (let i = 0; i < N; i++) {
+    for (let j = 0; j < N; j++) {
+      if (!map[i][j] || visited[i][j]) continue;
+
+      dfs(i, j);
+      answer.push(cnt);
+      cnt = 0;
+    }
+  }
+
+  answer.sort((a, b) => a - b);
+
+  console.log(answer.length);
+  answer.forEach((v) => console.log(v));
+}
+
+Solution(N, map);
+```
+
 </div>
 </details>
