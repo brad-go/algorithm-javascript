@@ -111,5 +111,73 @@ function Solution(N, map) {
 Solution(N, map);
 ```
 
+### Solution - BFS
+
+DFS 방식이 안돼서 BFS 방식으로 풀이에 도전했다. BFS 방식에도 조금 애먹었는데, 단지의 개수를 세기 위해 cnt를 정의하고 한번 반복될 때마다 그것을 증가시켰다. 그러나 방문처리를 하는 위치가 잘못되어서 cnt의 개수가 이상하게 출력되어서 애먹었지만 해결했다.
+
+```js
+const [n, ...input] = require("fs")
+  .readFileSync("./input.txt")
+  .toString()
+  .trim()
+  .split("\n");
+const N = Number(n);
+const map = input.map((line) => line.split("").map((v) => +v));
+
+function Solution(N, map) {
+  const visited = Array.from(Array(N), () => Array(N).fill(0));
+  const DR = [0, 1, 0, -1];
+  const DC = [1, 0, -1, 0];
+
+  const bfs = (sr, sc) => {
+    const q = [];
+    let cnt = 1;
+
+    visited[sr][sc] = 1;
+    q.push([sr, sc]);
+
+    while (q.length) {
+      const [r, c] = q.shift();
+
+      for (let i = 0; i < 4; i++) {
+        let nr = r + DR[i];
+        let nc = c + DC[i];
+
+        if (
+          nr < N &&
+          nc < N &&
+          nr >= 0 &&
+          nc >= 0 &&
+          map[nr][nc] &&
+          !visited[nr][nc]
+        ) {
+          visited[nr][nc] = 1;
+          q.push([nr, nc]);
+          cnt++;
+        }
+      }
+    }
+    return cnt;
+  };
+
+  const answer = [];
+
+  for (let i = 0; i < N; i++) {
+    for (let j = 0; j < N; j++) {
+      if (!map[i][j] || visited[i][j]) continue;
+
+      answer.push(bfs(i, j));
+    }
+  }
+
+  answer.sort((a, b) => a - b);
+
+  console.log(answer.length);
+  answer.forEach((v) => console.log(v));
+}
+
+Solution(N, map);
+```
+
 </div>
 </details>

@@ -11,46 +11,50 @@ function Solution(N, map) {
   const DR = [0, 1, 0, -1];
   const DC = [1, 0, -1, 0];
 
-  const traverse = (r, c, color) => {
-    visited[r][c] = color;
+  const bfs = (sr, sc) => {
+    const q = [];
+    let cnt = 1;
 
-    for (let i = 0; i < 4; i++) {
-      let nr = r + DR[i];
-      let nc = c + DC[i];
+    visited[sr][sc] = 1;
+    q.push([sr, sc]);
 
-      if (
-        nr < N &&
-        nc < N &&
-        nr >= 0 &&
-        nc >= 0 &&
-        map[nr][nc] &&
-        !visited[nr][nc]
-      ) {
-        traverse(nr, nc, color);
+    while (q.length) {
+      const [r, c] = q.shift();
+
+      for (let i = 0; i < 4; i++) {
+        let nr = r + DR[i];
+        let nc = c + DC[i];
+
+        if (
+          nr < N &&
+          nc < N &&
+          nr >= 0 &&
+          nc >= 0 &&
+          map[nr][nc] &&
+          !visited[nr][nc]
+        ) {
+          visited[nr][nc] = 1;
+          q.push([nr, nc]);
+          cnt++;
+        }
       }
     }
+    return cnt;
   };
+
+  const answer = [];
 
   for (let i = 0; i < N; i++) {
     for (let j = 0; j < N; j++) {
       if (!map[i][j] || visited[i][j]) continue;
 
-      traverse(i, j, i + j);
+      answer.push(bfs(i, j));
     }
   }
 
-  const totalComplex = visited.flat(2).filter((v) => v);
-  const complex = [...new Set(totalComplex)];
+  answer.sort((a, b) => a - b);
 
-  const answer = new Array(complex.length + 1).fill(0);
-  answer[0] = complex.length;
-
-  for (let i = 0; i < totalComplex.length; i++) {
-    if (complex[0] === totalComplex[i]) answer[1]++;
-    if (complex[1] === totalComplex[i]) answer[2]++;
-    if (complex[2] === totalComplex[i]) answer[3]++;
-  }
-
+  console.log(answer.length);
   answer.forEach((v) => console.log(v));
 }
 
