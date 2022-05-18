@@ -1,4 +1,4 @@
-# 블랙잭 - 24479
+# DFS1 - 24479
 
 [문제 링크](https://www.acmicpc.net/problem/24479)
 
