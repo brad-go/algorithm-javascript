@@ -108,5 +108,109 @@
 <details><summary><b>문제 풀이</b></summary>
 <div markdown="1">
 
+시간초과가 나서 while문을 반복하는 내 로직에 문제가 있다고 생각하고, 문제를 푸느라 시간이 좀 걸렸다. 그러나 문제는 로직이 아닌 shift()나 push()연산에 걸리는 시간이 문제였던 것 같다.
+큐를 간단하게 직접 구현하고 문제를 풀었더니 통과할 수 있었다.
+
+### Solution
+
+```js
+const [nm, ...input] = require("fs")
+  .readFileSync("./input.txt")
+  .toString()
+  .trim()
+  .split("\n");
+
+const [n, m] = nm.split(" ").map(Number);
+const box = input.map((row) => row.split(" ").map(Number));
+
+class Node {
+  constructor(item) {
+    this.item = item;
+    this.next = null;
+  }
+}
+
+class Queue {
+  constructor() {
+    this.head = null;
+    this.tail = null;
+    this.length = 0;
+  }
+
+  enqueue(value) {
+    const node = new Node(value);
+    if (!this.head) {
+      this.head = node;
+    } else this.tail.next = node;
+
+    this.tail = node;
+    this.length++;
+  }
+
+  dequeue() {
+    if (!this.head) return null;
+
+    const node = this.head.item;
+    this.head = this.head.next;
+    this.length--;
+
+    return node;
+  }
+}
+
+function Solution(n, m, box) {
+  // 익은 토마토의 위치를 찾아서 큐에 넣어주기
+  const findRipeTomatoes = (box) => {
+    for (let i = 0; i < m; i++) {
+      for (let j = 0; j < n; j++) {
+        if (box[i][j] === 1) q.enqueue([i, j, 0]);
+      }
+    }
+  };
+
+  // bfs를 통해 토마토가 모두 익는데 걸리는 일 수 체크하기
+  const bfs = (box, q) => {
+    const DR = [0, 1, 0, -1];
+    const DC = [1, 0, -1, 0];
+    let day = 0;
+
+    while (q.length) {
+      const [r, c, dep] = q.dequeue();
+
+      for (let i = 0; i < 4; i++) {
+        let nr = r + DR[i];
+        let nc = c + DC[i];
+
+        if (nr < m && nc < n && nr >= 0 && nc >= 0 && !box[nr][nc]) {
+          box[nr][nc] = 1;
+          q.enqueue([nr, nc, dep + 1]);
+        }
+      }
+      day = dep;
+    }
+
+    return day;
+  };
+
+  // 안 익은 토마토가 박스에 존재하는지 확인하기
+  const checkUnRipeTomatoes = (box) => {
+    for (let i = 0; i < m; i++) {
+      if (box[i].includes(0)) return false;
+    }
+    return true;
+  };
+
+  const q = new Queue();
+  findRipeTomatoes(box, q);
+
+  const day = bfs(box, q);
+  const answer = checkUnRipeTomatoes(box) ? day : -1;
+
+  console.log(answer);
+}
+
+Solution(n, m, box);
+```
+
 </div>
 </details>

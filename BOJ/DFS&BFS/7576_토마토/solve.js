@@ -1,82 +1,93 @@
-const [n, m, ...input] = require("fs")
-  .readFileSync("./input5.txt")
+const [nm, ...input] = require("fs")
+  .readFileSync("./input.txt")
   .toString()
   .trim()
-  .split(/\s/)
-  .map((v) => +v);
-const box = Array.from(Array(m), (_, row) =>
-  Array(n)
-    .fill()
-    .map((_, col) => input[col + row * n])
-);
+  .split("\n");
+
+const [n, m] = nm.split(" ").map(Number);
+const box = input.map((row) => row.split(" ").map(Number));
+
+class Node {
+  constructor(item) {
+    this.item = item;
+    this.next = null;
+  }
+}
+
+class Queue {
+  constructor() {
+    this.head = null;
+    this.tail = null;
+    this.length = 0;
+  }
+
+  enqueue(value) {
+    const node = new Node(value);
+    if (!this.head) {
+      this.head = node;
+    } else this.tail.next = node;
+
+    this.tail = node;
+    this.length++;
+  }
+
+  dequeue() {
+    if (!this.head) return null;
+
+    const node = this.head.item;
+    this.head = this.head.next;
+    this.length--;
+
+    return node;
+  }
+}
 
 function Solution(n, m, box) {
-  const visited = Array.from(Array(m), () => Array(n).fill(0));
-  const DR = [0, 1, 0, -1];
-  const DC = [1, 0, -1, 0];
-
-  let day = 0;
-
-  const bfs = (poses, depth) => {
-    const q = [];
-
-    for (let pos of poses) {
-      const [sr, sc] = pos;
-      visited[sr][sc] = 1;
-      box[sr][sc] = 1;
-      q.push([sr, sc, depth]);
+  const findRipeTomatoes = (box) => {
+    for (let i = 0; i < m; i++) {
+      for (let j = 0; j < n; j++) {
+        if (box[i][j] === 1) q.enqueue([i, j, 0]);
+      }
     }
+  };
+
+  const bfs = (box, q) => {
+    const DR = [0, 1, 0, -1];
+    const DC = [1, 0, -1, 0];
+    let day = 0;
 
     while (q.length) {
-      const [r, c, dep] = q.shift();
-
-      if (!q.length) day = Math.max(day, dep);
+      const [r, c, dep] = q.dequeue();
 
       for (let i = 0; i < 4; i++) {
         let nr = r + DR[i];
         let nc = c + DC[i];
 
-        if (
-          nr < m &&
-          nc < n &&
-          nr >= 0 &&
-          nc >= 0 &&
-          box[nr][nc] === 0 &&
-          !visited[nr][nc]
-        ) {
-          visited[nr][nc] = 1;
+        if (nr < m && nc < n && nr >= 0 && nc >= 0 && !box[nr][nc]) {
           box[nr][nc] = 1;
-          q.push([nr, nc, dep + 1]);
+          q.enqueue([nr, nc, dep + 1]);
         }
       }
-    }
-  };
-
-  const findRipeTomatoes = (box) => {
-    const ripeTomatoesPos = [];
-
-    for (let i = 0; i < m; i++) {
-      for (let j = 0; j < n; j++) {
-        if (box[i][j] === 1) ripeTomatoesPos.push([i, j]);
-      }
+      day = dep;
     }
 
-    return ripeTomatoesPos;
+    return day;
   };
 
   const checkUnRipeTomatoes = (box) => {
     for (let i = 0; i < m; i++) {
-      for (let j = 0; j < n; j++) {
-        if (box[i][j] === 0) return false;
-      }
+      if (box[i].includes(0)) return false;
     }
     return true;
   };
 
-  const ripeTomatoesPos = findRipeTomatoes(box);
-  bfs(ripeTomatoesPos, 0);
+  const q = new Queue();
+  findRipeTomatoes(box, q);
 
-  console.log(checkUnRipeTomatoes(box) ? day : -1);
+  const day = bfs(box, q);
+  const answer = checkUnRipeTomatoes(box) ? day : -1;
+
+  console.log(answer);
 }
 
 Solution(n, m, box);
