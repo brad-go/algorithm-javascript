@@ -36,6 +36,8 @@
 <div markdown="1">
 <br />
 
+### Solution - BFS
+
 처음에 문제를 보고 어떻게 풀어야 하나 걱정했었다. dp 방식으로 풀어야 하나 하다가, 그래프를 떠올리고 아래로 하나씩 그려보니 생각보다 쉽게 풀 수 있을 것 같았다.
 
 BFS, 큐를 이용해서 문제를 풀이했다. 큐에 [시작 위치, 0]을 넣고 선언해주고, 큐가 비기 전까지 다음을 반복한다.
@@ -122,6 +124,82 @@ function Solution(START, END) {
 }
 
 Solution(N, K);
+```
+
+### Solution - DP
+
+문제를 보고 dp로도 불 수 있을 것 같아서 도전해봤다. 우선 출력해야 할 위치인 K값만큼 dp 배열을 선언해준다.
+
+```js
+const dp = new Array(END + 1).fill(0);
+```
+
+수빈이의 위치인 N전까지는 모두 -1연산 말고는 최선의 방법이 없으므로 수빈의 위치에서 i만큼 빼준다. 참고로 수빈이의 위치와 동생의 위치가 같다면 찾는 시간이 걸리지 않으므로 0으로 초기화 했다.
+
+```js
+for (let i = 0; i < START; i++) {
+  dp[i] = START - i;
+}
+```
+
+동생의 위치가 더 크다면, 수빈이의 위치 + 1부터 동생의 위치까지 아래의 식을 통해 dp 배열을 구할 수 있다.
+
+```js
+for (let i = START + 1; i <= END; i++) {
+  const PREV = dp[i - 1];
+  const HALF_L = dp[i / 2];
+  const HALF_R = dp[(i + 1) / 2];
+
+  // 짝수일 경우 절반에서 한번 움직이는 것
+  // 이전 값에서 + 1 해준 값과 절반에서 + 1 해준 값 중 더 작은 것을 저장해준다.
+  if (i % 2 === 0) {
+    dp[i] = Math.min(PREV + 1, HALF_L + 1);
+    continue;
+  }
+
+  // 홀수일 경우
+  // i / 2와 (i + 1) / 2 중에 작은 값을 택해서 이전값에서 +1 한 것과 비교해서 저장해준다.
+  // 예를 들어 11일 경우 5나 6중 두배 한 값에서 +1 혹은 -1 연산을 할 수 있다.
+  if (HALF_L < HALF_R) dp[i] = Math.min(PREV + 1, HALF_L + 2);
+  else dp[i] = Math.min(PREV + 1, HALF_R + 2);
+}
+```
+
+#### 전체 코드
+
+```js
+const [N, K] = require("fs")
+  .readFileSync("./input3.txt")
+  .toString()
+  .trim()
+  .split(" ")
+  .map((v) => +v);
+
+function Solution(START, END) {
+  if (START > END) return console.log(START - END);
+
+  const dp = new Array(END + 1).fill(0);
+
+  for (let i = 0; i < START; i++) {
+    dp[i] = START - i;
+  }
+
+  for (let i = START + 1; i <= END; i++) {
+    const PREV = dp[i - 1];
+    const HALF_L = dp[i / 2];
+    const HALF_R = dp[(i + 1) / 2];
+
+    if (i % 2 === 0) {
+      dp[i] = Math.min(PREV + 1, HALF_L + 1);
+      continue;
+    }
+
+    if (HALF_L < HALF_R) dp[i] = Math.min(PREV + 1, HALF_L + 2);
+    else dp[i] = Math.min(PREV + 1, HALF_R + 2);
+  }
+
+  console.log(dp[END]);
+}
 ```
 
 </div>
