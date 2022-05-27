@@ -1,74 +1,39 @@
-const input = require("fs")
-  .readFileSync("./input3.txt")
+const [nmr, ...input] = require("fs")
+  .readFileSync("./input.txt")
   .toString()
   .trim()
   .split("\n");
 
-const [n, m, r] = input
-  .shift()
-  .split(" ")
-  .map((v) => +v);
-const edges = input.map((edge) => edge.split(" ").map((v) => +v));
-
-class Node {
-  constructor(item) {
-    this.item = item;
-    this.next = null;
-  }
-}
-
-class LinkedList {
-  constructor() {
-    this.head = null;
-    this.tail = null;
+class ArrayList {
+  constructor(size = 0) {
+    this.array = new Array(size).fill(0);
     this.length = 0;
   }
 
-  size() {
-    return this.length;
-  }
-
-  isEmpty() {
-    return !this.length;
-  }
-
   add(value) {
-    const node = new Node(value);
-
-    if (this.tail) this.tail.next = node;
-    else this.head = node;
-
-    this.tail = node;
+    this.array[this.length] = value;
     this.length++;
   }
 
-  remove() {
-    if (!this.tail) return;
+  get(index) {
+    if (index < 0 || index > this.length) return -1;
 
-    const value = this.tail.item;
-    let current = this.head;
-    let i = 0;
+    return this.array[index];
+  }
 
-    while (i < this.length - 2) {
-      current = current.next;
-      i++;
-    }
-
-    current.next = null;
-    this.tail = current;
-    this.length--;
-
-    return value;
+  sort() {
+    this.array.sort((a, b) => b - a);
   }
 
   *iterator() {
-    if (!this.head) return;
+    if (!this.length) return;
 
-    let current = this.head;
+    let idx = 0;
+    let current = this.array[idx];
 
     while (current) {
-      yield current.value;
-      current = current.next;
+      yield current;
+      current = this.array[++idx];
     }
   }
 
@@ -77,69 +42,161 @@ class LinkedList {
   }
 }
 
+class Node {
+  constructor(item) {
+    this.item = item;
+    this.prev = null;
+  }
+}
+
 class Stack {
   constructor() {
-    this.list = new LinkedList();
+    this.top = null;
+    this.length = 0;
   }
 
-  size() {
-    return this.list.size();
-  }
+  push(item) {
+    const node = new Node(item);
 
-  isEmpty() {
-    return this.list.isEmpty();
-  }
+    if (this.length) node.prev = this.top;
 
-  push(element) {
-    this.list.add(element);
+    this.top = node;
+    this.length++;
   }
 
   pop() {
-    if (this.isEmpty()) return null;
-    return this.list.remove();
-  }
+    if (!this.length) return null;
 
-  [Symbol.iterator]() {
-    return this.list.iterator();
+    const node = this.top;
+    this.top = this.top.prev;
+    this.length--;
+
+    return node.item;
   }
 }
 
-function Solution(n, m, r, edges) {
-  const graph = Array.from(Array(n + 1), () => []);
-  const visited = new Array(n + 1).fill(0);
-  const answer = new Array(n + 1).fill(0);
+const [N, M, R] = nmr.split(" ").map(Number);
+const edges = input.map((edge) => edge.split(" ").map(Number));
+
+function Solution(N, M, R, edges) {
+  const graph = new ArrayList(N + 1);
+
+  for (let i = 1; i <= N; i++) graph.array[i] = new ArrayList();
+
+  const visited = new Array(N + 1).fill(false);
+  const answer = new Array(N + 1).fill(0);
 
   for (let edge of edges) {
-    const [key, value] = edge;
-    graph[key].push(value);
-    graph[value].push(key);
+    const [from, to] = edge;
+
+    graph.array[from].add(to);
+    graph.array[to].add(from);
   }
 
-  for (let i = 1; i <= n; i++) {
-    graph[i].sort((a, b) => b - a);
-  }
+  for (let i = 1; i <= N; i++) graph.array[i].sort();
 
+  let idx = 1;
   const stack = new Stack();
-  stack.push(r);
+  visited[R] = 1;
+  stack.push(R);
 
-  let cnt = 1;
-  while (stack.size()) {
-    let currentNode = stack.pop();
-    visited[currentNode] = 1;
+  while (stack.length) {
+    const current = stack.pop();
+    visited[current] = true;
 
-    if (answer[currentNode] === 0) {
-      answer[currentNode] = cnt;
-      cnt++;
-    }
+    if (!answer[current]) answer[current] = idx++;
 
-    for (nextNode of graph[currentNode]) {
-      if (!visited[nextNode]) stack.push(nextNode);
+    for (let next of graph.array[current]) {
+      if (visited[next]) continue;
+
+      stack.push(next);
     }
   }
 
-  for (let i = 1; i < answer.length; i++) {
-    console.log(answer[i]);
-  }
+  for (let i = 1; i < answer.length; i++) console.log(answer[i]);
 }
 
-Solution(n, m, r, edges);
+Solution(N, M, R, edges);
+
+// Sol 2
+
+// const [N, M, R] = nmr.split(" ").map(Number);
+// const edges = input.map((edge) => edge.split(" ").map(Number));
+
+// function Solution(N, M, R, edges) {
+//   const graph = new ArrayList(N + 1);
+
+//   for (let i = 1; i <= N; i++) graph.array[i] = new ArrayList();
+
+//   const visited = new Array(N + 1).fill(false);
+//   const answer = new Array(N + 1).fill(0);
+
+//   for (let edge of edges) {
+//     const [from, to] = edge;
+
+//     graph.array[from].add(to);
+//     graph.array[to].add(from);
+//   }
+
+//   for (let i = 1; i <= N; i++) graph.array[i].sort();
+
+//   let idx = 1;
+//   visited[R] = true;
+
+//   const dfs = (current) => {
+//     answer[current] = idx++;
+
+//     for (let vertex of graph.array[current]) {
+//       if (visited[vertex]) continue;
+
+//       visited[vertex] = true;
+//       dfs(vertex);
+//     }
+//   };
+
+//   dfs(R);
+
+//   for (let i = 1; i < answer.length; i++) console.log(answer[i]);
+// }
+
+// Solution(N, M, R, edges);
+
+// Sol 1
+
+// const [N, M, R] = nmr.split(" ").map(Number);
+// const edges = input.map((edge) => edge.split(" ").map(Number));
+
+// function Solution(N, M, R, edges) {
+//   const graph = Array.from(Array(N + 1), () => []);
+//   const visited = new Array(N + 1).fill(false);
+//   const answer = new Array(N + 1).fill(0);
+
+//   for (let edge of edges) {
+//     const [from, to] = edge;
+
+//     graph[from].push(to);
+//     graph[to].push(from);
+//   }
+
+//   for (let i = 1; i <= N; i++) graph[i].sort((a, b) => a - b);
+
+//   let idx = 1;
+//   visited[R] = true;
+
+//   const dfs = (current) => {
+//     answer[current] = idx++;
+
+//     for (let vertex of graph[current]) {
+//       if (visited[vertex]) continue;
+
+//       visited[vertex] = true;
+//       dfs(vertex);
+//     }
+//   };
+
+//   dfs(R);
+
+//   for (let i = 1; i < answer.length; i++) console.log(answer[i]);
+// }
+
+// Solution(N, M, R, edges);
