@@ -15,6 +15,23 @@ function Solution(k, input) {
     }
   };
 
+  const bfs = (vertex, graph, visited) => {
+    const q = [vertex];
+    visited[vertex] = 1;
+
+    while (q.length) {
+      const current = q.shift();
+
+      for (let v of graph[current]) {
+        if (visited[v]) continue;
+
+        if (visited[current] === 1) visited[v] = -1;
+        else visited[v] = 1;
+        q.push([v]);
+      }
+    }
+  };
+
   const checkGraph = (V, graph, visited) => {
     for (let i = 1; i <= V; i++) {
       for (let v of graph[i]) {
@@ -39,7 +56,8 @@ function Solution(k, input) {
 
     for (let j = 1; j <= V; j++) {
       if (visited[j]) continue;
-      dfs(j, graph, visited, 1);
+      // dfs(j, graph, visited, 1);
+      bfs(j, graph, visited);
     }
 
     let isBipartite = checkGraph(V, graph, visited);
