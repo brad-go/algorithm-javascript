@@ -40,5 +40,78 @@
 <details><summary><b>문제 풀이</b></summary>
 <div markdown="1">
 
+어려운 문제였다. 트리의 지름을 구하기 위한 개념을 이해해야 했다.
+
+[참고 링크](https://blog.myungwoo.kr/112)
+
+트리의 지름이란 단어로 구글에 검색하니 위 블로그가 나왔다. 정말 꼼꼼히 잘 설명해주신 것 같은데,
+나는 이해가 잘 안됐다.
+
+위 글을 여러번 보고 내 나름대로 문제를 고민하다가 트리의 지름이란 건 다음과 같이 구할 수 있다고 생각했다.
+
+우선 그래프 탐색 때와 같이 간선들의 정보를 입력받아준다. 그리고 각 정점마다 연결된 정점들이 있을 것이다. 연결된 정점들 중 가장 거리가 긴 것을 고르고, 그 다음 정점에서 가장 거리가 긴 것을 고르고... 이런식으로 반복하면 **가장 먼 두 정점 사이의 거리**인 트리의 지름을 구할 수 있다고 생각했다.
+
+처음에는 각 정점에서 최장 거리를 구하고 그 거리중 최대값을 구하는 방식으로 문제를 풀이하려고 했는데, 메모리초과가 발생했다. 그래서 아래와 같은 방식으로 문제를 풀이하기로 결정했다.
+
+1. dfs를 통해 임의의 정점(x) 하나에서 가장 먼 정점(y)을 구한다.
+2. dfs를 통해 구한 정점(y)으로부터 가장 먼 정점(z)까지의 거리를 구한다.
+
+=> 위의 참고 글에서 볼 수 있듯이 트리의 지름은 두번째 dfs를 통해 구할 수 있는 거리(정점 y와 정점 z를 연결하는 경로)가 된다.
+
+트리의 특성을 생각해 보면 모든 정점은 사이클이 없이 연결이 되어 있고, 한 정점에서 다른 정점으로 가는 경로는 유일하다. 그래서 가장 멀리있는 두 정점의 경로는 항상 유일하다. 또한 한 정점에서 가장 먼 정점으로 가는 경로와 가장 먼 정점 사이의 경로는 항상 일부가 겹친다.
+
+```js
+const [v, ...input] = require("fs")
+  .readFileSync("./input.txt")
+  .toString()
+  .trim()
+  .split("\n");
+
+const V = Number(v);
+const edges = input.map((edge) => edge.split(" ").map(Number));
+
+function Solution(V, edges) {
+  const tree = new Array(V + 1).fill().map(() => []);
+
+  // 단방향이어서 굳이 반대로 연결해줄 필요가 없었다.
+  edges.forEach((edge, idx) => {
+    const [node, ...nextInfo] = edge;
+    for (let i = 0; i < nextInfo.length - 1; i += 2) {
+      tree[node].push([nextInfo[i], nextInfo[i + 1]]);
+    }
+  });
+
+  let visited = new Array(V + 1).fill(0);
+  // 현재 정점으로부터 가정 먼 거리의 정점과 그 거리를 저장할 객체
+  let max = { node: 0, dist: 0 };
+
+  const dfs = (node, dist) => {
+    visited[node] = 1;
+    // 거리가 최대라면 노드, 거리 값 갱신
+    if (max.dist < dist) max = { node, dist };
+
+    // 해당 정점에서 연결된 각 정점들에서 현재 거리를 더해 탐색을 진행
+    for (let [nextNode, nextDist] of tree[node]) {
+      if (visited[nextNode]) continue;
+      dfs(nextNode, dist + nextDist);
+    }
+  };
+
+  // 임의의 노드(1번 노드)에서 탐색 시작 - 가장 먼 거리의 노드를 구할 수 있다.
+  dfs(1, 0);
+
+  // 초기화
+  max.dist = 0;
+  visited = new Array(V + 1).fill(0);
+
+  // 1번 노드에서 최대 거리인 노드 max.node에서 탐색 시작
+  dfs(max.node, 0);
+
+  console.log(max.dist);
+}
+
+Solution(V, edges);
+```
+
 </div>
 </details>

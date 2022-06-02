@@ -1,5 +1,5 @@
 const [v, ...input] = require("fs")
-  .readFileSync("./input2.txt")
+  .readFileSync("./input.txt")
   .toString()
   .trim()
   .split("\n");
@@ -9,40 +9,36 @@ const edges = input.map((edge) => edge.split(" ").map(Number));
 
 function Solution(V, edges) {
   const tree = new Array(V + 1).fill().map(() => []);
-  const visited = new Array(V + 1).fill(0);
 
   edges.forEach((edge, idx) => {
-    const from = edge[0];
-    let to;
-    let len;
-    let i = 1;
-
-    while (edge[i] !== -1) {
-      to = edge[i];
-      len = edge[i + 1];
-      i += 2;
+    const [node, ...nextInfo] = edge;
+    for (let i = 0; i < nextInfo.length - 1; i += 2) {
+      tree[node].push([nextInfo[i], nextInfo[i + 1]]);
     }
-
-    tree[from].push([to, len]);
-    tree[to].push([from, len]);
   });
 
-  let answer = 0;
+  let visited = new Array(V + 1).fill(0);
+  let max = { node: 0, dist: 0 };
 
-  const dfs = (v, visited, diameter) => {
-    if (visited[v]) return;
+  const dfs = (node, dist) => {
+    visited[node] = 1;
 
-    visited[v] = 1;
-    answer = Math.max(answer, diameter);
+    if (max.dist < dist) max = { node, dist };
 
-    for (const [vertex, len] of tree[v]) {
-      dfs(vertex, visited, diameter + len);
+    for (let [nextNode, nextDist] of tree[node]) {
+      if (visited[nextNode]) continue;
+      dfs(nextNode, dist + nextDist);
     }
   };
 
-  dfs(1, visited, 0);
+  dfs(1, 0);
 
-  console.log(answer);
+  max.dist = 0;
+  visited = new Array(V + 1).fill(0);
+
+  dfs(max.node, 0);
+
+  console.log(max.dist);
 }
 
 Solution(V, edges);
