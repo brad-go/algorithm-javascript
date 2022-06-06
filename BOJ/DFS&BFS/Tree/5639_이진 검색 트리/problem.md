@@ -59,6 +59,8 @@
 <details><summary><b>문제 풀이</b></summary>
 <div markdown="1">
 
+### Solution - 트리 구현
+
 이진 검색 트리를 구현해서 문제를 쉽게 풀 수 있었다.
 
 1. 입력받은 preorder 배열의 각 값들을 하나씩 트리에 넣는다.
@@ -134,6 +136,62 @@ function Solution(preorder) {
   preorder.forEach((value) => tree.insert(value));
 
   tree.postorder();
+}
+
+Solution(input);
+```
+
+### Solution - 스택을 이용한 풀이
+
+스택을 이용해서 다음과 같이 풀 수 있다.
+
+1. 트리 전위 순회 결과를 루트, 왼쪽 서브트리, 오른쪽 서브트리로 나눈다.
+2. 왼쪽 서브트리에 대해 이 과정을 반복
+3. 오른쪽 서브 트리에 대해 이 과정을 반복
+4. 서브 트리가 없다면 루트를 제외한 나머지를 서브 트리로 간주하고 과정 반복
+
+```js
+const input = require("fs")
+  .readFileSync("./input.txt")
+  .toString()
+  .trim()
+  .split("\n")
+  .map(Number);
+
+function Solution(preorder) {
+  // 전위 순회 결과 배열의 시작, 끝 인덱스 삽입
+  const result = [];
+  const stack = [[0, preorder.length - 1]];
+
+  while (stack.length) {
+    const [start, end] = stack.pop();
+
+    if (start > end) continue;
+
+    // 루트보다 큰 숫자들 중 가장 앞 숫자가 오른쪽 서브 트리의 루트
+    let pivot;
+    for (let i = start + 1; i <= end; i++) {
+      if (preorder[i] < preorder[start]) continue;
+      pivot = i;
+      break;
+    }
+
+    // 오른쪽 서브트리가 존재한다면
+    if (pivot) {
+      // 왼쪽 서브 트리의 시작 끝, 인덱스 삽입
+      stack.push([start + 1, pivot - 1]);
+      // 오른쪽 서브 트리의 시작, 끝 인덱스 삽입
+      stack.push([pivot, end]);
+    } else {
+      // 루트를 제외한 나머지 숫자들 삽입
+      stack.push([start + 1, end]);
+    }
+
+    // 루트 삽입
+    result.unshift(input[start]);
+  }
+
+  console.log(result.join(" "));
 }
 
 Solution(input);
