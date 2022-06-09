@@ -250,235 +250,344 @@ N×N 크기의 격자 중 M개의 칸에 상어가 한 마리씩 들어 있다. 
 
 <br />
 
-### Solution
+### 의사 코드
 
-정말 오래오래 걸려서 푼 문제이다. 중간에 참고도 했지만, 기본적인 로직은 같았고, 어떤 것이 문제인지 찾을 수가 없어서 봤었다. JavaScript로 해설된 문제가 없어서 결국 간점적인 참고만 하게 되었다.
+1. BFS를 통해서 상어의 이동이 시작된다.
+2. 큐에는 상어가 있는 공간(map), 현재 상어들의 상태(sharks), 시간(time)이 들어간다.
+3. 큐가 빌 때까지 아래의 과정을 반복한다.
+   [ while 문 ]
+   1. 큐에서 공간, 상어들, 시간을 꺼낸다.
+   2. 상어들의 수만큼 아래의 과정을 반복한다.
+      [ for 문 ]
+      1. 상어가 쫓겨났는지 확인한다.
+      2. 상어가 갈 수 있는지 후보지로 갈 수 있는 방향들(candidates), 자신의 냄새를 남긴 공간으로 갈 수 있는 방향들(ownSmellPlaces)를 빈 배열로 선언한다.
+      3. 현재 상어가 보고 있는 방향의 우선 순위 방향(priority[dir])에 따라 아래를 반복한다.
+         [ 2차 for 문 ]
+         1. 다음 상어의 방향 값을 구한다. (nx, ny)
+         2. 상어들이 있는 공간의 범위를 벗어난다면 다음 방향을 체크한다. (continue)
+         3. 갈수 있는 곳이 있다면 그곳으로 갈 수 있는 방향을 후보지 배열에 추가한다.
+         4. 갈 수 있는 곳이 자신의 냄새가 있는 곳 뿐이라면, 그곳으로 갈 수 있는 방향을 자신의 냄새를 남긴 공간에 추가한다.
+      4. 후보지로 갈 수 있는 방향들(candidates)이 있다면 상어의 상어의 우선 순위 방향 중 후보지로 갈 수 있는 방향이 있다면 다음 방향으로 설정해준다.
+      5. 후보지로 갈 수 있는 방향들이 없다면 자신의 냄새를 남긴 공간으로 갈 수 있는 방향들(ownSmellPlaces)이 담긴 것 중에서 방향을 찾아 다음 방향으로 설정한다.
+      6. 공간의 상태를 나타내는 배열에서 현재 위치에 상어가 없다고 표시한다.
+      7. 상어가 바라볼 방향과 다음으로 이동할 위치값을 설정해준다.
+   3. 이동할 위치에 다른 상어가 없다면 상어의 냄새를 남긴다.
+   4. 이동할 위치에 다른 상어가 있다면 현재 상어의 번호보다 기존에 위치한 상어의 번호가 크다면 자신의 냄새를 남기고 다른 상어를 쫓아낸다.
+   5. 이동할 위치에 다른 상어가 있을 때 자신이 그 상어보다 번호가 크다면 쫓겨난다.
+   6. 이동할 위치가 자신의 냄새가 남아있는 곳이라면 자신의 냄새를 새로 남긴다.
+   7. 상어가 위치하지 않고, 냄새가 남아있는 공간들의 냄새를 1씩 줄여준다.
+   8. 현재 남아있는 상어를 확인하고, 1번 상어만 남았다면 1번 상어만 남기까지의 시간을 출력하고 종료
+   9. 1000초가 넘어도, 다른 상어가 공간에 남아있다면 -1을 출력하고 종료
+   10. 둘다 아니라면 큐에 다시 현재 상태의 공간, 상어들, 시간 + 1을 넣어주고 반복
 
-#### 핵심 Trouble Shooting
-
-##### 1. 배열의 복사
-
-기존에 작성했던 코드보다 이 코드가 더 깔끔해서 참고한 코드 방식대로 코드를 리팩토링했는데, 왜 안 풀렸는지 이유를 찾은 지금 원래 코드에서도 풀 수 있었을 것을... 하고 아쉬움이 남는다.
-
-문제를 풀이할 로직을 잘못 세운 것이 아니라 문제는 **2차원 배열과 객체 배열의 깊은 복사 문제**였다.
+### 상어 클래스 생성
 
 ```js
-// 객체 배열 깊은 복사
+class Shark {
+  constructor(id) {
+    this.id = id;
+    this.x = null;
+    this.y = null;
+    this.dir = null;
+    this.priority = new Array(4).fill(null);
+    this.isDriveAway = false;
+  }
 
-// 기존 복사 방식
-const newFishes = [...fishes];
+  setPosition(x, y) {
+    this.x = x;
+    this.y = y;
+  }
 
-// 1차 수정
-const newFishes = fishes.map((fish) => ({ ...fish }));
+  setDir(dir) {
+    this.dir = dir;
+  }
 
-// 2차 수정
-const newFishes = fishes.map(
-  ({ x, y, id, dir, isAlive }) => new Fish(x, y, id, dir, isAlive)
+  setPriority(idx, direction) {
+    this.priority[idx] = direction;
+  }
+
+  findNextDir(candidates) {
+    // 후보지 중에 갈 수 있는 곳이 있다면 방향을 반환
+    for (let i = 0; i < 4; i++) {
+      // 현재 바라보고 있는 방향에서 이동할 우선 순위 방향 중 후보지로 갈 방향에 포함되어 있다면 그 방향을 반환
+      if (candidates.includes(this.priority[this.dir][i]))
+        return this.priority[this.dir][i];
+    }
+    // 없다면 0 반환
+    return 0;
+  }
+
+  driveAway() {
+    this.isDriveAway = true;
+  }
+}
+```
+
+### 공간 생성
+
+다른 분들은 어떻게 풀었는지 모르겠지만, 나는 3차원 배열을 이용해서 문제를 해결했다. 2차원 배열까지는 해당 공간, 즉 격자를 나타내기 위함이고, 그 안의 값인 배열은 해당 칸에 위치한 상어의 번호(냄새 주인), 냄새 지속 시간, 상어가 현재 칸에 위치하는지를 나타내기 위해 사용했다.
+
+```js
+// 3차원 배열을 이용해서 상어들이 있는 공간 구현
+const map = new Array(N).fill().map((_, idx) =>
+  input[idx + 1].split(" ").map((v) => {
+    // 상어 번호, 냄새 지속 시간, 상어가 있는지 없는지
+    if (+v) return [+v, k, 1];
+    return [+v, 0, 0];
+  })
 );
 ```
 
-처음 복사한 방식은 1차원 배열이기 때문에 당연히 자연스레 복사가 될 줄 알고, spread문법을 사용했다.
-이것이 문제가 아니라 2차원 배열인 map을 복사한 것이 문제가 있는 줄 알고, 계속 그것만을 수정해보려고 했는데, 이 녀석이 문제였다.
+### BFS로 해결하기
 
-문제를 발견하고 map과 spread 문법을 이용해서 이 객체 배열을 복사를 시도했다. 그러나 또 문제가 있었다. 객체의 값을 참조만 한다면 상관없지만, 나는 저 fish라는 객체를 Class를 통해 만들었다. 그래서 해당 클래스의 메서드를 사용하려고 하니 오류가 났다.
+방향 탐색을 진행해야 하니 BFS로 문제를 풀기 위해 접근했는데, 큐에 뭘 넣고 빼가면서 문제를 해결할 수 있을지 방법이 잘 떠오르지 않았다. 그러나 곧 해결 방안이 떠올랐는데, 현재 map의 상태와 상어들의 상태, 시간을 갱신된 상태로 상용해야 했기에 이들을 큐에 넣고 문제를 풀이했다.
 
-값을 출력해보니 다음과 같았다.
+```js
+const q = [[initialMap, initialSharks, time + 1]];
 
-```bash
-Fish { x: 3, y: 0, id: 11, dir: 2, isAlive: true } // 기존
-{ x: 3, y: 0, id: 11, dir: 2, isAlive: true } // 복사한 것
+while (q.length) {
+  const [map, sharks, time] = q.shift();
+  ...
+}
 ```
 
-값은 그대로 복사가 되는데, 객체 자체 즉, 클래스가 복사가 되지는 않았다. 아직 이유는 알지 못한다. 그래서 각 객체를 생성자를 이용해 새로 만들어 배열에 담아주었더니 문제가 해결되었다.
+그리고 이 안에서 상어들을 동시에 이동시키고, 맵을 갱신해야 했다. 그러기 위해서 각 상어가 이동할 방향이 선택되었을 때, 공간을 바로 갱신 시키면 안됐다. 그래서 상어들이 가진 바라볼 방향값과 위칫값의 상태만 업데이트 해주었다.
 
-##### 2. 공간의 상태 처리
+### 상어의 냄새 남기기
 
-두번째로 신경써줘야 했던 것은 공간의 상태 처리였다. 상어가 물고기를 잡아먹고나서 상태나, 상어의 위치, 혹은 물고기들의 위치 신경써야 할 것들이 많았다. 확인하려고 하면 출력값들이 너무 많이 찍혀 디버깅을 제대로 하기 어려웠다.
+각 상어들의 바라보는 방향과 위칫값의 상태가 이미 갱신되었다. 즉, 이미 방향 탐색을 통해 다음에 이동할 곳은 정해졌다. 이 상태에서는 공간의 상태를 갱신할 수 있었다. 각 상어들마다 아래의 코드대로 예정된 곳으로 이동시켜주었다.
 
-#### 의사 코드
+그러나 그곳에 상어가 존재한다면 번호를 확인해서 큰 번호를 가진 상어를 쫓아내주었고, 만약 자기 냄새가 남은 곳이라면 상어를 이동시키고 냄새를 갱신해주었다.
 
-1. 물고기와 상어 클래스를 구현해준다.
-2. 전역으로 사용할 값들을 설정해준다.
+```js
+// 냄새 남기는 함수
+const leaveSmell = (map, sharks) => {
+  for (let shark of sharks) {
+    // 상어가 죽었다면 냄새를 남기면 안된다.
+    if (shark.isDriveAway) continue;
 
-- DX, DY와 같은 방향 값, N = 4(공간의 크기), max(상어가 총 먹은 양)
+    const { x, y, id } = shark;
 
-3. 입력을 통해 공간의 정보를 담을 배열과 물고기들의 정보를 담을 배열을 생성해준다.
+    // 현재 지도에 상어가 있는 곳에 상어의 번호와 냄새를 남긴다.
+    if (map[x][y][0] === 0) {
+      map[x][y] = [id, k, 1];
+      continue;
+    }
 
-- map: 물고기들의 번호가 담김
-- fishes: 물고기들의 정보(위치, 번호, 방향, 살아있는지 여부)
-- fishes 배열을 번호 기준으로 오름차순으로 정렬해준다.
+    // 상어의 번호가 기존에 위치한 상어보다 작다면 갱신
+    if (map[x][y][0] > id) map[x][y] = [id, k, 1];
+    // 상어가 갈 곳이 없어 자기 냄새 쪽으로 이동했다면 갱신
+    else if (map[x][y][0] === id) map[x][y] = [id, k, 1];
+    // 상어가 기존에 위치한 상어보다 번호가 크다면 내쫓기
+    else shark.driveAway();
+  }
+};
+```
 
-4. map[0][0]에 위치한 물고기를 잡아먹고 해당 물고기의 위치로 이동하고, 물고기의 방향을 가지고 먹은 양에 추가한다.
-5. DFS를 통해서 다음을 반복한다.
-
-- max값이 상어의 먹은 총 양보다 작다면 업데이트
-- 모든 물고기들을 순서대로 이동시켜준다.
-- 상어는 직선으로 원하는만큼 이동할 수 있다.
-- 범위를 초과하지 않고, 이동하려는 칸에 물고기가 있다면
-  - 공간과 물고기 리스트 복사
-  - 새 물고기 리스트에서 해당 칸의 물고기 찾기
-  - 상어가 물고기를 먹는다.
-  - 상어가 있는 칸을 비워주고, 물고기가 이동한 칸을 상어가 있다고 표시
-
-6. 상어가 총 먹은 물고기의 번호의 합을 출력한다.
-
-#### 전체 코드
+### 전체 코드
 
 ```js
 const input = require("fs")
   .readFileSync("./input.txt")
   .toString()
   .trim()
-  .split(/\s/)
-  .map(Number);
-
-class Fish {
-  constructor(x, y, num, dir, isAlive) {
-    this.x = x;
-    this.y = y;
-    this.id = num;
-    this.dir = dir;
-    this.isAlive = isAlive;
-  }
-
-  swap(x, y) {
-    this.x = x;
-    this.y = y;
-  }
-}
+  .split("\n");
 
 class Shark {
-  constructor(eatenFish = 0) {
+  constructor(id) {
+    this.id = id;
     this.x = null;
     this.y = null;
     this.dir = null;
-    this.eatenFish = eatenFish;
+    this.priority = new Array(4).fill(null);
+    this.isDriveAway = false;
   }
 
-  hunt(fish) {
-    this.x = fish.x;
-    this.y = fish.y;
-    this.dir = fish.dir;
-    this.eatenFish += fish.id;
+  setPosition(x, y) {
+    this.x = x;
+    this.y = y;
+  }
+
+  setDir(dir) {
+    this.dir = dir;
+  }
+
+  setPriority(idx, direction) {
+    this.priority[idx] = direction;
+  }
+
+  findNextDir(candidates) {
+    // 후보지 중에 갈 수 있는 곳이 있다면 방향을 반환
+    for (let i = 0; i < 4; i++) {
+      if (candidates.includes(this.priority[this.dir][i]))
+        return this.priority[this.dir][i];
+    }
+    // 없다면 0 반환
+    return 0;
+  }
+
+  driveAway() {
+    this.isDriveAway = true;
   }
 }
 
-// 0 부터 7 까지 순서대로 ↑, ↖, ←, ↙, ↓, ↘, →, ↗
-const DX = [-1, -1, 0, 1, 1, 1, 0, -1];
-const DY = [0, -1, -1, -1, 0, 1, 1, 1];
-const N = 4;
-let max = 0;
+// 맵 크기, 상어 마릿 수, 냄새 지속 시간 입력 받기
+const [N, M, k] = input[0].split(" ").map(Number);
+// 3차원 배열을 이용해서 상어들이 있는 공간 구현
+const map = new Array(N).fill().map((_, idx) =>
+  input[idx + 1].split(" ").map((v) => {
+    // 상어 번호, 냄새 지속 시간, 상어가 있는지 없는지
+    if (+v) return [+v, k, 1];
+    return [+v, 0, 0];
+  })
+);
+// 상어들 생성해주기
+const sharks = new Array(M).fill().map((_, idx) => new Shark(idx + 1));
 
-// map안인지 범위 체크
+// 상어의 위치 입력 받기
+sharks.forEach((shark, idx) => {
+  for (let i = 0; i < N; i++) {
+    for (let j = 0; j < N; j++) {
+      if (map[i][j][0] === idx + 1) shark.setPosition(i, j);
+    }
+  }
+});
+
+// 첫 방향 입력받기
+const firstDirections = input[N + 1].split(" ").map(Number);
+firstDirections.forEach((dir, idx) => sharks[idx].setDir(dir - 1));
+
+// 상어의 각 방향별 우선 순위 입력받기
+for (let i = N + 2; i < input.length; i++) {
+  const id = Math.floor((i - N + 2) / 4) - 1;
+  const idx = (i - N + 2) % 4;
+  const dir = input[i].split(" ").map((v) => v - 1);
+  sharks[id].setPriority(idx, dir);
+}
+
+// 범위 체크 함수
 const isInRange = (nx, ny) => {
-  if (0 <= nx && nx < N && 0 <= ny && ny < N) return true;
-  return false;
+  if (0 > nx || nx >= N || 0 > ny || ny >= N) return false;
+  return true;
 };
 
-// 빈 칸 혹은 다른 물고기가 있는 칸으로 이동
-const moveFish = (fish, map, fishes) => {
-  if (fish.isAlive === false) return;
+// 냄새 남기는 함수
+const leaveSmell = (map, sharks) => {
+  for (let shark of sharks) {
+    // 상어가 죽었다면 냄새를 남기면 안된다.
+    if (shark.isDriveAway) continue;
 
-  for (let i = 0; i < 8; i++) {
-    // 움직일 수 있는 곳이 있을 때까지 반시계 방향으로 방향 회전
-    let nextDir = (fish.dir + i) % 8;
-    let nx = fish.x + DX[nextDir];
-    let ny = fish.y + DY[nextDir];
+    const { x, y, id } = shark;
 
-    // 범위를 벗어나지 않고, 상어가 있는 곳이 아니라면
-    if (isInRange(nx, ny) && map[nx][ny] > -1) {
-      // 이동할 곳에 물고기가 없을 곳을 대비해 0으로 미리 만들어줌
-      map[fish.x][fish.y] = 0;
+    // 현재 지도에 상어가 있는 곳에 상어의 번호와 냄새를 남긴다.
+    if (map[x][y][0] === 0) {
+      map[x][y] = [id, k, 1];
+      continue;
+    }
 
-      // 빈 칸이라면 물고기를 이동 시키기
-      if (map[nx][ny] === 0) {
-        fish.swap(nx, ny);
-      } else {
-        // 다음 위치에 있는 물고기
-        const nextFish = fishes[map[nx][ny] - 1];
-        nextFish.swap(fish.x, fish.y);
+    // 상어의 번호가 기존에 위치한 상어보다 작다면 갱신
+    if (map[x][y][0] > id) map[x][y] = [id, k, 1];
+    // 상어가 갈 곳이 없어 자기 냄새 쪽으로 이동했다면 갱신
+    else if (map[x][y][0] === id) map[x][y] = [id, k, 1];
+    // 상어가 기존에 위치한 상어보다 번호가 크다면 내쫓기
+    else shark.driveAway();
+  }
+};
 
-        // 현재 공간에 있던 물고기의 id를 바꾼 물고기의 id로 변경해주기
-        map[fish.x][fish.y] = nextFish.id;
+// 냄새 지속 시간을 줄이는 함수
+const decreaseSmellTime = (map) => {
+  for (let i = 0; i < N; i++) {
+    for (let j = 0; j < N; j++) {
+      // 냄새가 없거나 상어가 현재 위치하고 있다면 넘어감
+      if (!map[i][j][1] || map[i][j][2]) continue;
 
-        fish.swap(nx, ny);
+      // 해당 위치의 냄새 줄이기
+      map[i][j][1]--;
+
+      // 냄새가 0이되면 냄새의 주인 표시도 없애주기
+      if (map[i][j][1] === 0) map[i][j][0] = 0;
+    }
+  }
+};
+
+// 현재 남아 있는 상어의 번호를 반환하는 함수
+const checkRemainingSharks = (sharks) => {
+  let remainingShark = M;
+
+  for (let shark of sharks) {
+    if (shark.isDriveAway) remainingShark--;
+  }
+
+  return remainingShark;
+};
+
+// BFS를 통해 진행하기
+const moveShark = (initialMap, initialSharks, time) => {
+  const DX = [-1, 1, 0, 0];
+  const DY = [0, 0, -1, 1];
+
+  const q = [[initialMap, initialSharks, time + 1]];
+
+  while (q.length) {
+    const [map, sharks, time] = q.shift();
+
+    for (let i = 0; i < M; i++) {
+      const shark = sharks[i];
+
+      if (shark.isDriveAway) continue;
+
+      const candidates = [];
+      const ownSmellPlaces = [];
+
+      for (let dir of shark.priority[shark.dir]) {
+        let nx = shark.x + DX[dir];
+        let ny = shark.y + DY[dir];
+
+        // 범위 체크
+        if (!isInRange(nx, ny)) continue;
+
+        // 갈 수 있는 곳이 있다면
+        if (map[nx][ny][0] === 0) candidates.push(dir);
+        // 갈 수 있는 곳이 자신의 냄새가 있는 곳 뿐이라면
+        else if (map[nx][ny][0] === shark.id) ownSmellPlaces.push(dir);
       }
 
-      // 바꾸려고 했던 물고기가 있던 위치에 현재 물고기의 id로 변경해주기
-      map[nx][ny] = fish.id;
-      fish.dir = nextDir;
+      // 후보지가 있다면 다음 방향은 nextDir
+      let nextDir = shark.findNextDir(candidates);
+      // 후보지가 없다면 자기 냄새가 있는 쪽으로 방향을 틈
+      if (!candidates.length) nextDir = shark.findNextDir(ownSmellPlaces);
+
+      // 이전 위치의 상어 존재 여부 false
+      map[shark.x][shark.y] = [shark.id, k, 0];
+
+      // 상어가 보는 방향과 위치 설정
+      shark.setPosition(shark.x + DX[nextDir], shark.y + DY[nextDir]);
+      shark.setDir(nextDir);
+    }
+
+    // 다음 위치에 상어의 냄새 남기기
+    leaveSmell(map, sharks);
+
+    // 맵 전체에 상어가 없는 곳에 냄새 시간 줄이기
+    decreaseSmellTime(map);
+
+    // 남아있는 상어 확인하기
+    if (checkRemainingSharks(sharks) === 1) {
+      console.log(time);
       return;
     }
-  }
-};
 
-// 상어가 이동할 수 없을 때까지 반복
-const eatFish = (map, shark, fishes) => {
-  if (max < shark.eatenFish) max = shark.eatenFish;
-
-  // 모든 물고기 순서대로 이동
-  fishes.forEach((fish) => moveFish(fish, map, fishes));
-
-  for (let dist = 1; dist < N; dist++) {
-    let nx = shark.x + DX[shark.dir] * dist;
-    let ny = shark.y + DY[shark.dir] * dist;
-
-    if (isInRange(nx, ny) && map[nx][ny] > 0) {
-      // 2차원 배열 깊은 복사
-      const newMap = map.map((m) => [...m]);
-      const newFishes = [...fishes];
-
-      newMap[shark.x][shark.y] = 0;
-
-      const fish = newFishes[map[nx][ny] - 1];
-      const newShark = new Shark(shark.eatenFish);
-
-      newShark.hunt(fish);
-      fish.isAlive = false;
-
-      // 상어가 이동할 것이므로 원래 있던 곳은 빈 칸이 되고, 물고기의 위치를 상어가 있다고 표시
-      newMap[fish.x][fish.y] = -1;
-
-      eatFish(newMap, newShark, newFishes);
+    // 1000초가 넘어도 다른 상어가 격자에 남아있으면 -1 출력
+    if (time >= 1000) {
+      console.log(-1);
+      return;
     }
+
+    q.push([map, sharks, time + 1]);
   }
 };
 
-function Solution(input) {
-  // 현재 공간의 상태를 나타낼 배열
-  const map = Array.from(Array(4), () => Array(4).fill(null));
-  // 물고기들의 정보를 담을 배열
-  const fishes = new Array(input.length / 2);
-
-  for (let i = 0; i < input.length; i += 2) {
-    const x = Math.floor(i / 8);
-    const y = (i % 8) / 2;
-    const num = input[i];
-    const dir = input[i + 1] - 1;
-
-    const fish = new Fish(x, y, num, dir, true);
-    fishes[i / 2] = fish;
-    // 현재 공간에 물고기들의 번호를 넣어준다.
-    map[x][y] = fish.id;
-  }
-
-  // 물고기는 번호가 작은 순서부터 이동해야 하기 때문에 정렬해두기
-  fishes.sort((a, b) => a.id - b.id);
-
-  const fish = fishes[map[0][0] - 1];
-  const shark = new Shark();
-
-  // 물고기를 잡아먹는다. 물고기의 위치로 이동, 물고기의 방향을 가지게 되고, 먹은 양에 추가
-  shark.hunt(fish);
-  fish.isAlive = false;
-  // 상어가 있는 곳을 -1로 표시
-  map[0][0] = -1;
-
-  eatFish(map, shark, fishes);
-  console.log(max);
-}
-
-Solution(input);
+moveShark(map, sharks, 0);
 ```
 
 </div>
