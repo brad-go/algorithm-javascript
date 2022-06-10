@@ -5,118 +5,115 @@ const input = require("fs")
   .split("\n");
 
 class FireBall {
-  constructor(r, c, m, s, d) {
-    this.r = r;
-    this.c = c;
-    this.m = m;
-    this.s = s;
-    this.d = d;
+  constructor(row, col, mass, speed, dir) {
+    this.row = row;
+    this.col = col;
+    this.mass = mass;
+    this.speed = speed;
+    this.dir = dir;
   }
 }
 
 const [N, M, K] = input.shift().split(" ").map(Number);
-const fireBalls = input.map((ball) => {
-  const [r, c, m, s, d] = ball.split(" ").map(Number);
-  return new FireBall(r - 1, c - 1, m, s, d);
+const fireBalls = input.map((fireBall) => {
+  const [row, col, mass, speed, dir] = fireBall.split(" ").map(Number);
+  return new FireBall(row - 1, col - 1, mass, speed, dir);
 });
 
 const moveFireBalls = (map, fireBalls) => {
+  const newMap = Array.from({ length: N }, () =>
+    Array.from({ length: N }, () => [])
+  );
+
   const DR = [-1, -1, 0, 1, 1, 1, 0, -1];
   const DC = [0, 1, 1, 1, 0, -1, -1, -1];
 
   fireBalls.forEach((fireBall) => {
-    const { r, c, s, d } = fireBall;
+    const { row, col, speed, dir } = fireBall;
 
-    let nr = (r + DR[d] * s + s * N) % N;
-    let nc = (c + DC[d] * s + s * N) % N;
+    let nr = (row + DR[dir] * speed + speed * N) % N;
+    let nc = (col + DC[dir] * speed + speed * N) % N;
 
-    map[r][c] -= 1;
+    fireBall.row = nr;
+    fireBall.col = nc;
 
-    fireBall.r = nr;
-    fireBall.c = nc;
-
-    map[nr][nc] += 1;
+    newMap[nr][nc].push(fireBall);
   });
+
+  return newMap;
 };
 
-const findPlaceWithMoreThanOneBall = (map) => {
-  const places = [];
+const checkNumberOfFireBallsOnMap = (map) => {
+  const newFireBalls = [];
+  const placesMoreThanOne = [];
 
   for (let i = 0; i < N; i++) {
     for (let j = 0; j < N; j++) {
-      if (map[i][j] > 1) places.push([i, j]);
+      if (map[i][j].length === 1) newFireBalls.push(...map[i][j]);
+      if (map[i][j].length > 1) placesMoreThanOne.push([i, j]);
     }
   }
 
-  return places;
+  return [newFireBalls, placesMoreThanOne];
 };
 
-const combineFireBall = (map, fireBalls, places) => {
-  const M = fireBalls.length;
+const combineFireBall = (map, places) => {
+  const newFireBalls = [];
 
-  places.forEach(([r, c]) => {
-    const willCombined = [];
+  const ODD = [1, 3, 5, 7];
+  const EVEN = [0, 2, 4, 6];
 
-    for (let i = 0; i < M; i++) {
-      if (fireBalls[i] === null) continue;
+  places.forEach(([row, col]) => {
+    const combinedFireBalls = map[row][col];
 
-      const fireBall = fireBalls[i];
+    let combinedMass = 0;
+    let combinedSpeed = 0;
+    let combinedEvenDir = 0;
 
-      if (fireBall.r === r && fireBall.c === c) {
-        willCombined.push(fireBall);
-        fireBalls[i] = null;
-      }
-    }
+    combinedFireBalls.forEach((fireBall) => {
+      const { mass, speed, dir } = fireBall;
 
-    map[r][c] = 0;
-
-    let comM = 0;
-    let comS = 0;
-    let comD = new Array(willCombined.length);
-
-    willCombined.forEach((fireBall, idx) => {
-      if (fireBall === null) return;
-
-      comM += fireBall.m;
-      comS += fireBall.s;
-      comD[idx] = fireBall.d;
+      combinedMass += mass;
+      combinedSpeed += speed;
+      if (dir % 2 === 0) combinedEvenDir++;
     });
 
-    let flag = comD[0] % 2 === 0 ? true : false;
-    let isEven;
+    const mass = Math.floor(combinedMass / 5);
+    const speed = Math.floor(combinedSpeed / combinedFireBalls.length);
 
-    if (flag) isEven = comD.every((d) => d % 2 === 0);
-    else isEven = comD.every((d) => d % 2 === 1);
-
-    const m = Math.floor(comM / 5);
-    const s = Math.floor(comS / willCombined.length);
-    const dir = isEven ? [0, 2, 4, 6] : [1, 3, 5, 7];
-
-    if (m <= 0) return;
+    if (mass === 0) return;
 
     for (let i = 0; i < 4; i++) {
-      fireBalls.push(new FireBall(r, c, m, s, dir[i]));
+      if (!combinedEvenDir || combinedEvenDir === combinedFireBalls.length) {
+        newFireBalls.push(new FireBall(row, col, mass, speed, EVEN[i]));
+      } else {
+        newFireBalls.push(new FireBall(row, col, mass, speed, ODD[i]));
+      }
     }
-
-    map[r][c] = 4;
   });
+
+  return newFireBalls;
 };
 
 const calculateSumOfMass = (fireBalls) => {
-  const sum = fireBalls.reduce((acc, cur) => (acc += cur.m), 0);
-  return sum;
+  return fireBalls.reduce((acc, cur) => acc + cur.mass, 0);
 };
 
 const Solution = (N, K, fireBalls) => {
-  const map = Array.from(Array(N), () => Array(N).fill(0));
-  fireBalls.forEach((fireBall) => (map[fireBall.r][fireBall.c] = 1));
+  let map = Array.from({ length: N }, () =>
+    Array.from({ length: N }, () => [])
+  );
+
+  fireBalls.forEach((fireBall) =>
+    map[fireBall.row][fireBall.col].push(fireBall)
+  );
 
   while (K > 0) {
-    moveFireBalls(map, fireBalls);
-    const placesToCheck = findPlaceWithMoreThanOneBall(map);
-    combineFireBall(map, fireBalls, placesToCheck);
-    fireBalls = fireBalls.filter((fireBall) => fireBall !== null);
-
+    map = moveFireBalls(map, fireBalls);
+    const [existFireBalls, placesMoreThanOne] =
+      checkNumberOfFireBallsOnMap(map);
+    const devidedFireBalls = combineFireBall(map, placesMoreThanOne);
+    fireBalls = [...existFireBalls, ...devidedFireBalls];
     K--;
   }
 
