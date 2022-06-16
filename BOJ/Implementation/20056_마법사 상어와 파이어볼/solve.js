@@ -1,5 +1,5 @@
 const input = require("fs")
-  .readFileSync("./input3.txt")
+  .readFileSync("./input.txt")
   .toString()
   .trim()
   .split("\n");
@@ -19,6 +19,29 @@ const fireBalls = input.map((fireBall) => {
   const [row, col, mass, speed, dir] = fireBall.split(" ").map(Number);
   return new FireBall(row - 1, col - 1, mass, speed, dir);
 });
+
+const Solution = (N, K, fireBalls) => {
+  let map = Array.from({ length: N }, () =>
+    Array.from({ length: N }, () => [])
+  );
+
+  fireBalls.forEach((fireBall) =>
+    map[fireBall.row][fireBall.col].push(fireBall)
+  );
+
+  while (K > 0) {
+    map = moveFireBalls(map, fireBalls);
+    const [existFireBalls, placesMoreThanOne] =
+      checkNumberOfFireBallsOnMap(map);
+    const devidedFireBalls = combineFireBall(map, placesMoreThanOne);
+    fireBalls = [...existFireBalls, ...devidedFireBalls];
+    K--;
+  }
+
+  const answer = calculateSumOfMass(fireBalls);
+
+  console.log(answer);
+};
 
 const moveFireBalls = (map, fireBalls) => {
   const newMap = Array.from({ length: N }, () =>
@@ -97,29 +120,6 @@ const combineFireBall = (map, places) => {
 
 const calculateSumOfMass = (fireBalls) => {
   return fireBalls.reduce((acc, cur) => acc + cur.mass, 0);
-};
-
-const Solution = (N, K, fireBalls) => {
-  let map = Array.from({ length: N }, () =>
-    Array.from({ length: N }, () => [])
-  );
-
-  fireBalls.forEach((fireBall) =>
-    map[fireBall.row][fireBall.col].push(fireBall)
-  );
-
-  while (K > 0) {
-    map = moveFireBalls(map, fireBalls);
-    const [existFireBalls, placesMoreThanOne] =
-      checkNumberOfFireBallsOnMap(map);
-    const devidedFireBalls = combineFireBall(map, placesMoreThanOne);
-    fireBalls = [...existFireBalls, ...devidedFireBalls];
-    K--;
-  }
-
-  const answer = calculateSumOfMass(fireBalls);
-
-  console.log(answer);
 };
 
 Solution(N, K, fireBalls);
