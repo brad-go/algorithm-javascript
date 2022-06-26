@@ -56,3 +56,32 @@ function solution(genres, plays) {
   return answer;
 }
 ```
+
+## 코드 개선
+
+문제에서 제시한 정렬 기준을 알기 쉽게 표현하는 코드였다. 이렇게 하기 위해서는 전체 음악 리스틀 먼저 저장할 것이 아니라 문제에서 중요시 되는 장르와 그 장르의 총 재생횟수를 저장하는 것이 포인트였다.
+
+```js
+function solution(genres, plays) {
+  const playlist = {};
+  const genrelist = {};
+
+  genres.forEach((genre, id) => {
+    playlist[genre] = playlist[genre] ? playlist[genre] + plays[id] : plays[id]; // prettier-ignore
+  });
+
+  return genres
+    .map((genre, id) => ({ genre, count: plays[id], id })) // 정렬을 위해 객체로 생성
+    .sort((a, b) => {
+      if (a.genre !== b.genre) return playlist[b.genre] - playlist[a.genre]; // 총 반복횟수가 높은 장르 우선
+      if (a.count !== b.count) return b.count - a.count; // 총 재생횟수가 높은 음악 우선
+      return a.id - b.id; // 재생횟수가 같을 경우 고유 번호가 낮은 것이 우선
+    })
+    .filter(({ genre }) => {
+      if (genrelist[genre] >= 2) return false; // 한 장르당 두 곡씩만 베스트 앨범에 담는다.
+      genrelist[genre] = (genrelist[genre] || 0) + 1;
+      return true;
+    })
+    .map(({ id }) => id);
+}
+```
