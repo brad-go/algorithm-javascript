@@ -17,38 +17,79 @@ const query = [
 ];
 
 function solution(info, query) {
-  var answer = [];
+  const searchConditions = [
+    ["cpp", "java", "python"],
+    ["backend", "frontend"],
+    ["junior", "senior"],
+    ["chicken", "pizza"],
+  ];
 
-  const volunteers = info.map((i) => i.split(" "));
-  const qualifications = query.map((q) =>
-    q.split(" ").filter((v) => v !== "and")
-  );
+  let applicants = {};
 
-  const NO_MATTER = "-";
+  const indexSearchConditions = (condition, depth) => {
+    if (depth === searchConditions.length) return;
 
-  qualifications.forEach((qualification) => {
-    const [lan, group, career, food, score] = qualification;
+    searchConditions[depth].forEach((subCondition) => {
+      if (depth === searchConditions.length - 1) condition[subCondition] = [];
+      else condition[subCondition] = {};
+      indexSearchConditions(condition[subCondition], depth + 1);
+    });
+  };
 
-    let count = 0;
+  indexSearchConditions(applicants, 0);
 
-    for (let volunteer of volunteers) {
-      const [l, g, c, f, s] = volunteer;
-
-      let qualified = true;
-
-      if (l !== lan && lan !== NO_MATTER) qualified = false;
-      if (g !== group && group !== NO_MATTER) qualified = false;
-      if (c !== career && career !== NO_MATTER) qualified = false;
-      if (f !== food && food !== NO_MATTER) qualified = false;
-      if (Number(s) < Number(score)) qualified = false;
-
-      if (qualified) count++;
-    }
-
-    answer.push(count);
+  info.forEach((applicant) => {
+    const [lang, group, career, food, score] = applicant.split(" ");
+    applicants[lang][group][career][food].push(+score);
   });
 
-  return answer;
+  const getApplicants = (applicatns, condition, depth) => {
+    if (depth === condition.length) return applicatns;
+
+    if (condition[depth] === "-") {
+      // -면 다음 depth로 넘어감
+      return Object.values(applicatns).reduce((acc, cur) => {
+        return acc.concat(getApplicants(cur, condition, depth + 1));
+      }, []);
+    } else {
+      return getApplicants(applicatns[condition[depth]], condition, depth + 1);
+    }
+  };
+
+  // prettier-ignore
+  const binarySearch = (array, target, startIndex = 0, endIndex = array.length - 1) => {
+    while (startIndex <= endIndex) {
+      const middleIndex = Math.floor((startIndex + endIndex) / 2);
+
+      if (target <= array[middleIndex]) endIndex = middleIndex - 1;
+      else startIndex = middleIndex + 1;
+    }
+
+    return startIndex;
+  }
+
+  const conditions = {};
+  const count = [];
+
+  query.forEach((q) => {
+    const [lang, group, career, food, score] = q.replace(/\sand\s/g, " ").split(" "); // prettier-ignore
+    const applicantInfo = [lang, group, career, food];
+    const conditionStr = applicantInfo.join(",");
+
+    if (conditions[conditionStr] === undefined) {
+      conditions[conditionStr] = getApplicants(applicants, applicantInfo, 0).sort((a, b) => a - b); // prettier-ignore
+    }
+
+    if (score === "-") count.push(conditions[conditionStr].length);
+    else {
+      const standardScore = Number(score);
+      const qualifiedApplicantCount = binarySearch(conditions[conditionStr], standardScore); // prettier-ignore
+
+      count.push(conditions[conditionStr].length - qualifiedApplicantCount);
+    }
+  });
+
+  return count;
 }
 
 console.log(solution(info, query));
