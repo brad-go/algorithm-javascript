@@ -4,83 +4,28 @@
 
 : DFS/BFS
 
-## 문제 설명
+## 풀이 과정
 
-n개의 음이 아닌 정수들이 있습니다. 이 정수들을 순서를 바꾸지 않고 적절히 더하거나 빼서 타겟 넘버를 만들려고 합니다. 예를 들어 [1, 1, 1, 1, 1]로 숫자 3을 만들려면 다음 다섯 방법을 쓸 수 있습니다.
+경우의 수를 구해야하므로 DFS를 이용했다.
 
-```
--1+1+1+1+1 = 3
-+1-1+1+1+1 = 3
-+1+1-1+1+1 = 3
-+1+1+1-1+1 = 3
-+1+1+1+1-1 = 3
-```
-
-사용할 수 있는 숫자가 담긴 배열 numbers, 타겟 넘버 target이 매개변수로 주어질 때 숫자를 적절히 더하고 빼서 타겟 넘버를 만드는 방법의 수를 return 하도록 solution 함수를 작성해주세요.
-
-## 제한 사항
-
-- 주어지는 숫자의 개수는 2개 이상 20개 이하입니다.
-- 각 숫자는 1 이상 50 이하인 자연수입니다.
-- 타겟 넘버는 1 이상 1000 이하인 자연수입니다.
-
-## 입출력 예
-
-| numbers         | target | return |
-| --------------- | ------ | ------ |
-| [1, 1, 1, 1, 1] | 3      | 5      |
-| [4, 1, 2, 1]    | 4      | 2      |
-
-## 입출력 예 설명
-
-### 입출력 예 #1
-
-문제의 예시와 같습니다.
-
-### 입출력 예 #2
-
-```
-+4+1-1+1 = 4
-+4-1+2-1 = 4
-```
-
-- 총 2가지 방법이 있으므로, 2를 return 한다.
-
-<details><summary><b>문제 풀이</b></summary><div markdown="1">
-
-**주어진 모든 숫자에 더하기와 빼기를 하는 경우를 탐색해 타겟 숫자가 나오는 횟수를 카운트**하면 된다. 경우의 수를 고려해 보면 숫자 n개는 각각 더하기와 빼기가 될 수 있는 두가지 경우의 수를 가지고 있고, 해당 경우의 수는 전체 숫자에 대해 동시에 발생하므로 `2 * 2 * 2 * ... n`, 총 `2^n`번의 탐색이 일어난다.
-
-**경우의 수를 탐색하기 위해서는 DFS 알고리즘**을 이용한다!
-
-![그림 1](https://miro.medium.com/max/800/1*_5hShcCU5GKQKgXHKEcdiw.jpeg)
-
-재귀 함수를 이용해 DFS를 구현한다. 각각 노드에 자식 노드를 탐색하는 함수를 스택에 추가한 뒤, 더 이상 자식 노드가 없을 때 마지막에 추가된 자식 노드 먼저 실행 후 스택에서 제거하는 후입선출(LIFO) 방식을 사용한다.
-
-이 문제는 **각 노드(숫자)는 다음 인덱스의 숫자가 더하기인 경우와 빼기인 경우 두 가지의 자식 노드를 가지고 있으며**, **DFS 방법에 따라 모든 숫자가 더하기인 경우를 모두 탐색한 뒤 다음 인덱스의 숫자가 빼기인 경우를 탐색**한다.
+1. numbers배열의 첫번째 인덱스부터 시작한다.
+2. dfs를 통해 다음 인덱스의 수를 더한 경우와, 뺀 경우를 진행시킨다.
+3. 배열의 끝까지 갔을 때, 현재 수가 목표한 수와 같다면 answer 증가
 
 ```js
-function Solution(numbers, target) {
+function solution(numbers, target) {
   let answer = 0;
 
-  const dfs = (idx, sum) => {
-    if (idx < numbers.length) {
-      if (sum === target) answer++;
+  const makeTargetNumber = (index, currentNumber) => {
+    if (index === numbers.length) {
+      if (currentNumber === target) answer++;
       return;
     }
-
-    dfs(idx + 1, sum + numbers[idx]);
-    dfs(idx + 1, sum - numbers[idx]);
+    makeTargetNumber(index + 1, currentNumber + numbers[index]);
+    makeTargetNumber(index + 1, currentNumber - numbers[index]);
   };
 
-  dfs(0, 0);
+  makeTargetNumber(0, 0);
+  return answer;
 }
-
-Solution(numbers, target);
 ```
-
-재귀 과정이 이해가 되지 않아 직접 손으로 그려보고 이해했다. 직접 손으로 한 번 그려보라.
-어떻게 동작하게 되는지 한 번에 이해가 될 것이다.
-
-그러나 중요한 것은 어떻게 탐색할 것인지 이 함수를 세우는 것이 항상 제일 어려운 것 같다.
-
-</div></details>
