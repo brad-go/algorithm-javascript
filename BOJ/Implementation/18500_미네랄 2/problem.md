@@ -159,3 +159,134 @@ const findMineral = (cave, visited) => {
 
 console.log(solution(cave, THROWN_COUNT, THROWN_HEIGHT));
 ```
+
+### 코드 개선
+
+코드를 리팩토링하다가 파생되는 클러스터는 막대기를 던질 때마다 최대 1개씩만 생긴다는 것을 알아챘다.
+그러므로 땅에 붙어있는 클러스터와 연결되지 않은 모든 미네랄들의 좌표를 구한 후 각 미네랄들 마다 클러스터를 찾는 작업을 할 필요가 없었다.
+막대기를 던져서 미네랄이 부서진 좌표를 통해 파생된 클러스터를 찾고, 해당 클러스터를 아래로 떨어뜨려주면 되었다.
+
+```js
+// prettier-ignore
+const input = require('fs').readFileSync('./input4.txt').toString().trim().split('\n');
+const [R, C] = input[0].split(" ").map(Number);
+const cave = input.slice(1, R + 1).map((line) => line.split("")).reverse(); // prettier-ignore
+const THROWN_COUNT = Number(input[R + 1]);
+const THROWN_HEIGHT = input[R + 2].split(" ").map((v) => v - 1);
+
+function solution(cave, THROWN_COUNT, THROWN_HEIGHT) {
+  const visited = Array.from(Array(R), () => Array(C).fill(0));
+
+  for (let count = 0; count < THROWN_COUNT; count++) {
+    // 막대기를 던지고 파괴된 미네랄의 좌표 반환
+    const target = throwStick(cave, THROWN_HEIGHT[count], count);
+    // 파괴된 미네랄이 없다면 다음 막대기 던지기
+    if (!target) continue;
+
+    // 땅에 붙어있는 클러스터 방문처리해주기
+    checkClusterOnTheGround(cave, visited);
+    // 위에서 찾은 좌표를 통해 파생된 클러스터 찾기
+    const derivedCluster = findCluster(cave, visited, target[0], target[1]);
+    // 파생된 클러스터가 없다면 다음 막대기 던지기
+    if (!derivedCluster) continue;
+    // 파생된 클러스터 떨어뜨리기
+    dropCluster(derivedCluster);
+    visited.forEach((line) => line.fill(0));
+  }
+
+  const answer = cave.map((line) => line.join("")).reverse().join("\n"); // prettier-ignore
+  return answer;
+}
+
+// 막대기 던지기
+const throwStick = (cave, height, count) => {
+  let target;
+
+  // 짝수라면 왼쪽에서부터 미네랄 찾아서 부수기
+  if (count % 2 === 0) {
+    for (let i = 0; i < C; i++) {
+      if (cave[height][i] === ".") continue;
+
+      cave[height][i] = ".";
+      target = [height, i];
+      break;
+    }
+  } else {
+    // 홀수라면 오른쪽에서부터 미네랄 찾아서 부수기
+    for (let i = C - 1; i >= 0; i--) {
+      if (cave[height][i] === ".") continue;
+
+      cave[height][i] = ".";
+      target = [height, i];
+      break;
+    }
+  }
+
+  return target;
+};
+
+// 땅에 붙어있는 클러스터 방문처리해주기 - 떠있는 클러스터를 찾을 수 있게 하기 위해 필요
+const checkClusterOnTheGround = (cave, visited) => {
+  const ground = cave[0];
+
+  ground.forEach((space, idx) => {
+    if (space === "." || visited[0][idx]) return;
+    findCluster(cave, visited, 0, idx);
+  });
+};
+
+// BFS로 클러스터 찾기
+const findCluster = (cave, visited, sr, sc) => {
+  const DR = [0, 1, 0, -1];
+  const DC = [1, 0, -1, 0];
+
+  const clusterPoints = [];
+  const queue = [[sr, sc]];
+  visited[sr][sc] = 1;
+
+  while (queue.length) {
+    const [r, c] = queue.pop();
+
+    for (let dir = 0; dir < 4; dir++) {
+      let nr = r + DR[dir];
+      let nc = c + DC[dir];
+
+      // 범위를 벗어나지 않고, x이면서 방문하지 않은 곳이라면
+      if (isInRange(nr, nc) && cave[nr][nc] === "x" && !visited[nr][nc]) {
+        visited[nr][nc] = 1;
+        clusterPoints.push([nr, nc]);
+        queue.push([nr, nc]);
+      }
+    }
+  }
+
+  return clusterPoints;
+};
+
+const isInRange = (nr, nc) => {
+  if (0 <= nr && nr < R && 0 <= nc && nc < C) return true;
+  return false;
+};
+
+// 클러스터 떨어뜨리기
+const dropCluster = (cluster) => {
+  const heightDifferences = [];
+  let diff = 0;
+
+  // 각 클러스터의 미네랄들을 잠시 동굴에서 없애주기
+  cluster.forEach(([r, c]) => (cave[r][c] = "."));
+  // 각 미네랄들의 좌표를 이용해서 각 미네랄들이 바닥이나 다른 클러스터를 만날 때까지의 높이 차 구하기
+  cluster.forEach(([r, c]) => {
+    while (0 < r && cave[r-- - 1][c] === ".") diff++;
+
+    heightDifferences.push(diff);
+    diff = 0;
+  });
+
+  // 최소 높이차를 구하고, 기존 좌표에서 높이차만큼 아래의 좌표에 미네랄 표시
+  const minHeightDifference = Math.min(...heightDifferences);
+  cluster.forEach(([r, c]) => (cave[r - minHeightDifference][c] = "x"));
+};
+
+console.log(solution(cave, THROWN_COUNT, THROWN_HEIGHT));
+```

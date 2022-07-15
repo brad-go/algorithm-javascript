@@ -5,94 +5,65 @@ const cave = input.slice(1, R + 1).map((line) => line.split("")).reverse(); // p
 const THROWN_COUNT = Number(input[R + 1]);
 const THROWN_HEIGHT = input[R + 2].split(" ").map((v) => v - 1);
 
-const DR = [0, 1, 0, -1];
-const DC = [1, 0, -1, 0];
-
 function solution(cave, THROWN_COUNT, THROWN_HEIGHT) {
-  let count = 0;
+  const visited = Array.from(Array(R), () => Array(C).fill(0));
 
-  while (count < THROWN_COUNT) {
-    const visited = Array.from(Array(R), () => Array(C).fill(0));
+  for (let count = 0; count < THROWN_COUNT; count++) {
+    const target = throwStick(cave, THROWN_HEIGHT[count], count);
 
-    // 막대기 던지기
-    throwStick(cave, THROWN_HEIGHT[count], count);
+    if (!target) continue;
 
-    // 땅에 있는 클러스터
-    for (let i = 0; i < cave[0].length; i++) {
-      if (visited[0][i] || cave[0][i] === ".") continue;
+    checkClusterOnTheGround(cave, visited);
+    const derivedCluster = findCluster(cave, visited, target[0], target[1]);
 
-      findCluster(cave, visited, 0, i);
-    }
+    if (!derivedCluster) continue;
 
-    // 떠있는 클러스터 탐색
-    const restMineralPoints = findMineral(cave, visited);
-
-    count++;
-    if (!restMineralPoints.length) continue;
-
-    for (let i = 0; i < restMineralPoints.length; i++) {
-      const [r, c] = restMineralPoints[i];
-
-      if (visited[r][c]) continue;
-
-      const clusterPoints = findCluster(cave, visited, r, c);
-
-      for (let j = 0; j < clusterPoints.length; j++) {
-        const [r, c] = clusterPoints[j];
-        cave[r][c] = ".";
-      }
-
-      const heightDiff = [];
-
-      for (let j = 0; j < clusterPoints.length; j++) {
-        let [r, c] = clusterPoints[j];
-        let diff = 0;
-
-        while (0 < r && cave[r - 1][c] === ".") {
-          r--;
-          diff++;
-        }
-
-        heightDiff.push(diff);
-      }
-
-      // 아래로 떨어뜨리기
-      const minHeightDiff = Math.min(...heightDiff);
-
-      for (let j = 0; j < clusterPoints.length; j++) {
-        const [r, c] = clusterPoints[j];
-        cave[r - minHeightDiff][c] = "x";
-      }
-    }
+    dropCluster(derivedCluster);
+    visited.forEach((line) => line.fill(0));
   }
 
-  const answer = cave
-    .map((line) => line.join(""))
-    .reverse()
-    .join("\n");
+  const answer = cave.map((line) => line.join("")).reverse().join("\n"); // prettier-ignore
   return answer;
 }
 
 const throwStick = (cave, height, count) => {
+  let target;
+
   if (count % 2 === 0) {
-    for (let i = 0; i < cave[height].length; i++) {
-      if (cave[height][i] === "x") {
-        cave[height][i] = "."; // 미네랄 파괴
-        break;
-      }
+    for (let i = 0; i < C; i++) {
+      if (cave[height][i] === ".") continue;
+
+      cave[height][i] = ".";
+      target = [height, i];
+      break;
     }
   } else {
-    for (let i = cave[height].length; i >= 0; i--) {
-      if (cave[height][i] === "x") {
-        cave[height][i] = ".";
-        break;
-      }
+    for (let i = C - 1; i >= 0; i--) {
+      if (cave[height][i] === ".") continue;
+
+      cave[height][i] = ".";
+      target = [height, i];
+      break;
     }
   }
+
+  return target;
+};
+
+const checkClusterOnTheGround = (cave, visited) => {
+  const ground = cave[0];
+
+  ground.forEach((space, idx) => {
+    if (space === "." || visited[0][idx]) return;
+    findCluster(cave, visited, 0, idx);
+  });
 };
 
 const findCluster = (cave, visited, sr, sc) => {
-  const clusterPoints = [[sr, sc]];
+  const DR = [0, 1, 0, -1];
+  const DC = [1, 0, -1, 0];
+
+  const clusterPoints = [];
   const queue = [[sr, sc]];
   visited[sr][sc] = 1;
 
@@ -119,18 +90,20 @@ const isInRange = (nr, nc) => {
   return false;
 };
 
-const findMineral = (cave, visited) => {
-  const mineralPoint = [];
+const dropCluster = (cluster) => {
+  const heightDifferences = [];
+  let diff = 0;
 
-  for (let i = 0; i < R; i++) {
-    for (let j = 0; j < C; j++) {
-      if (cave[i][j] === "." || visited[i][j]) continue;
+  cluster.forEach(([r, c]) => (cave[r][c] = "."));
+  cluster.forEach(([r, c]) => {
+    while (0 < r && cave[r-- - 1][c] === ".") diff++;
 
-      mineralPoint.push([i, j]);
-    }
-  }
+    heightDifferences.push(diff);
+    diff = 0;
+  });
 
-  return mineralPoint;
+  const minHeightDifference = Math.min(...heightDifferences);
+  cluster.forEach(([r, c]) => (cave[r - minHeightDifference][c] = "x"));
 };
 
 console.log(solution(cave, THROWN_COUNT, THROWN_HEIGHT));
