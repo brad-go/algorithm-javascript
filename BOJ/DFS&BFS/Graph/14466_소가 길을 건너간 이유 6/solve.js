@@ -7,23 +7,15 @@ const cows = input.slice(R).map((line) => line.split(" ").map(v => v - 1)); // p
 const DR = [0, 1, 0, -1];
 const DC = [1, 0, -1, 0];
 
-function solution(N, K, roads, cows) {
+function solution(N, K, R, roads, cows) {
   const map = Array.from(Array(N), () => Array(N).fill().map(() => Array(4).fill(0))); // prettier-ignore
-  const visited = Array.from(Array(N), () => Array(N).fill(0));
-  let count = 0;
-
   makeRoad(map, roads);
 
-  cows.forEach(([r, c], cur) => {
-    visited.forEach((visit) => visit.fill(0));
-    dfs(map, visited, r, c);
+  const count = cows.reduce((count, [r, c]) => {
+    return count + dijkstra(map, cows, r, c);
+  }, 0);
 
-    for (let i = cur + 1; i < K; i++) {
-      if (!visited[cows[i][0]][cows[i][1]]) count++;
-    }
-  });
-
-  return count;
+  return count / 2;
 }
 
 const makeRoad = (map, roads) => {
@@ -42,19 +34,36 @@ const makeRoad = (map, roads) => {
   });
 };
 
-const dfs = (map, visited, r, c) => {
-  visited[r][c] = 1;
+const dijkstra = (map, cows, sr, sc) => {
+  const digit = Array.from(Array(N), () => Array(N).fill(Number.MAX_SAFE_INTEGER)); // prettier-ignore
+  const queue = [[sr, sc]];
 
-  for (let dir = 0; dir < 4; dir++) {
-    if (map[r][c][dir]) continue;
+  digit[sr][sc] = 0;
 
-    let nr = r + DR[dir];
-    let nc = c + DC[dir];
+  while (queue.length) {
+    const [r, c] = queue.shift();
 
-    if (!isInRange(nr, nc) || visited[nr][nc]) continue;
+    for (let dir = 0; dir < 4; dir++) {
+      let nr = r + DR[dir];
+      let nc = c + DC[dir];
+      let weight = 0;
 
-    dfs(map, visited, nr, nc);
+      if (!isInRange(nr, nc)) continue;
+
+      if (map[r][c][dir]) weight = 1;
+
+      if (digit[r][c] + weight < digit[nr][nc]) {
+        digit[nr][nc] = digit[r][c] + weight;
+        queue.push([nr, nc]);
+      }
+    }
   }
+
+  const count = cows.reduce((count, [r, c]) => {
+    return digit[r][c] !== 0 ? count + 1 : count;
+  }, 0);
+
+  return count;
 };
 
 const isInRange = (r, c) => {
@@ -62,4 +71,4 @@ const isInRange = (r, c) => {
   return true;
 };
 
-console.log(solution(N, K, roads, cows));
+console.log(solution(N, K, R, roads, cows));
