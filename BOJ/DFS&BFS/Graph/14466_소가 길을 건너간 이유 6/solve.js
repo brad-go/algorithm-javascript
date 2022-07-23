@@ -16,7 +16,7 @@ function solution(N, K, roads, cows) {
 
   cows.forEach(([r, c], cur) => {
     visited.forEach((visit) => visit.fill(0));
-    bfs(map, visited, r, c);
+    dfs(map, visited, r, c);
 
     for (let i = cur + 1; i < K; i++) {
       if (!visited[cows[i][0]][cows[i][1]]) count++;
@@ -42,24 +42,18 @@ const makeRoad = (map, roads) => {
   });
 };
 
-const bfs = (map, visited, sr, sc) => {
-  const queue = [[sr, sc]];
-  visited[sr][sc] = 1;
+const dfs = (map, visited, r, c) => {
+  visited[r][c] = 1;
 
-  while (queue.length) {
-    const [r, c] = queue.shift();
+  for (let dir = 0; dir < 4; dir++) {
+    if (map[r][c][dir]) continue;
 
-    for (let dir = 0; dir < 4; dir++) {
-      if (map[r][c][dir]) continue;
+    let nr = r + DR[dir];
+    let nc = c + DC[dir];
 
-      let nr = r + DR[dir];
-      let nc = c + DC[dir];
+    if (!isInRange(nr, nc) || visited[nr][nc]) continue;
 
-      if (!isInRange(nr, nc) || visited[nr][nc]) continue;
-
-      visited[nr][nc] = 1;
-      queue.push([nr, nc]);
-    }
+    dfs(map, visited, nr, nc);
   }
 };
 
