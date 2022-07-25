@@ -12,8 +12,7 @@ const BLUE = 2;
 
 class Piece {
   constructor(id, r, c, dir) {
-    this.id = id;
-    this.r = r;
+    (this.id = id), (this.r = r);
     this.c = c;
     this.dir = dir;
   }
@@ -25,7 +24,7 @@ function solution(N, K, color, pieceInfo) {
 
   while (turn++ < 1000) {
     for (let i = 0; i < K; i++) {
-      const size = movePiece(board, pieces, pieces[i], color); // prettier-ignore
+      const size = movePiece(board, color, pieces[i]); // prettier-ignore
 
       if (size >= 4) return turn;
     }
@@ -52,7 +51,7 @@ const getBoard = (N, pieces) => {
   return board;
 };
 
-const movePiece = (board, pieces, piece, color) => {
+const movePiece = (board, color, piece) => {
   const { r, c, dir } = piece;
   let nr = r + DR[dir];
   let nc = c + DC[dir];
@@ -67,18 +66,13 @@ const movePiece = (board, pieces, piece, color) => {
   }
 
   if (color[nr][nc] === WHITE || color[nr][nc] === RED) {
-    const pieceIndex = board[r][c].findIndex((cur) => cur.id === piece.id);
-    const piecesToStay = board[r][c].filter((_, idx) => idx < pieceIndex);
-    const piecesToMove = board[r][c]
-      .filter((_, idx) => idx >= pieceIndex)
-      .map(({ id, dir }) => new Piece(id, nr, nc, dir));
+    const pieceIndex = board[r][c].indexOf(piece);
+    const piecesToMove = board[r][c].splice(pieceIndex);
 
     if (color[nr][nc] === RED) piecesToMove.reverse();
 
+    updatePiecesPosition(piecesToMove, nr, nc);
     board[nr][nc].push(...piecesToMove);
-    board[r][c] = piecesToStay;
-
-    updatePieces(pieces, piecesToMove);
   }
 
   return board[nr][nc].length;
@@ -94,12 +88,10 @@ const changeDirection = (direction) => {
   return direction - 1;
 };
 
-const updatePieces = (pieces, piecesToMove) => {
+const updatePiecesPosition = (pieces, nr, nc) => {
   pieces.forEach((piece) => {
-    const current = piecesToMove.find((p) => p.id === piece.id);
-    if (!current) return;
-    piece.r = current.r;
-    piece.c = current.c;
+    piece.r = nr;
+    piece.c = nc;
   });
 };
 
