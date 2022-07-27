@@ -27,12 +27,9 @@ function solution(N, wormholeInfo) {
 
 const connectWormholes = (N, wormholes, visited, count, index, answer) => {
   if (count === N) {
+    // 각 웜홀의 위치에서 소를 이동시켜서 무한 순황에 빠지는지 체크하기
     for (let i = 0; i < N; i++) {
-      if (isCycling(N, wormholes, i)) {
-        answer++;
-
-        return answer++;
-      }
+      if (isCycling(N, wormholes, i)) return ++answer;
     }
   }
 
@@ -59,6 +56,7 @@ const isCycling = (N, wormholes, index) => {
   const visited = new Array(N).fill(false);
 
   while (true) {
+    // 같은 곳을 또 방문한다면 무한 순환에 빠지게 된 것!
     if (visited[index]) return true;
 
     visited[index] = true;
@@ -66,6 +64,7 @@ const isCycling = (N, wormholes, index) => {
     const x = wormholes[wormholes[index].connected].x;
     const y = wormholes[wormholes[index].connected].y;
 
+    // 다음 연결된 웜홀을 찾는다.
     index = searchNextHole(wormholes, x, y);
 
     if (index === -1) return false;
