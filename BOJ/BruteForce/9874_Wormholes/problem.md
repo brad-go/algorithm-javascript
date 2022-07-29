@@ -110,3 +110,97 @@ const searchNextHole = (wormholes, x, y) => {
 
 console.log(solution(N, wormholeInfo));
 ```
+
+### 다시 푼 코드
+
+문제 풀이에 고전했기에, 다시 풀이에 도전했다. 메모리나 시간이 훨씬 더 오래 소모되지만, 이 방식이 더 맘에 든다.
+
+```js
+// prettier-ignore
+const [n, ...input] = require('fs').readFileSync('./input.txt').toString().trim().split('\n');
+const N = Number(n);
+const wormholesPosition = input.map((line) => line.split(" ").map(Number));
+
+class Wormhole {
+  constructor(x, y, connected = null) {
+    this.x = x;
+    this.y = y;
+    this.connected = connected;
+  }
+
+  connect(index) {
+    this.connected = index;
+  }
+}
+
+function solution(N, wormholesPosition) {
+  const wormholes = wormholesPosition.map(([x, y]) => new Wormhole(x, y)).sort((a, b) => a.x - b.x); // prettier-ignore
+  const visited = new Array(N).fill(false);
+  const connectedWormholes = connectWormholes(N, wormholes, visited, 0, 0);
+
+  return connectedWormholes.filter((wormholes) => isCycling(wormholes)).length;
+}
+
+const connectWormholes = (N, wormholes, visited, index, count) => {
+  const connectedWormholes = [];
+
+  if (count === N) {
+    const currentConnected = wormholes.map(({ x, y, connected }) => new Wormhole(x, y, connected)); // prettier-ignore
+    return [currentConnected];
+  }
+
+  for (let i = index; i < N; i++) {
+    if (visited[i]) continue;
+    visited[i] = true;
+
+    for (let j = i + 1; j < N; j++) {
+      if (visited[j]) continue;
+      visited[j] = true;
+
+      wormholes[i].connect(j);
+      wormholes[j].connect(i);
+      const connected = connectWormholes(N, wormholes, visited, i + 1, count + 2); // prettier-ignore
+      connectedWormholes.push(...connected);
+
+      visited[j] = false;
+    }
+    visited[i] = false;
+  }
+
+  return connectedWormholes;
+};
+
+const isCycling = (wormholes) => {
+  for (let i = 0; i < wormholes.length; i++) {
+    if (checkConnectedWormholes(wormholes, i)) return true;
+  }
+
+  return false;
+};
+
+const checkConnectedWormholes = (wormholes, index) => {
+  const visited = new Array(wormholes.length).fill(false);
+
+  while (index !== -1) {
+    if (visited[index]) return true;
+    visited[index] = true;
+
+    const connectedIndex = wormholes[index].connected;
+    const { x, y } = wormholes[connectedIndex];
+
+    index = findConnectedWormholeIndex(wormholes, x, y);
+  }
+
+  return false;
+};
+
+const findConnectedWormholeIndex = (wormholes, x, y) => {
+  for (let i = 0; i < wormholes.length; i++) {
+    if (wormholes[i].y === y && wormholes[i].x > x) return i;
+  }
+
+  return -1;
+};
+
+console.log(solution(N, wormholesPosition));
+```
