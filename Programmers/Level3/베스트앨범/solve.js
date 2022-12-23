@@ -1,27 +1,30 @@
-const genres = ["classic", "pop", "classic", "classic", "pop"];
-const plays = [500, 600, 150, 800, 2500];
+const input = require('fs').readFileSync('./input.txt').toString().trim().split('\n'); // prettier-ignore
+const genres = input[0].split(" ");
+const plays = input[1].split(" ").map(Number);
 
-function solution(genres, plays) {
-  const playlist = {};
-  const genrelist = {};
+const solution = (genres, plays) => {
+  const songs = genres.map((genre, index) => ({
+    genre,
+    id: index,
+    play: plays[index],
+  }));
 
-  genres.forEach((genre, id) => {
-    playlist[genre] = playlist[genre] ? playlist[genre] + plays[id] : plays[id]; // prettier-ignore
-  });
+  const genresByTotalPlays = songs.reduce((acc, song) => {
+    const genre = acc[song.genre] || { totalPlays: 0, songs: [] };
 
-  return genres
-    .map((genre, id) => ({ genre, count: plays[id], id }))
-    .sort((a, b) => {
-      if (a.genre !== b.genre) return playlist[b.genre] - playlist[a.genre]; // 총 반복횟수가 높은 장르 우선
-      if (a.count !== b.count) return b.count - a.count; // 총 재생횟수가 높은 음악 우선
-      return a.id - b.id; // 재생횟수가 같을 경우 고유 번호가 낮은 것이 우선
-    })
-    .filter(({ genre }) => {
-      if (genrelist[genre] >= 2) return false;
-      genrelist[genre] = (genrelist[genre] || 0) + 1;
-      return true;
-    })
+    genre.totalPlays += song.play;
+    genre.songs.push(song);
+    acc[song.genre] = genre;
+
+    return acc;
+  }, {});
+
+  const bestAlbum = Object.values(genresByTotalPlays)
+    .sort((a, b) => b.totalPlays - a.totalPlays)
+    .flatMap((genre) => genre.songs.sort((a, b) => b.play - a.play).slice(0, 2))
     .map(({ id }) => id);
-}
+
+  return bestAlbum;
+};
 
 console.log(solution(genres, plays));

@@ -1,5 +1,9 @@
 # 베스트앨범
 
+## 문제 링크
+
+https://school.programmers.co.kr/learn/courses/30/lessons/42579
+
 ## 문제 분류
 
 : 해쉬
@@ -84,4 +88,39 @@ function solution(genres, plays) {
     })
     .map(({ id }) => id);
 }
+```
+
+## 코드 개선 2
+
+```js
+const solution = (genres, plays) => {
+  // 기존과 달리 하나의 객체에서 데이터를 관리할 수 있도록 수정
+  const songs = genres.map((genre, index) => ({
+    genre,
+    id: index,
+    play: plays[index],
+  }));
+
+  // 장르별로 총 재생횟수와 음악들을 담은 객체
+  const genresByTotalPlays = songs.reduce((acc, song) => {
+    const genre = acc[song.genre] || { totalPlays: 0, songs: [] };
+
+    genre.totalPlays += song.play;
+    genre.songs.push(song);
+    acc[song.genre] = genre;
+
+    return acc;
+  }, {});
+
+  // 베스트 앨범 찾기
+  const bestAlbum = Object.values(genresByTotalPlays)
+    // 총 재생횟수가 많은 순으로 정렬
+    .sort((a, b) => b.totalPlays - a.totalPlays)
+    // 각 장르가 가진 음악들을 재생횟수 순으로 정렬하고 앞에 두개만 선택
+    .flatMap((genre) => genre.songs.sort((a, b) => b.play - a.play).slice(0, 2))
+    // 노래의 고유번호만을 담아주기
+    .map(({ id }) => id);
+
+  return bestAlbum;
+};
 ```

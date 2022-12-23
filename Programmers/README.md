@@ -19,13 +19,15 @@
 #### LEVEL 1
 
 - [폰케몬](./Level1/폰켓몬/problem.md)
-- [완주하지 못한 선수](./Level1/%EC%99%84%EC%A3%BC%ED%95%98%EC%A7%80%20%EB%AA%BB%ED%95%9C%20%EC%84%A0%EC%88%98/problem.md)
+- [완주하지 못한 선수](./Level1/완주하지%20못한%20선수/problem.md)
 
 #### LEVEL 2
 
 - [위장](./Level2/위장/problem.md)
 
 #### LEVEL 3
+
+- [베스트앨범](./Level3/베스트앨범/problem.md)
 
 #### LEVEL 4
 
@@ -43,8 +45,9 @@
 key, value 쌍으로 데이터를 빠르게 찾습니다.
 
 - [폰케몬](./Level1/폰켓몬/problem.md)
-- [완주하지 못한 선수](./Level1/%EC%99%84%EC%A3%BC%ED%95%98%EC%A7%80%20%EB%AA%BB%ED%95%9C%20%EC%84%A0%EC%88%98/problem.md)
+- [완주하지 못한 선수](./Level1/완주하지%20못한%20선수/problem.md)
 - [위장](./Level2/위장/problem.md)
+- [베스트앨범](./Level3/베스트앨범/problem.md)
 
 <br />
 
