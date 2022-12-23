@@ -1,8 +1,4 @@
-const clothes = [
-  ["yellowhat", "headgear"],
-  ["bluesunglasses", "eyewear"],
-  ["green_turban", "headgear"],
-];
+const clothes = require('fs').readFileSync('./input.txt').toString().trim().split('\n').map((str) => str.split(' ')); // prettier-ignore
 
 function solution(clothes) {
   const numberOfClothes = clothes.reduce((spy, [_, type]) => {
