@@ -1,5 +1,9 @@
 # 완주하지 못한 선수
 
+## 문제 링크
+
+https://school.programmers.co.kr/learn/courses/30/lessons/42576
+
 ## 문제 분류
 
 : 해쉬
@@ -61,7 +65,7 @@ function solution(participant, completion) {
 }
 ```
 
-### Map 객체를 이용한 코드
+### 2. Map 객체를 이용한 코드
 
 가독성이 가장 뛰어난 것 같다.
 
@@ -83,7 +87,7 @@ function solution(participant, completion) {
 }
 ```
 
-### find를 이용한 코드
+### 3. find를 이용한 코드
 
 |과 ||가 무슨 차이인가 싶을 수 있다. 하지만 이 코드에서 ||을 사용하면 틀린 값이 나오게 된다.
 
@@ -98,4 +102,29 @@ function solution(participant, completion) {
 
   return participant.find((player) => !completion[player]--, players);
 }
+```
+
+### 4. 객체의 key, value를 이용한 코드
+
+```js
+const solution = (participant, completion) => {
+  const participants = participant.reduce((acc, name) => {
+    acc[name] = (acc[name] || 0) + 1;
+    return acc;
+  }, {});
+
+  const completions = completion.reduce((acc, name) => {
+    acc[name] = (acc[name] || 0) + 1;
+    return acc;
+  }, {});
+
+  const answer = Object.keys(participants).filter((name) => {
+    return (
+      completions[name] === undefined ||
+      participants[name] !== completions[name]
+    );
+  })[0];
+
+  return answer;
+};
 ```

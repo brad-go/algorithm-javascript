@@ -1,20 +1,14 @@
-const participant = ["mislav", "stanko", "mislav", "ana"];
-const completion = ["stanko", "ana", "mislav"];
+const [participant, completion] = require('fs').readFileSync('./input.txt').toString().trim().split('\n').map((str) => str.split(' ')); // prettier-ignore
 
-function solution(participant, completion) {
-  const player = new Map();
+const solution = (participant, completion) => {
+  const players = participant.reduce((acc, name, index) => {
+    acc[name] = (acc[name] || 0) + 1;
+    acc[completion[index]] = (acc[completion[index]] || 0) - 1;
 
-  for (let i = 0; i < participant.length; i++) {
-    const p = participant[i];
-    const c = completion[i];
+    return acc;
+  }, {});
 
-    player.set(p, (player.get(p) || 0) + 1);
-    player.set(c, (player.get(c) || 0) - 1);
-  }
-
-  for (let [name, count] of player) {
-    if (count > 0) return name;
-  }
-}
+  return Object.keys(players).find((name) => players[name] > 0);
+};
 
 console.log(solution(participant, completion));
