@@ -20,6 +20,7 @@
 
 - [폰케몬](./Level1/폰켓몬/problem.md)
 - [완주하지 못한 선수](./Level1/완주하지%20못한%20선수/problem.md)
+- [같은 숫자는 싫어](./Level1/같은%20숫자는%20싫어/problem.md)
 
 #### LEVEL 2
 
@@ -48,6 +49,12 @@ key, value 쌍으로 데이터를 빠르게 찾습니다.
 - [완주하지 못한 선수](./Level1/완주하지%20못한%20선수/problem.md)
 - [위장](./Level2/위장/problem.md)
 - [베스트앨범](./Level3/베스트앨범/problem.md)
+
+#### 스택
+
+LIFO, FIFO, push & pop 등 스택과 큐를 이용해 문제를 풀이합니다.
+
+- [같은 숫자는 싫어](./Level1/같은%20숫자는%20싫어/problem.md)
 
 <br />
 
