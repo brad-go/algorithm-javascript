@@ -26,6 +26,7 @@
 
 - [위장](./Level2/위장/problem.md)
 - [기능개발](./Level2/기능개발/problem.md)
+- [올바른 괄호](./Level2/올바른%20괄호/problem.md)
 
 #### LEVEL 3
 
@@ -57,6 +58,7 @@ LIFO, FIFO, push & pop 등 스택과 큐를 이용해 문제를 풀이합니다.
 
 - [같은 숫자는 싫어](./Level1/같은%20숫자는%20싫어/problem.md)
 - [기능개발](./Level2/기능개발/problem.md)
+- [올바른 괄호](./Level2/올바른%20괄호/problem.md)
 
 <br />
 
