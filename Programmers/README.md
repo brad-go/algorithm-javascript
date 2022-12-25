@@ -25,6 +25,7 @@
 #### LEVEL 2
 
 - [위장](./Level2/위장/problem.md)
+- [기능개발](./Level2/기능개발/problem.md)
 
 #### LEVEL 3
 
@@ -55,6 +56,7 @@ key, value 쌍으로 데이터를 빠르게 찾습니다.
 LIFO, FIFO, push & pop 등 스택과 큐를 이용해 문제를 풀이합니다.
 
 - [같은 숫자는 싫어](./Level1/같은%20숫자는%20싫어/problem.md)
+- [기능개발](./Level2/기능개발/problem.md)
 
 <br />
 
