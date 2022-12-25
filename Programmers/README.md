@@ -28,6 +28,7 @@
 - [기능개발](./Level2/기능개발/problem.md)
 - [올바른 괄호](./Level2/올바른%20괄호/problem.md)
 - [프린터](./Level2/프린터/problem.md)
+- [다리를 지나는 트럭](./Level2/다리를%20지나는%20트럭/problem.md)
 
 #### LEVEL 3
 
@@ -61,6 +62,7 @@ LIFO, FIFO, push & pop 등 스택과 큐를 이용해 문제를 풀이합니다.
 - [기능개발](./Level2/기능개발/problem.md)
 - [올바른 괄호](./Level2/올바른%20괄호/problem.md)
 - [프린터](./Level2/프린터/problem.md)
+- [다리를 지나는 트럭](./Level2/다리를%20지나는%20트럭/problem.md)
 
 <br />
 
