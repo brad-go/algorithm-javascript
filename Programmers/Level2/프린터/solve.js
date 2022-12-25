@@ -1,27 +1,36 @@
-// const priorities = [2, 1, 3, 2];
-// const location = 2;
-const priorities = [1, 1, 9, 1, 1, 1];
-const location = 0;
+const input = require('fs').readFileSync('./input2.txt').toString().trim().split('\n'); // prettier-ignore
+const priorities = input[0].split(" ").map(Number);
+const location = +input[1];
 
-function solution(priorities, location) {
-  const documents = priorities.map((prirority, id) => ({ id , prirority })); // prettier-ignore
+const solution = (priorities, location) => {
+  const printerQueue = priorities.map((priority, index) => ({
+    id: index,
+    priority,
+  }));
 
-  const print = (documents, location, depth) => {
-    if (!documents.length) return;
+  return print(printerQueue, location, 1);
+};
 
-    const current = documents.shift();
-    const isPrint = documents.every(({ prirority }) => prirority <= current.prirority); // prettier-ignore
+const print = (printerQueue, location, order) => {
+  if (!printerQueue.length) {
+    return order;
+  }
 
-    if (isPrint) {
-      if (current.id === location) return depth;
-      return print(documents, location, depth + 1);
-    } else {
-      documents.push(current);
-      return print(documents, location, depth);
-    }
-  };
+  const current = printerQueue.shift();
+  const canPrint = printerQueue.every(
+    ({ priority }) => priority <= current.priority
+  );
 
-  return print(documents, location, 1);
-}
+  if (!canPrint) {
+    printerQueue.push(current);
+    return print(printerQueue, location, order);
+  }
+
+  if (current.id === location) {
+    return order;
+  }
+
+  return print(printerQueue, location, order + 1);
+};
 
 console.log(solution(priorities, location));

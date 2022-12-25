@@ -40,3 +40,74 @@ function solution(priorities, location) {
   return print(documents, location, 1);
 }
 ```
+
+## 코드 개선
+
+함수를 분할하고, if-else 문 대신에 ealry return을 사용해서 들여쓰기를 단계를 줄였다.
+
+```js
+const solution = (priorities, location) => {
+  const printerQueue = priorities.map((priority, index) => ({
+    id: index,
+    priority,
+  }));
+
+  return print(printerQueue, location, 1);
+};
+
+const print = (printerQueue, location, order) => {
+  if (!printerQueue.length) {
+    return order;
+  }
+
+  const current = printerQueue.shift();
+  const canPrint = printerQueue.every(
+    ({ priority }) => priority <= current.priority
+  );
+
+  if (!canPrint) {
+    printerQueue.push(current);
+    return print(printerQueue, location, order);
+  }
+
+  if (current.id === location) {
+    return order;
+  }
+
+  return print(printerQueue, location, order + 1);
+};
+```
+
+## 코드 개선 2
+
+재귀 함수 대신에 while문을 사용해서 오버헤드를 피할 수 있다.
+
+```js
+const solution = (priorities, location) => {
+  const printerQueue = priorities.map((priority, index) => ({
+    id: index,
+    priority,
+  }));
+
+  let order = 1;
+  while (printerQueue.length > 0) {
+    const current = printerQueue.shift();
+    const canPrint = printerQueue.every(
+      ({ priority }) => priority <= current.priority
+    );
+
+    if (!canPrint) {
+      printerQueue.push(current);
+      continue;
+    }
+
+    if (current.id === location) {
+      return order;
+    }
+
+    order++;
+  }
+
+  return order;
+};
+```
