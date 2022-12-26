@@ -24,6 +24,7 @@
 - [완주하지 못한 선수](./Level1/완주하지%20못한%20선수/problem.md)
 - [같은 숫자는 싫어](./Level1/같은%20숫자는%20싫어/problem.md)
 - [K번째수](./Level1/K번째수/problem.md)
+- [최소직사각형](./Level1/최소직사각형/problem.md)
 
 #### LEVEL 2
 
@@ -71,11 +72,17 @@ LIFO, FIFO, push & pop 등 스택과 큐를 이용해 문제를 풀이합니다.
 
 #### 정렬
 
-정렬을 이용해 효율적으로 문제를 해결합니다.
+어떤 데이터가 주어졌을 때 이를 정해진 순서대로 재배치하여 정답을 찾는 방법입니다.
 
 - [K번째수](./Level1/K번째수/problem.md)
 - [가장 큰 수](./Level2/가장%20큰%20수/problem.md)
 - [H-Index](./Level2/H-Index/problem.md)
+
+#### 완전탐색(BruteForce)
+
+간단히 가능한 모든 경우의 수를 다 체크해서 정답을 찾는 방법입니다.
+
+- [최소직사각형](./Level1/최소직사각형/problem.md)
 
 <br />
 
