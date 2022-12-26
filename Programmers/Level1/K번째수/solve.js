@@ -1,15 +1,12 @@
-const array = [1, 5, 2, 6, 3, 7, 4];
-const commands = [
-  [2, 5, 3],
-  [4, 4, 1],
-  [1, 7, 3],
-];
+const input = require('fs').readFileSync('./input.txt').toString().trim().split('\n'); // prettier-ignore
+const array = input[0].split(" ").map(Number);
+const commands = input.slice(1).map((str) => str.split(" ").map(Number));
 
-function solution(array, commands) {
-  return commands.map(([startIndex, endIndex, index]) => {
-    const newArray = array.slice(startIndex - 1, endIndex).sort((a, b) => a - b); // prettier-ignore
+const solution = (array, commands) => {
+  return commands.map(([start, end, index]) => {
+    const newArray = array.slice(start - 1, end).sort((a, b) => a - b);
     return newArray[index - 1];
   });
-}
+};
 
 console.log(solution(array, commands));

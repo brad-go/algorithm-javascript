@@ -1,5 +1,9 @@
 # K번째수
 
+## 문제 링크
+
+https://school.programmers.co.kr/learn/courses/30/lessons/42748
+
 ## 문제 분류
 
 : 정렬
@@ -11,52 +15,46 @@
 - 정렬된 배열에 입력받은 인덱스를 answer 배열에 넣는다.
 
 ```js
-function solution(array, commands) {
-  // prettier-ignore
-  const quickSort = (array, left = 0, right = array.length - 1) => { 
-    if (left >= right) return array;
-
-    const pivot = partition(array, left, right);
-
-    if (left < pivot - 1) quickSort(array, left, pivot - 1);
-    if (pivot < right) quickSort(array, pivot, right);
-
-    return array;
-  };
-
-  const partition = (array, left, right) => {
-    const pivot = array[Math.floor((left + right) / 2)];
-
-    while (left <= right) {
-      while (array[left] < pivot) left++;
-      while (array[right] > pivot) right--;
-
-      if (left <= right) {
-        swap(array, left, right);
-        left++;
-        right--;
-      }
-    }
-
-    return left;
-  };
-
-  const swap = (array, idx1, idx2) => {
-    const temp = array[idx1];
-    array[idx1] = array[idx2];
-    array[idx2] = temp;
-  };
-
-  const answer = [];
-
-  commands.forEach((command) => {
-    const [left, right, targetIndex] = command;
-    const target = quickSort(array.slice(left - 1, right))[targetIndex - 1];
-    answer.push(target);
+const solution = (array, commands) => {
+  return commands.map(([start, end, targetIndex]) => {
+    const target = quickSort(array.slice(start - 1, end))[targetIndex - 1];
+    return target;
   });
+};
 
-  return answer;
-}
+const quickSort = (array, left = 0, right = array.length - 1) => {
+  if (left >= right) return array;
+
+  const pivot = partition(array, left, right);
+
+  if (left < pivot - 1) quickSort(array, left, pivot - 1);
+  if (pivot < right) quickSort(array, pivot, right);
+
+  return array;
+};
+
+const partition = (array, left, right) => {
+  const pivot = array[Math.floor((left + right) / 2)];
+
+  while (left <= right) {
+    while (array[left] < pivot) left++;
+    while (array[right] > pivot) right--;
+
+    if (left <= right) {
+      swap(array, left, right);
+      left++;
+      right--;
+    }
+  }
+
+  return left;
+};
+
+const swap = (array, idx1, idx2) => {
+  const temp = array[idx1];
+  array[idx1] = array[idx2];
+  array[idx2] = temp;
+};
 ```
 
 ## 코드 개선

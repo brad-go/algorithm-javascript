@@ -21,6 +21,7 @@
 - [폰케몬](./Level1/폰켓몬/problem.md)
 - [완주하지 못한 선수](./Level1/완주하지%20못한%20선수/problem.md)
 - [같은 숫자는 싫어](./Level1/같은%20숫자는%20싫어/problem.md)
+- [K번째수](./Level1/K번째수/problem.md)
 
 #### LEVEL 2
 
@@ -63,6 +64,12 @@ LIFO, FIFO, push & pop 등 스택과 큐를 이용해 문제를 풀이합니다.
 - [올바른 괄호](./Level2/올바른%20괄호/problem.md)
 - [프린터](./Level2/프린터/problem.md)
 - [다리를 지나는 트럭](./Level2/다리를%20지나는%20트럭/problem.md)
+
+#### 정렬
+
+정렬을 이용해 효율적으로 문제를 해결합니다.
+
+- [K번째수](./Level1/K번째수/problem.md)
 
 <br />
 
