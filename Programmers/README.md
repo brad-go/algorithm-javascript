@@ -39,6 +39,7 @@
 - [H-Index](./Level2/H-Index/problem.md)
 - [소수 찾기](./Level2/소수%20찾기/problem.md)
 - [카펫](./Level2/카펫/problem.md)
+- [피로도](./Level2/피로도/problem.md)
 
 #### LEVEL 3
 
@@ -90,6 +91,7 @@ LIFO, FIFO, push & pop 등 스택과 큐를 이용해 문제를 풀이합니다.
 - [모의고사](./Level1/모의고사/problem.md)
 - [소수 찾기](./Level2/소수%20찾기/problem.md)
 - [카펫](./Level2/카펫/problem.md)
+- [피로도](./Level2/피로도/problem.md)
 
 <br />
 
