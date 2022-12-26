@@ -37,6 +37,7 @@
 - [다리를 지나는 트럭](./Level2/다리를%20지나는%20트럭/problem.md)
 - [가장 큰 수](./Level2/가장%20큰%20수/problem.md)
 - [H-Index](./Level2/H-Index/problem.md)
+- [소수 찾기](./Level2/소수%20찾기/problem.md)
 
 #### LEVEL 3
 
@@ -86,6 +87,7 @@ LIFO, FIFO, push & pop 등 스택과 큐를 이용해 문제를 풀이합니다.
 
 - [최소직사각형](./Level1/최소직사각형/problem.md)
 - [모의고사](./Level1/모의고사/problem.md)
+- [소수 찾기](./Level2/소수%20찾기/problem.md)
 
 <br />
 

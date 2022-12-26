@@ -1,146 +1,133 @@
 # 소수 찾기
 
+## 문제 링크
+
+https://school.programmers.co.kr/learn/courses/30/lessons/42839
+
 ## 문제 분류
 
 : 완전 탐색
 
-## 문제 설명
+## 풀이 과정
 
-한자리 숫자가 적힌 종이 조각이 흩어져있습니다. 흩어진 종이 조각을 붙여 소수를 몇 개 만들 수 있는지 알아내려 합니다.
+일반적인 순열 알고리즘에서 조금 변형이 필요했다. 숫자가 아닌 문자열을 다뤘기 때문인데, 이를 해결하기 위해 `flat()`과 `join()` 메서드를 사용했다.
 
-각 종이 조각에 적힌 숫자가 적힌 문자열 numbers가 주어졌을 때, 종이 조각으로 만들 수 있는 소수가 몇 개인지 return 하도록 solution 함수를 완성해주세요.
+소수를 구하는 알고리즘도 조금 더 효율적인 방식으로 할 수 있을 것 같았는데, 기억이 나지 않았다.
 
-## 제한 사항
-
-- numbers는 길이 1 이상 7 이하인 문자열입니다.
-- numbers는 0~9까지 숫자만으로 이루어져 있습니다.
-- "013"은 0, 1, 3 숫자가 적힌 종이 조각이 흩어져있다는 의미입니다.
-
-## 입출력 예
-
-| numbers | return |
-| ------- | ------ |
-| "17"    | 3      |
-| "011"   | 2      |
-
-## 입출력 예 설명
-
-### 입출력 예 #1
-
-[1, 7]으로는 소수 [7, 17, 71]를 만들 수 있습니다.
-
-### 입출력 예 #2
-
-[0, 1, 1]으로는 소수 [11, 101]를 만들 수 있습니다.
-
-11과 011은 같은 숫자로 취급합니다.
-
-<details><summary><b>문제 풀이</b></summary><div markdown="1">
-
-문제를 보고 해결 방법은 간단하게 떠올랐다.
-
-1. 소수임을 판별하는 함수
-2. 각 수를 쪼개고 조합해서 소수인지 체크하는 함수
-
-이 두가지 기능을 가진 함수만 있으면 이 문제를 해결할 수 있다고 생각했다.
-
-우선 소수임을 판별하기 위한 함수 isPrime을 만들었다. 에라토스 테네스의 체를 이용해서 문제를 풀이하고 싶었는데, 방법이 떠오르지 않아서 간단하게 구현했다.
+1. 주어진 문자열을 쪼개서 배열로 만든다.
+2. 순열을 통해 만들 수 있는 수의 모든 경우의 수를 구해준다.
+3. 중복 숫자를 제거해준다.
+4. 소수만을 남기고 모두 제외한다.
+5. 소수의 개수를 반환한다.
 
 ```js
-const isPrime = (num) => {
-  if (num < 2) return false;
+const solution = (numbers) => {
+  // 문자열을 배열로 분할해주기
+  const pieces = numbers.split("");
 
-  for (let i = 2; i < num; i++) {
-    if (num % i === 0) return false;
+  // 중복을 제거한 각 문자로 만들 수 있는 모든 수
+  const uniqueNumbers = pieces.reduce((acc, cur, index) => {
+    // 각 자릿수마다 만들 수 있는 모든 수를 구하기
+    const perm = getPermutations(pieces, index + 1)
+      .flat()
+      .map(Number);
+
+    // 중복 숫자 제거
+    return [...new Set([...acc, ...perm])];
+  }, []);
+
+  // 소수만 남기고 제거
+  const primeNumbers = uniqueNumbers.filter(isPrimeNumber);
+
+  return primeNumbers.length;
+};
+
+const getPermutations = (array, selectNumber) => {
+  const results = [];
+
+  if (selectNumber === 1) {
+    return array.map((value) => [value]);
+  }
+
+  array.forEach((fixed, index, origin) => {
+    const rest = [...origin.slice(0, index), ...origin.slice(index + 1)];
+    // 문자열이 합쳐져야 하기 때문에 겹겹이 겹쳐진 배열을 flat을 통해 1차원 배열로 만들기
+    const permutations = getPermutations(rest, selectNumber - 1).flat();
+    // join을 통해 문자열을 합쳐서 하나의 숫자를 나타내는 문자열로 만들기
+    const attached = permutations.map((permutation) =>
+      [fixed, ...permutation].join("")
+    );
+
+    results.push(attached);
+  });
+
+  return results;
+};
+
+const isPrimeNumber = (number) => {
+  if (number < 2) {
+    return false;
+  }
+
+  for (let i = 2; i < number; i++) {
+    if (number % i === 0) {
+      return false;
+    }
   }
 
   return true;
 };
 ```
 
-그 다음 순열을 통해서 순서에 상관없이 모든 수를 체크하도록 만들었다.
+## 코드 개선
 
 ```js
-// 선택한 수라면 건너뛰기 위해 selected 배열을 이용해준다.
-const selected = new Array(numbers.length).fill(false);
-// 재귀 함수 perm이 종료될 때, 소수를 저장할 배열
-const nums = [];
+const solution = (numbers) => {
+  const pieces = numbers.split("");
+  const permutations = getPermutations(pieces);
+  const primeNumbers = getPrimeNumbers([...permutations]);
 
-const perm = (cnt, max) => {
-  // max에 도달하면
-  if (cnt === max) {
-    // ...
+  return primeNumbers.length;
+};
+
+const getPermutations = (array) => {
+  const set = new Set();
+
+  for (let i = 1; i <= array.length; i++) {
+    permutation(array, i, "", set);
   }
 
-  for (let i = 0; i < numbers.length; i++) {
-    if (selected[i]) continue;
+  return set;
+};
 
-    selected[i] = true;
-    nums[cnt] = numbers[i];
-    perm(cnt + 1, max);
-    selected[i] = false;
+const permutation = (array, selectNumber, current, set) => {
+  if (selectNumber === 0) {
+    set.add(Number(current));
+    return;
   }
+
+  array.forEach((value, index) => {
+    const rest = [...array.slice(0, index), ...array.slice(index + 1)];
+
+    permutation(rest, selectNumber - 1, current + value, set);
+  });
+};
+
+const getPrimeNumbers = (numbers) => {
+  return numbers.filter(isPrimeNumber);
+};
+
+const isPrimeNumber = (number) => {
+  if (number < 2) {
+    return false;
+  }
+
+  for (let i = 2; i <= Math.sqrt(number); i++) {
+    if (number % i === 0) {
+      return false;
+    }
+  }
+
+  return true;
 };
 ```
-
-그리고 이제 반복문을 통해 max(자릿 수)를 지정해주고, 소수를 저장해주었다.
-
-```js
-if (cnt === max) {
-  const num = Number(nums.join(""));
-  if (isPrime(num) && primeNums.indexOf(num) === -1) primeNums.push(num);
-  return;
-}
-
-// ...
-
-for (let i = 1; i <= numbers.length; i++) {
-  perm(0, i);
-}
-```
-
-#### 전체 코드
-
-```js
-function Solution(numbers) {
-  // 소수 판별함수
-  const isPrime = (num) => {
-    if (num < 2) return false;
-
-    for (let i = 2; i < num; i++) {
-      if (num % i === 0) return false;
-    }
-
-    return true;
-  };
-
-  const primeNums = [];
-  const selected = new Array(numbers.length).fill(false);
-  const nums = [];
-
-  const perm = (cnt, max) => {
-    if (cnt === max) {
-      const num = Number(nums.join(""));
-      if (isPrime(num) && primeNums.indexOf(num) === -1) primeNums.push(num);
-      return;
-    }
-
-    for (let i = 0; i < numbers.length; i++) {
-      if (selected[i]) continue;
-
-      selected[i] = true;
-      nums[cnt] = numbers[i];
-      perm(cnt + 1, max);
-      selected[i] = false;
-    }
-  };
-
-  for (let i = 1; i <= numbers.length; i++) {
-    perm(0, i);
-  }
-
-  console.log(primeNums.length);
-}
-```
-
-</div></details>
