@@ -1,15 +1,8 @@
-const numbers = [3, 30, 34, 5, 9];
+const numbers = require('fs').readFileSync('./input.txt').toString().trim().split(' ').map(Number); // prettier-ignore
 
-function solution(numbers) {
-  const answer = numbers.sort(customSortFunction).join("").replace(/(^0+)/, 0);
-  return answer;
-}
-
-const customSortFunction = (a, b) => {
-  const compareA = parseInt(a.toString() + b.toString());
-  const compareB = parseInt(b.toString() + a.toString());
-
-  return compareB - compareA;
+const solution = (numbers) => {
+  const answer = numbers.sort((a, b) => `${b}${a}` - `${a}${b}`).join("");
+  return answer[0] === "0" ? "0" : answer;
 };
 
 console.log(solution(numbers));
