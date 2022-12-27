@@ -41,6 +41,7 @@
 - [카펫](./Level2/카펫/problem.md)
 - [피로도](./Level2/피로도/problem.md)
 - [전력망을 둘로 나누기](./Level2/전력망을%20둘로%20나누기/problem.md)
+- [모음 사전](./Level2/모음%20사전/problem.md)
 
 #### LEVEL 3
 
@@ -94,6 +95,7 @@ LIFO, FIFO, push & pop 등 스택과 큐를 이용해 문제를 풀이합니다.
 - [카펫](./Level2/카펫/problem.md)
 - [피로도](./Level2/피로도/problem.md)
 - [전력망을 둘로 나누기](./Level2/전력망을%20둘로%20나누기/problem.md)
+- [모음 사전](./Level2/모음%20사전/problem.md)
 
 <br />
 
