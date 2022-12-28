@@ -1,5 +1,9 @@
 # 단어 변환
 
+## 문제 링크
+
+https://school.programmers.co.kr/learn/courses/30/lessons/43163
+
 ## 문제 분류
 
 : DFS/BFS

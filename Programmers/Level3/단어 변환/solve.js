@@ -1,32 +1,36 @@
-const begin = "hit";
-const target = "cog";
-const words = ["hot", "dot", "dog", "lot", "log", "cog"];
+const input = require('fs').readFileSync('./input.txt').toString().trim().split('\n'); // prettier-ignore
+const begin = input[0];
+const target = input[1];
+const words = input[2].split(" ");
 
-function solution(begin, target, words) {
-  if (!words.includes(target)) return 0;
+const solution = (begin, target, words) => {
+  if (!new Set(words).has(target)) {
+    return 0;
+  }
 
-  const q = [[begin, 0]];
+  const queue = [[begin, 0]];
 
-  while (q.length) {
-    const [currentWord, depth] = q.shift();
+  while (queue.length) {
+    const [current, depth] = queue.shift();
 
-    for (let i = 0; i < words.length; i++) {
-      if (isConvertable(currentWord, words[i])) {
-        if (currentWord === target) return depth;
-        q.push([words[i], depth + 1]);
-      }
+    if (current === target) {
+      return depth;
     }
-  }
-}
 
-const isConvertable = (currentWord, wordToChange) => {
-  let difference = 0;
-
-  for (let i = 0; i < currentWord.length; i++) {
-    if (currentWord[i] !== wordToChange[i]) difference++;
+    words.forEach((word) => {
+      if (isChangeable(current, word)) {
+        queue.push([word, depth + 1]);
+      }
+    });
   }
 
-  return difference > 1 ? false : true;
+  return 0;
+};
+
+const isChangeable = (word, target) => {
+  const diff = [...word].filter((char, index) => char !== target[index]);
+
+  return diff.length === 1;
 };
 
 console.log(solution(begin, target, words));
