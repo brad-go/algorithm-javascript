@@ -39,9 +39,9 @@
 - [가장 큰 수](./Level2/가장%20큰%20수/problem.md)
 - [H-Index](./Level2/H-Index/problem.md)
 - [소수 찾기](./Level2/소수%20찾기/problem.md)
-- [카펫](./Level2/카펫/problem.md)
+- [카펫](./Level2/카펫/problem.md) <sup>다시 풀기</sup>
 - [피로도](./Level2/피로도/problem.md)
-- [전력망을 둘로 나누기](./Level2/전력망을%20둘로%20나누기/problem.md)
+- [전력망을 둘로 나누기](./Level2/전력망을%20둘로%20나누기/problem.md) <sup>다시 풀기</sup>
 - [모음 사전](./Level2/모음%20사전/problem.md)
 - [타겟 넘버](./Level2/타겟%20넘버/problem.md)
 
@@ -49,6 +49,7 @@
 
 - [베스트앨범](./Level3/베스트앨범/problem.md)
 - [단어 변환](./Level3/단어%20변환/problem.md)
+- [디스크 컨트롤러](./Level3/더%20맵게/problem.md) <sup>다시 풀기</sup>
 
 #### LEVEL 4
 
@@ -80,6 +81,12 @@ LIFO, FIFO, push & pop 등 스택과 큐를 이용해 문제를 풀이합니다.
 - [프린터](./Level2/프린터/problem.md)
 - [다리를 지나는 트럭](./Level2/다리를%20지나는%20트럭/problem.md)
 
+#### 힙
+
+힙은 특정한 규칙을 가지는 트리로, 힙을 이용해서 우선순위 큐를 구현할 수 있습니다.
+
+- [디스크 컨트롤러](./Level3/더%20맵게/problem.md) <sup>다시 풀기</sup>
+
 #### 정렬
 
 어떤 데이터가 주어졌을 때 이를 정해진 순서대로 재배치하여 정답을 찾는 방법입니다.
@@ -95,9 +102,9 @@ LIFO, FIFO, push & pop 등 스택과 큐를 이용해 문제를 풀이합니다.
 - [최소직사각형](./Level1/최소직사각형/problem.md)
 - [모의고사](./Level1/모의고사/problem.md)
 - [소수 찾기](./Level2/소수%20찾기/problem.md)
-- [카펫](./Level2/카펫/problem.md)
+- [카펫](./Level2/카펫/problem.md) <sup>다시 풀기</sup>
 - [피로도](./Level2/피로도/problem.md)
-- [전력망을 둘로 나누기](./Level2/전력망을%20둘로%20나누기/problem.md)
+- [전력망을 둘로 나누기](./Level2/전력망을%20둘로%20나누기/problem.md) <sup>다시 풀기</sup>
 - [모음 사전](./Level2/모음%20사전/problem.md)
 
 #### 깊이/너비 우선 탐색 (DFS/BFS)
