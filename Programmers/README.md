@@ -50,6 +50,7 @@
 - [베스트앨범](./Level3/베스트앨범/problem.md)
 - [단어 변환](./Level3/단어%20변환/problem.md)
 - [디스크 컨트롤러](./Level3/더%20맵게/problem.md) <sup>다시 풀기</sup>
+- [이중우선순위큐](./Level3/이중우선순위큐/problem.md)
 
 #### LEVEL 4
 
@@ -86,6 +87,7 @@ LIFO, FIFO, push & pop 등 스택과 큐를 이용해 문제를 풀이합니다.
 힙은 특정한 규칙을 가지는 트리로, 힙을 이용해서 우선순위 큐를 구현할 수 있습니다.
 
 - [디스크 컨트롤러](./Level3/더%20맵게/problem.md) <sup>다시 풀기</sup>
+- [이중우선순위큐](./Level3/이중우선순위큐/problem.md)
 
 #### 정렬
 
