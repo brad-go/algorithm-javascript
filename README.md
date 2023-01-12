@@ -4,6 +4,10 @@
 
 ## 목차
 
+- [프로그래머스](./Programmers/)
+
+## 알고리즘 개념
+
 - [동적 계획법](#dynamic-programming-동적-계획법)
 - [LIS](#lis-최장-증가-부분-수열)
 - [LCS](#lcs-알고리즘)
