@@ -45,6 +45,7 @@
 - [모음 사전](./Level2/모음%20사전/problem.md)
 - [타겟 넘버](./Level2/타겟%20넘버/problem.md)
 - [가장 큰 정사각형 찾기](./Level2/가장%20큰%20정사각형%20찾기/problem.md) <sup>다시 풀기</sup>
+- [k진수에서 소수 개수 구하기](./Level2/k진수에서%20소수%20개수%20구하기/problem.md)
 
 #### LEVEL 3
 
