@@ -46,6 +46,7 @@
 - [타겟 넘버](./Level2/타겟%20넘버/problem.md)
 - [가장 큰 정사각형 찾기](./Level2/가장%20큰%20정사각형%20찾기/problem.md) <sup>다시 풀기</sup>
 - [k진수에서 소수 개수 구하기](./Level2/k진수에서%20소수%20개수%20구하기/problem.md)
+- [124 나라의 숫자](./Level2/124%20나라의%20숫자/problem.md)
 
 #### LEVEL 3
 
@@ -123,6 +124,12 @@ LIFO, FIFO, push & pop 등 스택과 큐를 이용해 문제를 풀이합니다.
 
 - [타겟 넘버](./Level2/타겟%20넘버/problem.md)
 - [단어 변환](./Level3/단어%20변환/problem.md)
+
+#### 구현(Implementation)
+
+문제의 요구사항을 구현하거나 시뮬레이션을 통해 문제를 풀이합니다.
+
+- [124 나라의 숫자](./Level2/124%20나라의%20숫자/problem.md)
 
 <br />
 
