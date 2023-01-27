@@ -48,6 +48,7 @@
 - [k진수에서 소수 개수 구하기](./Level2/k진수에서%20소수%20개수%20구하기/problem.md)
 - [124 나라의 숫자](./Level2/124%20나라의%20숫자/problem.md)
 - [후보키](./Level2/후보키/problem.md) <sup>다시 풀기</sup>
+- [하노이의 탑](./Level2/하노이의%20탑/problem.md) <sup>다시 풀기</sup>
 
 #### LEVEL 3
 
@@ -132,6 +133,7 @@ LIFO, FIFO, push & pop 등 스택과 큐를 이용해 문제를 풀이합니다.
 
 - [124 나라의 숫자](./Level2/124%20나라의%20숫자/problem.md)
 - [후보키](./Level2/후보키/problem.md) <sup>다시 풀기</sup>
+- [하노이의 탑](./Level2/하노이의%20탑/problem.md) <sup>다시 풀기</sup>
 
 <br />
 
