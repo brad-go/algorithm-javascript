@@ -51,6 +51,7 @@
 - [124 나라의 숫자](./Level2/124%20나라의%20숫자/problem.md)
 - [후보키](./Level2/후보키/problem.md) <sup>다시 풀기</sup>
 - [하노이의 탑](./Level2/하노이의%20탑/problem.md) <sup>다시 풀기</sup>
+- [택배상자](./Level2/택배상자/problem.md)
 
 #### LEVEL 3
 
@@ -88,6 +89,7 @@ LIFO, FIFO, push & pop 등 스택과 큐를 이용해 문제를 풀이합니다.
 - [올바른 괄호](./Level2/올바른%20괄호/problem.md)
 - [프린터](./Level2/프린터/problem.md)
 - [다리를 지나는 트럭](./Level2/다리를%20지나는%20트럭/problem.md)
+- [택배상자](./Level2/택배상자/problem.md)
 
 #### 힙
 
