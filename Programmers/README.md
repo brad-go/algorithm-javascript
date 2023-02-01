@@ -142,6 +142,7 @@ LIFO, FIFO, push & pop 등 스택과 큐를 이용해 문제를 풀이합니다.
 #### 수학
 
 - [N개의 최소공배수](./Level2/N개의%20최소공배수/problem.md)
+- [행렬이 곱셈](./Level2/행렬의%20곱셈/problem.md)
 
 <br />
 
