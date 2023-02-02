@@ -52,6 +52,7 @@
 - [후보키](./Level2/후보키/problem.md) <sup>다시 풀기</sup>
 - [하노이의 탑](./Level2/하노이의%20탑/problem.md) <sup>다시 풀기</sup>
 - [택배상자](./Level2/택배상자/problem.md)
+- [JadenCase 문자열 만들기](./Level2/JadenCase%20문자열%20만들기/problem.md)
 
 #### LEVEL 3
 
@@ -143,6 +144,10 @@ LIFO, FIFO, push & pop 등 스택과 큐를 이용해 문제를 풀이합니다.
 
 - [N개의 최소공배수](./Level2/N개의%20최소공배수/problem.md)
 - [행렬이 곱셈](./Level2/행렬의%20곱셈/problem.md)
+
+#### 문자열
+
+- [JadenCase 문자열 만들기](./Level2/JadenCase%20문자열%20만들기/problem.md)
 
 <br />
 
