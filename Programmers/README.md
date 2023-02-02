@@ -53,6 +53,7 @@
 - [하노이의 탑](./Level2/하노이의%20탑/problem.md) <sup>다시 풀기</sup>
 - [택배상자](./Level2/택배상자/problem.md)
 - [JadenCase 문자열 만들기](./Level2/JadenCase%20문자열%20만들기/problem.md)
+- [N-Queen](./Level2/N-Queen/problem.md) <sup>다시 풀기</sup>
 
 #### LEVEL 3
 
@@ -118,6 +119,7 @@ LIFO, FIFO, push & pop 등 스택과 큐를 이용해 문제를 풀이합니다.
 - [피로도](./Level2/피로도/problem.md)
 - [전력망을 둘로 나누기](./Level2/전력망을%20둘로%20나누기/problem.md) <sup>다시 풀기</sup>
 - [모음 사전](./Level2/모음%20사전/problem.md)
+- [N-Queen](./Level2/N-Queen/problem.md) <sup>다시 풀기</sup>
 
 #### 다이나믹 프로그래밍(Dynamic Programming)
 
