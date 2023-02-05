@@ -55,6 +55,7 @@
 - [JadenCase 문자열 만들기](./Level2/JadenCase%20문자열%20만들기/problem.md)
 - [N-Queen](./Level2/N-Queen/problem.md) <sup>다시 풀기</sup>
 - [짝지어 제거하기](./Level2/짝지어%20제거하기/problem.md)
+- [배달](./Level2/배달/problem.md)
 
 #### LEVEL 3
 
@@ -135,6 +136,7 @@ LIFO, FIFO, push & pop 등 스택과 큐를 이용해 문제를 풀이합니다.
 
 - [타겟 넘버](./Level2/타겟%20넘버/problem.md)
 - [단어 변환](./Level3/단어%20변환/problem.md)
+- [배달](./Level2/배달/problem.md)
 
 #### 구현(Implementation)
 
