@@ -19,6 +19,7 @@
 - [깊이/너비 우선 탐색(DFS/BFS)](#깊이너비-우선-탐색-dfsbfs)
 - [구현](#구현implementation)
 - [수학](#수학)
+- [문자열](#문자열)
 
 ## 난이도 별 분류
 
@@ -147,6 +148,7 @@ LIFO, FIFO, push & pop 등 스택과 큐를 이용해 문제를 풀이합니다.
 - [124 나라의 숫자](./Level2/124%20나라의%20숫자/problem.md)
 - [후보키](./Level2/후보키/problem.md) <sup>다시 풀기</sup>
 - [하노이의 탑](./Level2/하노이의%20탑/problem.md) <sup>다시 풀기</sup>
+- [영어 끝말잇기](./Level2/영어%20끝말잇기/problem.md)
 
 #### 수학
 
