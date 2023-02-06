@@ -56,6 +56,7 @@
 - [N-Queen](./Level2/N-Queen/problem.md) <sup>다시 풀기</sup>
 - [짝지어 제거하기](./Level2/짝지어%20제거하기/problem.md)
 - [배달](./Level2/배달/problem.md)
+- [점프와 순간이동](./Level2/점프와%20순간이동/problem.md)
 
 #### LEVEL 3
 
@@ -129,6 +130,7 @@ LIFO, FIFO, push & pop 등 스택과 큐를 이용해 문제를 풀이합니다.
 불필요한 계산을 줄이고, 효율적으로 최적해를 찾아 문제를 풀이합니다.
 
 - [가장 큰 정사각형 찾기](./Level2/가장%20큰%20정사각형%20찾기/problem.md) <sup>다시 풀기</sup>
+- [점프와 순간이동](./Level2/점프와%20순간이동/problem.md)
 
 #### 깊이/너비 우선 탐색 (DFS/BFS)
 
