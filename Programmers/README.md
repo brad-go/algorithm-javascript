@@ -59,6 +59,7 @@
 - [배달](./Level2/배달/problem.md)
 - [점프와 순간이동](./Level2/점프와%20순간이동/problem.md)
 - [예상 대진표](./Level2/예상%20대진표/problem.md)
+- [뉴스 클러스터링](./Level2/뉴스%20클러스터링/problem.md)
 
 #### LEVEL 3
 
@@ -151,6 +152,7 @@ LIFO, FIFO, push & pop 등 스택과 큐를 이용해 문제를 풀이합니다.
 - [하노이의 탑](./Level2/하노이의%20탑/problem.md) <sup>다시 풀기</sup>
 - [영어 끝말잇기](./Level2/영어%20끝말잇기/problem.md)
 - [예상 대진표](./Level2/예상%20대진표/problem.md)
+- [뉴스 클러스터링](./Level2/뉴스%20클러스터링/problem.md)
 
 #### 수학
 
