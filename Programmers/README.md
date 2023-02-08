@@ -61,6 +61,7 @@
 - [예상 대진표](./Level2/예상%20대진표/problem.md)
 - [뉴스 클러스터링](./Level2/뉴스%20클러스터링/problem.md)
 - [프렌즈4블록](./Level2/프렌즈4블록/problem.md)
+- [빛의 경로 사이클](./Level2/빛의%20경로%20사이클/problem.md)
 
 #### LEVEL 3
 
@@ -128,6 +129,7 @@ LIFO, FIFO, push & pop 등 스택과 큐를 이용해 문제를 풀이합니다.
 - [전력망을 둘로 나누기](./Level2/전력망을%20둘로%20나누기/problem.md) <sup>다시 풀기</sup>
 - [모음 사전](./Level2/모음%20사전/problem.md)
 - [N-Queen](./Level2/N-Queen/problem.md) <sup>다시 풀기</sup>
+- [빛의 경로 사이클](./Level2/빛의%20경로%20사이클/problem.md)
 
 #### 다이나믹 프로그래밍(Dynamic Programming)
 

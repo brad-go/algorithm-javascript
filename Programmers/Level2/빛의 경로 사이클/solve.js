@@ -1,3 +1,5 @@
+const grid = require('fs').readFileSync('./input.txt').toString().trim().split(' '); // prettier-ignore
+
 const solution = (grid) => {
   const ROW_LEN = grid.length;
   const COL_LEN = grid[0].length;
@@ -45,3 +47,5 @@ const solution = (grid) => {
 
   return cycles.sort((a, b) => a - b);
 };
+
+console.log(solution(grid));
