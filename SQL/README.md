@@ -14,7 +14,8 @@
 - [조건문](#where-조건문)
 - [정렬하기](#order-by-정렬하기)
 - [문자열 자르기](#substr-substring-left-right-문자열-자르기)
-- [날짜 출력하기]()
+- [날짜 출력하기](#날짜-출력하기)
+- [두 개의 테이블에서 데이터 추출하기](#두-개의-테이블에서-데이터-추출하기-join)
 
 ### 데이터 읽어오기 (SELECT)
 
@@ -165,6 +166,72 @@ SELECT MINUTE('2023-02-09 09:25:07') -- 25
 SELECT SECOND('2023-02-09 09:25:07') -- 7
 ```
 
+### 두 개의 테이블에서 데이터 추출하기 (JOIN)
+
+![내부 조인](https://hongong.hanbit.co.kr/wp-content/uploads/2021/11/%ED%98%BC%EC%9E%90-%EA%B3%B5%EB%B6%80%ED%95%98%EB%8A%94-SQL_INNER-JOIN.png)
+[출처: 혼공러들의 스터디 공간]
+
+두 개의 테이블을 엮어야 결과를 얻을 수 있을 때는 JOIN을 사용합니다. 두 테이블의 조인을 위해서는
+**기본키와 외래키 관계**로 이루어져 있어야 하며, 이것을 **일대다 관계**라고 합니다.
+
+JOIN은 두 개의 테이블을 서로 묶어서 하나의 결과를 만들어 내는 것입니다. JOIN에는 4가지 종류가 있는데, INNER JOIN, OUTER JOIN, CROSS JOIN, SELF JOIN이 있습니다.
+
+#### INNER JOIN(내부 조인)
+
+기본적인 JOIN을 의미하며 두 테이블을 연결할 때 가장 많이 사용하는 것이 내부 조인입니다. 두 테이블에 모두 지정한 컬럼의 데이터가 있어야 합니다. 교집합을 만드는 것과 비슷합니다.
+
+```sql
+SELECT 컬럼 목록
+FROM 첫 번째 테이블
+  INNER JOIN 두 번째 테이블 -- INNER JOIN을 JOIN이라고 작성해도 같은 역할을 합니다.
+  ON 조인될 조건
+WHERE 검색 조건
+```
+
+#### OUTER JOIN(외부 조인)
+
+![외부 조인](https://hongong.hanbit.co.kr/wp-content/uploads/2021/11/OUTER-JOIN_%EB%8D%94%EC%95%8C%EC%95%84%EB%B3%B4%EA%B8%B0.png)
+[출처: 혼공러들의 스터디 공간]
+
+INNER JOIN과 달리 두 테이블에 모두 데이터가 있어야 결과가 나오는 것이 아니라, OUTER JOIN은 한 쪽 테이블에만 데이터가 있어도 결과를 만들어낼 수 있습니다.
+
+- LEFT OUTER JOIN: 왼쪽 테이블의 모든 값이 출력되는 조인 (LEFT)
+- RIGHT OUTER JOIN: 오른쪽 테이블의 모든 값이 출력되는 조인 (RIGHT)
+- FULL OUTER JOIN: 왼쪽 또는 오른쪽 테이블의 모든 값이 출력되는 조인 (합집합)
+
+```sql
+SELECT 컬럼 목록
+FROM 첫 번째 테이블(LEFT 테이블)
+  <LEFT | RIGHT | FULL> OUTER JOIN 두 번째 테이블(RIGHT 테이블)
+  ON 조인될 조건
+WHERE 검색 조건
+```
+
+#### CROSS JOIN(상호 조인)
+
+![상호 조인](https://hongong.hanbit.co.kr/wp-content/uploads/2021/11/%ED%98%BC%EC%9E%90-%EA%B3%B5%EB%B6%80%ED%95%98%EB%8A%94-SQL_CROSS-JOIN.png)
+[출처: 혼공러들의 스터디 공간]
+
+한쪽 테이블의 모든 행과 다른 쪽 테이블의 모든 행을 조인시키는 기능입니다. 상호 조인 결과의 전체 행의 개수는 두 테이블의 각 행의 개수를 곱한 수 만큽 됩니다. 카티션 곱(CARTESIAN PRODUCT)라고도 합니다.
+
+```sql
+SELECT *
+FROM 첫 번째 테이블
+  CROSS JOIN 두 번째 테이블
+```
+
+#### SELF JOIN(자체 조인)
+
+자체 조인은 자기 자신고 조인하므로 1개의 테이블을 사용합니다. 별칭을 이용해 조입합니다.
+
+```sql
+SELECT 컬럼 목록
+FROM 테이블 별칭 A
+  INNER JOIN 테이블 별칭 B
+  ON 조인될 조건
+WHERE 검색 조건
+```
+
 <br />
 
 [⬆ Back to Top](#목차)
@@ -176,6 +243,7 @@ SELECT SECOND('2023-02-09 09:25:07') -- 7
 
 - [평균 일일 대여 요금 구하기](./Level1/평균%20일일%20대여%20요금%20구하기/problem.md)
 - [인기있는 아이스크림](./Level1/인기있는%20아이스크림/problem.md)
+- [과일로 만든 아이스크림 고르기](./Level1/과일로%20만든%20아이스크림%20고르기/problem.md)
 
 ### LEVEL 2
 
@@ -193,8 +261,13 @@ SELECT SECOND('2023-02-09 09:25:07') -- 7
 - [평균 일일 대여 요금 구하기](./Level1/평균%20일일%20대여%20요금%20구하기/problem.md)
 - [인기있는 아이스크림](./Level1/인기있는%20아이스크림/problem.md)
 - [3월에 태어난 여성 회원 목록 출력하기](./Level2/3월에%20태어난%20여성%20회원%20목록%20출력하기/problem.md)
+- [과일로 만든 아이스크림 고르기](./Level1/과일로%20만든%20아이스크림%20고르기/problem.md)
 
 <br />
 
 [⬆ Back to Top](#목차)
 <br />
+
+## 참고
+
+- [혼공러들의 스터디 공간](https://hongong.hanbit.co.kr/sql-%EA%B8%B0%EB%B3%B8-%EB%AC%B8%EB%B2%95-joininner-outer-cross-self-join/)
