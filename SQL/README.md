@@ -8,14 +8,37 @@
 
 ## SQL 문법 정리
 
-### 목차
+### SQL 문법 목차
 
+- [SQL 쿼리 실행 순서](#sql-쿼리-실행-순서)
 - [데이터 읽어오기](#select-데이터-읽어오기)
 - [조건문](#where-조건문)
 - [정렬하기](#order-by-정렬하기)
 - [문자열 자르기](#substr-substring-left-right-문자열-자르기)
 - [날짜 출력하기](#날짜-출력하기)
 - [두 개의 테이블에서 데이터 추출하기](#두-개의-테이블에서-데이터-추출하기-join)
+- [그룹화해서 데이터 조회하기](#그룹화해서-데이터-조회하기-group-by)
+
+### SQL 쿼리 실행 순서
+
+```sql
+FROM -> ON -> JOIN -> WHERE -> GROUP BY -> HAVING -> SELECT -> DISTINCT -> ORDER BY
+```
+
+- FROM : 조회 테이블 확인
+- ON : 조인 조건 확인
+- JOIN : 테이블 조인 (병합)
+- WHERE : 데이터 추출 조건 확인
+- GROUP BY : 특정 컬럼 그룹화
+- HAVING : 그룹화 이후 데이터 추출 조건
+- SELECT : 데이터 추출
+- DISTINCT : 중복 제거
+- ORDER BY : 데이터 순서 정렬
+
+<br />
+
+[⬆ Back to SQL](#sql-문법-목차)
+<br />
 
 ### 데이터 읽어오기 (SELECT)
 
@@ -38,6 +61,11 @@ FROM 테이블
 SELECT DISTINCT 필드이름
 FROM 테이블
 ```
+
+<br />
+
+[⬆ Back to SQL](#sql-문법-목차)
+<br />
 
 ### 조건문 (WHERE)
 
@@ -74,6 +102,11 @@ SELECT 필드이름 혹은 * FROM 테이블
 WHERE 필드이름 IS NULL
 ```
 
+<br />
+
+[⬆ Back to SQL](#sql-문법-목차)
+<br />
+
 ### 정렬하기 (ORDER BY)
 
 데이터를 정렬하기 위해서는 ORDER BY를 사용합니다.
@@ -96,6 +129,11 @@ SELECT 필드이름 FROM 테이블
 ORDER BY 필드이름1 ASC
 ```
 
+<br />
+
+[⬆ Back to SQL](#sql-문법-목차)
+<br />
+
 ### 문자열 자르기 (SUBSTR, SUBSTRING, LEFT, RIGHT)
 
 SQL에서 문자열을 자르기 위해 SUBSTR, SUBSTRING, LEFT, RIGHT을 사용할 수 있다.
@@ -117,6 +155,11 @@ SELECT LEFT('string', 3) as email -- email: str
 -- RIGHT. 원하는 문자열을 오른쪽 첫 번째부터 입력받은 길이만큼 추출하기
 SELECT RIGHT('string', 4) as email -- email: ring
 ```
+
+<br />
+
+[⬆ Back to SQL](#sql-문법-목차)
+<br />
 
 ### 날짜 출력하기
 
@@ -165,6 +208,11 @@ SELECT HOUR('2023-02-09 09:25:07') -- 9
 SELECT MINUTE('2023-02-09 09:25:07') -- 25
 SELECT SECOND('2023-02-09 09:25:07') -- 7
 ```
+
+<br />
+
+[⬆ Back to SQL](#sql-문법-목차)
+<br />
 
 ### 두 개의 테이블에서 데이터 추출하기 (JOIN)
 
@@ -234,6 +282,54 @@ WHERE 검색 조건
 
 <br />
 
+[⬆ Back to SQL](#sql-문법-목차)
+<br />
+
+### 그룹화해서 데이터 조회하기 (GROUP BY)
+
+GROUP BY는 동일한 값을 가진 컬럼을 그룹으로 묶어서 요약하기 위해 사용합니다. WHERE과 HAVING 모두 조건을 거는 용도로 사용하지만, WHERE는 그룹화 하기 전이고, HAVING은 그룹화 후에 거는 조건입니다.
+
+```sql
+-- 기본 문법
+SELECT 컬럼이름
+FROM 테이블 이름
+WHERE 검색 조건
+GROUP BY 컬럼 이름
+  HAVING 그룹화한 결과에 걸 조건
+```
+
+GROUP BY는 아래와 같은 상황에 사용할 수 있습니다.
+
+```sql
+-- 컬럼 그룹화
+SELECT 컬럼
+FROM 테이블
+GROUP BY 그룹화할 컬럼
+
+-- 조건 처리 후에 컬럼 그룹화
+SELECT 컬럼
+FROM 테이블
+WHERE 조건식
+GROUP BY 그룹화할 컬럼
+
+-- 조건 처리 후에 컬럼 그룹화 후에 조건 처리
+SELECT 컬럼
+FROM 테이블
+WHERE 조건식
+GROUP BY 그룹화할 컬럼
+  HAVING 조건식
+
+-- 정렬과 함께 사용 시에
+SELECT 컬럼
+FROM 테이블
+[WHERE 조건식]
+GROUP BY 그룹화할 컬럼
+  [HAVING 조건식]
+ORDER BY 컬럼 1 [, 컬럼2, 컬럼 3, ... ];
+```
+
+<br />
+
 [⬆ Back to Top](#목차)
 <br />
 
@@ -249,6 +345,10 @@ WHERE 검색 조건
 
 - [3월에 태어난 여성 회원 목록 출력하기](./Level2/3월에%20태어난%20여성%20회원%20목록%20출력하기/problem.md)
 
+### LEVEL 4
+
+- [서울에 위치한 식당 목록 출력하기](./Level4/서울에%20위치한%20식당%20목록%20출력하기/problem.md)
+
 <br />
 
 [⬆ Back to Top](#목차)
@@ -262,6 +362,7 @@ WHERE 검색 조건
 - [인기있는 아이스크림](./Level1/인기있는%20아이스크림/problem.md)
 - [3월에 태어난 여성 회원 목록 출력하기](./Level2/3월에%20태어난%20여성%20회원%20목록%20출력하기/problem.md)
 - [과일로 만든 아이스크림 고르기](./Level1/과일로%20만든%20아이스크림%20고르기/problem.md)
+- [서울에 위치한 식당 목록 출력하기](./Level4/서울에%20위치한%20식당%20목록%20출력하기/problem.md)
 
 <br />
 
@@ -271,3 +372,4 @@ WHERE 검색 조건
 ## 참고
 
 - [혼공러들의 스터디 공간](https://hongong.hanbit.co.kr/sql-%EA%B8%B0%EB%B3%B8-%EB%AC%B8%EB%B2%95-joininner-outer-cross-self-join/)
+- [확장형 뇌 저장소](https://extbrain.tistory.com/56)
