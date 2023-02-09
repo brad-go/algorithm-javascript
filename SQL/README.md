@@ -14,10 +14,11 @@
 - [데이터 읽어오기](#select-데이터-읽어오기)
 - [조건문](#where-조건문)
 - [정렬하기](#order-by-정렬하기)
-- [문자열 자르기](#substr-substring-left-right-문자열-자르기)
+- [문자열 자르기](#문자열-자르기-substr-substring-left-right)
 - [날짜 출력하기](#날짜-출력하기)
 - [두 개의 테이블에서 데이터 추출하기](#두-개의-테이블에서-데이터-추출하기-join)
 - [그룹화해서 데이터 조회하기](#그룹화해서-데이터-조회하기-group-by)
+- [NULL 처리하기](#null-처리하기-ifnull-case-coalesce)
 
 ### SQL 쿼리 실행 순서
 
@@ -330,6 +331,93 @@ ORDER BY 컬럼 1 [, 컬럼2, 컬럼 3, ... ];
 
 <br />
 
+[⬆ Back to SQL](#sql-문법-목차)
+<br />
+
+### NULL 처리하기 (IFNULL, CASE, COALESCE)
+
+열 값이 NULL인 경우 처리하기 위해 IFNULL, CASE, COALESCE와 같은 함수를 사용할 수 있습니다.
+
+#### IFNULL
+
+IFNULL은 해당 컬럼의 값이 NULL을 반환할 때, 다른 값으로 출력할 수 있도록 해줍니다.
+
+```sql
+-- 기본 구조
+SELECT IFNULL(컬럼이름, 'NULL일 경우 대체 값') FROM 테이블이름;
+```
+
+예시로 다음과 같이 NAME이 NULL값일 때 'NONE'으로 출력할 수 있습니다.
+
+```sql
+SELECT IFNULL(NAME, "NONE") as NAME
+FROM ANIMAL_INS
+```
+
+이를 대체하기 위해 IF 함수와 IS NULL 조건을 사용할 수도 있습니다.
+
+```sql
+SELECT IF(IS NULL(NAME), "NONE", NAME) AS NAME
+FROM ANIMAL_INS
+```
+
+#### CASE
+
+해당 컬럼 값을 조건식을 통해 True, False를 판단하여 조건에 맞게 컬럼 값을 변환할 때 사용하는 함수입니다.
+
+```sql
+-- 기본구조
+CASE
+  WHEN 조건식1 THEN 식1
+  WHEN 조건식2 THEN 식2
+  ...
+  ELSE 조건에 맞지 않는 경우 실행할 식
+END
+```
+
+예시로 다음과 같이 NAME이 NULL값일 때 'NONE'으로 출력할 수 있습니다.
+
+```sql
+SELECT
+  CASE
+    WHEN NAME IS NULL THEN 'NONE'
+    ELSE NAME
+  END AS NAME
+FROM ANIMAL_INS
+```
+
+#### COALESCE
+
+COALESCE는 지정한 표현식들 중에 NULL이 아닌 첫 번째 값을 반환합니다.
+표현식은 여러 항목 지정이 가능하고, 처음으로 만나는 NULL이 아닌 값을 출력합니다.
+표현식이 모두 NULL일 경우엔 결과도 NULL을 반환합니다.
+
+```sql
+SELECT COALESCE(컬럼이름1, 컬럼이름1이 NULL인 경우 대체할 값)
+FROM 테이블
+```
+
+예를 들어 다음과 같이 사용할 수 있습니다.
+
+```sql
+SELECT COALESCE(NAME, 'NONE')
+FROM ANIMAL_INS
+```
+
+COALESCE는 배타적 OR 관계 열에서 활용도가 높습니다. 테이블에서 두 개 이상의 컬럼 중 하나의 값만 가지는 데이터일 경우 등에서 사용할 수 있습니다.
+
+```sql
+SELECT COALESCE(컬럼이름1, 컬럼이름2, 컬럼이름3, 컬럼이름4)
+FROM 테이블
+```
+
+<br />
+
+[⬆ Back to SQL](#sql-문법-목차)
+<br />
+
+<br />
+
 [⬆ Back to Top](#목차)
 <br />
 
@@ -341,6 +429,7 @@ ORDER BY 컬럼 1 [, 컬럼2, 컬럼 3, ... ];
 - [인기있는 아이스크림](./Level1/인기있는%20아이스크림/problem.md)
 - [과일로 만든 아이스크림 고르기](./Level1/과일로%20만든%20아이스크림%20고르기/problem.md)
 - [강원도에 위치한 생산공장 목록 출력하기](./Level1/강원도에%20위치한%20생산공장%20목록%20출력하기/problem.md)
+- [12세인 여자 환자 목록 출력하기](./Level1/12세인%20여자%20환자%20목록%20출력하기/problem.md)
 
 ### LEVEL 2
 
@@ -367,6 +456,7 @@ ORDER BY 컬럼 1 [, 컬럼2, 컬럼 3, ... ];
 - [서울에 위치한 식당 목록 출력하기](./Level4/서울에%20위치한%20식당%20목록%20출력하기/problem.md)
 - [강원도에 위치한 생산공장 목록 출력하기](./Level1/강원도에%20위치한%20생산공장%20목록%20출력하기/problem.md)
 - [재구매가 일어난 상품과 회원 리스트 구하기](./Level2/재구매가%20일어난%20상품과%20회원%20리스트%20구하기/problem.md)
+- [12세인 여자 환자 목록 출력하기](./Level1/12세인%20여자%20환자%20목록%20출력하기/problem.md)
 
 <br />
 
