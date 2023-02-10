@@ -25,6 +25,7 @@
 - [가격이 제일 비싼 식품의 정보 출력하기](./Level2/가격이%20제일%20비싼%20식품의%20정보%20출력하기/problem.md)
 - [진료과별 총 예약 횟수 출력하기](./Level2/진료과별%20총%20예약%20횟수%20출력하기/problem.md)
 - [자동차 종류 별 특정 옵션이 포함된 자동차 수 구하기](./Level2/자동차%20종류%20별%20특정%20옵션이%20포함된%20자동차%20수%20구하기/problem.md)
+- [가격대 별 상품 개수 구하기](./Level2/가격대%20별%20상품%20개수%20구하기/problem.md)
 
 ### LEVEL 3
 
@@ -75,6 +76,7 @@
 - [즐겨찾기가 가장 많은 식당 정보 출력하기](./Level3/즐겨찾기가%20가장%20많은%20식당%20정보%20출력하기/problem.md)
 - [자동차 대여 기록에서 대여중 대여 가능 여부 구분하기](./Level3/자동차%20대여%20기록에서%20대여중%20대여%20가능%20여부%20구분하기/problem.md) <sup>다시 풀기</sup>
 - [자동차 종류 별 특정 옵션이 포함된 자동차 수 구하기](./Level2/자동차%20종류%20별%20특정%20옵션이%20포함된%20자동차%20수%20구하기/problem.md)
+- [가격대 별 상품 개수 구하기](./Level2/가격대%20별%20상품%20개수%20구하기/problem.md)
 
 <br />
 
@@ -96,6 +98,7 @@
 - [NULL 처리하기](#null-처리하기-ifnull-case-coalesce)
 - [여러 테이블의 데이터를 하나의 쿼리로 추출하기](#여러-테이블의-데이터를-하나의-쿼리로-추출하기-union-union-all)
 - [상위 n개 레코드 출력하기](#상위-n개-레코드-출력하기-limit)
+- [숫자함수](#숫자-함수-round-floor-ceil-truncate)
 - [집계함수](#집계함수-count-sum-avg-min-max)
 - [중복행 제거하기](#중복-행-제거하기-distinct)
 - [임시 테이블 만들기](#임시-테이블-만들기-with)
@@ -535,6 +538,47 @@ SELECT 컬럼이름
 FROM 테이블
 ORDER BY 정렬조건
 LIMIT 조회할 개수(n)
+```
+
+<br />
+
+[⬆ Back to SQL](#sql-문법-목차)
+<br />
+
+### 숫자 함수 (ROUND, FLOOR, CEIL, TRUNCATE)
+
+숫자를 반올림 및 버림을 하기 위해서는 ROUND와 TRUNCATE를 사용할 수 있습니다.
+
+```sql
+# 기본 문법
+ROUND(숫자, 반올림할 자릿 수)
+
+FLOOR(숫자)
+
+CEIL(숫자, 올림할 자릿 수)
+
+TRUNCATE(숫자, 버릴 자릿 수) -- 반드시 버릴 자릿 수를 명시해주어야 합니다.
+```
+
+예를 들어 다음과 같이 사용할 수 있습니다.
+
+```sql
+# ROUND. 지정하는 소수점 자릿수로 반올림합니다.
+SELECT ROUND(3456.1234567) FROM DUAL -- 3456
+SELECT ROUND(3456.1234567, 1) FROM DUAL -- 3456.1
+SELECT ROUND(3456.1234567, 4) FROM DUAL -- 3456.1234
+SELECT ROUND(3456.1234567, -1) FROM DUAL -- 3460
+
+# FLOOR. 가장 가까운 정수로 버림하여 반환합니다.
+SELECT FLOOR(3456.1234567) FROM DUAL -- 3456
+
+# CEIL. 가장 가까운 정수로 올림하여 반환합니다.
+SELECT CEIL(3456.1234567) FROM DUAL -- 3457
+
+SELECT TRUNCATE(3456.1234567, 1) FROM DUAL -- 3456.1
+SELECT TRUNCATE(3456.1234567, 4) FROM DUAL -- 3456.1234
+SELECT TRUNCATE(3456.1234567, -1) FROM DUAL -- 3450
+SELECT TRUNCATE(3456.1234567, -3) FROM DUAL -- 3000
 ```
 
 <br />
