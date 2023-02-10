@@ -16,6 +16,7 @@
 - [강원도에 위치한 생산공장 목록 출력하기](./Level1/강원도에%20위치한%20생산공장%20목록%20출력하기/problem.md)
 - [12세인 여자 환자 목록 출력하기](./Level1/12세인%20여자%20환자%20목록%20출력하기/problem.md)
 - [상위 n개 레코드](./Level1/상위%20n개%20레코드/problem.md)
+- [가장 비싼 상품 구하기](./Level1/가장%20비싼%20상품%20구하기/problem.md)
 
 ### LEVEL 2
 
@@ -47,6 +48,10 @@
 - [오프라인 온라인 판매 데이터 통합하기](./Level4/오프라인%20온라인%20판매%20데이터%20통합하기/problem.md)
 - [상위 n개 레코드](./Level1/상위%20n개%20레코드/problem.md)
 
+### SUM, MAX, MIN
+
+- [가장 비싼 상품 구하기](./Level1/가장%20비싼%20상품%20구하기/problem.md)
+
 <br />
 
 [⬆ Back to Top](#목차)
@@ -67,6 +72,8 @@
 - [NULL 처리하기](#null-처리하기-ifnull-case-coalesce)
 - [여러 테이블의 데이터를 하나의 쿼리로 추출하기](#여러-테이블의-데이터를-하나의-쿼리로-추출하기-union-union-all)
 - [상위 n개 레코드 출력하기](#상위-n개-레코드-출력하기-limit)
+- [집계함수](#집계함수-count-sum-avg-min-max)
+- [중복행 제거하기](#중복-행-제거하기-distinct)
 
 ### SQL 쿼리 실행 순서
 
@@ -489,6 +496,11 @@ SELECT 컬럼목록2
 FROM 테이블2
 ```
 
+<br />
+
+[⬆ Back to SQL](#sql-문법-목차)
+<br />
+
 ### 상위 n개 레코드 출력하기 (LIMIT)
 
 LIMIT는 상위 n개의 레코드(행)만을 조회하기 위해서 사용합니다.
@@ -502,6 +514,139 @@ LIMIT 조회할 개수(n)
 
 <br />
 
+[⬆ Back to SQL](#sql-문법-목차)
+<br />
+
+### 집계함수 (COUNT, SUM, AVG, MIN, MAX)
+
+집합의 개수나 합계가 궁금하다면 SQL이 제공하는 집계함수를 사용해서 간단하게 구할 수 있습니다.
+주의할 것은 집계 함수들은 **기본적은 NULL값은 제외하고 센다**는 것입니다. 즉, NULL값을 제외하고 처리하기 때문에 이를 고려해서 사용해야 합니다.
+
+#### COUNT
+
+**레코드(행)의 개수를 구하기** 위해서 COUNT를 사용할 수 있습니다. COUNT 함수는 인자로 주어진 집합의 개수를 구해서 반환하는 역할을 합니다.
+
+```sql
+-- 기본 문법
+COUNT(인자)
+```
+
+COUNT 함수는 다음과 같이 사용할 수 있습니다.
+
+```sql
+-- 모든 행의 개수. *을 인자로 받을 수 있는 집계 함수는 COUNT가 유일합니다.
+SELECT COUNT(*)
+FROM 테이블
+
+-- PLAYER들의 수 구하기
+SELECT COUNT(PLAYER_ID)
+FROM PLAYERS;
+```
+
+#### SUM
+
+**집합의 합계를 구하기** 위해서는 SUM 함수를 사용할 수 있습니다. 예를 들어 1, 2, 3이라는 세개의 값을 가진 컬럼이 있다면, SUM 함수를 사용하면 6이라는 결과를 반환합니다.
+
+```sql
+-- 기본 문법
+SUM(컬럼이름)
+```
+
+예를 들어 SUM는 다음과 같이 사용할 수 있습니다.
+
+```sql
+-- 플레이어들의 몸무게 총합 구하기
+SELECT SUM(WEIGHT)
+FROM PLAYERS;
+```
+
+#### AVG
+
+**평균값을 구하기** 위해서는 AVG 함수를 사용할 수 있습니다.
+
+```sql
+-- 기본 문법
+AVG(컬럼이름)
+```
+
+예를 들어 AVG는 다음과 같이 사용할 수 있습니다.
+
+```sql
+-- PLAYER들의 몸무게 평균 구하기
+SELECT AVG(WEIGHT)
+FROM PLAYERS;
+
+-- 위 코드는 다음과 같습니다.
+SELECT SUM(WEIGHT) / COUNT(WEIGHT)
+FROM PLAYERS;
+```
+
+집계함수는 NULL인 값은 제외하고 연산하기 때문에 AVG도 NULL 값을 가진 행은 제외하고 평균을 냅니다.
+그렇기 때문에 NULL 값을 0으로 치환한 후에 평균에 반영되도록 코드를 짤 수도 있습니다.
+
+```sql
+SELECT AVG(IFNULL(WEIGHT, 0))
+FROM PLAYERS;
+```
+
+#### MIN, MAX
+
+집합에서 최솟값과 최댓값을 구하기 위해서는 MIN, MAX함수를 사용할 수 있습니다. 다른 집계 함수들과 달리 문자열과 날짜형에도 사용이 가능합니다.
+
+```sql
+MIN(컬럼이름)
+MAX(컬럼이름)
+```
+
+예를 들어 MIN, MAX는 다음과 같이 사용할 수 있습니다.
+
+```sql
+-- 플레이어들의 몸무게 중 최솟값 구하기
+SELECT MIN(WEIGHT)
+FROM PLAYERS;
+
+-- 플레이어들의 몸무게 중 최댓값 구하기
+SELECT MAM(WEIGHT)
+FROM PLAYERS;
+```
+
+<br />
+
+[⬆ Back to SQL](#sql-문법-목차)
+<br />
+
+### 중복 행 제거하기 (DISTINCT)
+
+컬럼에서 중복된 값을 가진 행들을 제거하기 위해서 DISTINT를 사용할 수 있습니다. DISTINCT는 모든 집계함수에 사용이 가능합니다.
+
+```sql
+-- 기본 문법
+SELECT DISTINCT 컬럼 목록
+FROM 테이블
+```
+
+DISTINCT 는 다음과 같이 사용할 수 있습니다.
+
+```sql
+-- 선수들의 중복을 제외한 국적 출력하기
+SELECT DISTINCT COUNTRY
+FROM PLAYERS
+
+-- COUNTRY와 AFFILIATION이 같은 값을 가진 행들을 제외
+SELECT DISTINCT COUNTRY, AFFILIATION
+FROM PLAYERS
+
+-- 집계함수와 사용하기. COUNT가 먼저 연산된 후에 DISTINCT가 적용됩니다.
+SELECT DISTINCT COUNT(COUNTY)
+FROM PLAYERS
+
+-- 그러므로 이렇게 사용해줘야 옳은 표현입니다.
+SELECT COUNT(DISTINCT COUNTY)
+FROM PLAYERS
+```
+
+<br />
+
 [⬆ Back to Top](#목차)
 <br />
 
@@ -509,3 +654,4 @@ LIMIT 조회할 개수(n)
 
 - [혼공러들의 스터디 공간](https://hongong.hanbit.co.kr/sql-%EA%B8%B0%EB%B3%B8-%EB%AC%B8%EB%B2%95-joininner-outer-cross-self-join/)
 - [확장형 뇌 저장소](https://extbrain.tistory.com/56)
+- [공부하는 식빵맘님 블로그](https://ansohxxn.github.io/db/ch6/)
