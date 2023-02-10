@@ -62,6 +62,7 @@
 - [뉴스 클러스터링](./Level2/뉴스%20클러스터링/problem.md)
 - [프렌즈4블록](./Level2/프렌즈4블록/problem.md)
 - [빛의 경로 사이클](./Level2/빛의%20경로%20사이클/problem.md)
+- [시소 짝꿍](./Level2/시소%20짝꿍/problem.md) <sup>다시 풀기</sup>
 
 #### LEVEL 3
 
@@ -89,6 +90,7 @@ key, value 쌍으로 데이터를 빠르게 찾습니다.
 - [완주하지 못한 선수](./Level1/완주하지%20못한%20선수/problem.md)
 - [위장](./Level2/위장/problem.md)
 - [베스트앨범](./Level3/베스트앨범/problem.md)
+- [시소 짝꿍](./Level2/시소%20짝꿍/problem.md) <sup>다시 풀기</sup>
 
 #### 스택, 큐
 
