@@ -15,6 +15,7 @@
 - [과일로 만든 아이스크림 고르기](./Level1/과일로%20만든%20아이스크림%20고르기/problem.md)
 - [강원도에 위치한 생산공장 목록 출력하기](./Level1/강원도에%20위치한%20생산공장%20목록%20출력하기/problem.md)
 - [12세인 여자 환자 목록 출력하기](./Level1/12세인%20여자%20환자%20목록%20출력하기/problem.md)
+- [상위 n개 레코드](./Level1/상위%20n개%20레코드/problem.md)
 
 ### LEVEL 2
 
@@ -24,6 +25,7 @@
 ### LEVEL 4
 
 - [서울에 위치한 식당 목록 출력하기](./Level4/서울에%20위치한%20식당%20목록%20출력하기/problem.md) <sup>다시 풀기</sup>
+- [오프라인 온라인 판매 데이터 통합하기](./Level4/오프라인%20온라인%20판매%20데이터%20통합하기/problem.md)
 
 <br />
 
@@ -42,6 +44,8 @@
 - [강원도에 위치한 생산공장 목록 출력하기](./Level1/강원도에%20위치한%20생산공장%20목록%20출력하기/problem.md)
 - [재구매가 일어난 상품과 회원 리스트 구하기](./Level2/재구매가%20일어난%20상품과%20회원%20리스트%20구하기/problem.md) <sup>다시 풀기</sup>
 - [12세인 여자 환자 목록 출력하기](./Level1/12세인%20여자%20환자%20목록%20출력하기/problem.md)
+- [오프라인 온라인 판매 데이터 통합하기](./Level4/오프라인%20온라인%20판매%20데이터%20통합하기/problem.md)
+- [상위 n개 레코드](./Level1/상위%20n개%20레코드/problem.md)
 
 <br />
 
@@ -61,12 +65,13 @@
 - [두 개의 테이블에서 데이터 추출하기](#두-개의-테이블에서-데이터-추출하기-join)
 - [그룹화해서 데이터 조회하기](#그룹화해서-데이터-조회하기-group-by)
 - [NULL 처리하기](#null-처리하기-ifnull-case-coalesce)
-- [여러 테이블의 데이터를 하나의 쿼리로 추출하기]()
+- [여러 테이블의 데이터를 하나의 쿼리로 추출하기](#여러-테이블의-데이터를-하나의-쿼리로-추출하기-union-union-all)
+- [상위 n개 레코드 출력하기](#상위-n개-레코드-출력하기-limit)
 
 ### SQL 쿼리 실행 순서
 
 ```sql
-FROM -> ON -> JOIN -> WHERE -> GROUP BY -> HAVING -> SELECT -> DISTINCT -> ORDER BY
+FROM -> ON -> JOIN -> WHERE -> GROUP BY -> HAVING -> SELECT -> DISTINCT -> ORDER BY -> LIMIT
 ```
 
 - FROM : 조회 테이블 확인
@@ -78,6 +83,7 @@ FROM -> ON -> JOIN -> WHERE -> GROUP BY -> HAVING -> SELECT -> DISTINCT -> ORDER
 - SELECT : 데이터 추출
 - DISTINCT : 중복 제거
 - ORDER BY : 데이터 순서 정렬
+- LIMIT : 맨 위부터 n개까지의 레코드를 선택
 
 <br />
 
@@ -481,6 +487,17 @@ FROM 테이블1
 UNION ALL
 SELECT 컬럼목록2
 FROM 테이블2
+```
+
+### 상위 n개 레코드 출력하기 (LIMIT)
+
+LIMIT는 상위 n개의 레코드(행)만을 조회하기 위해서 사용합니다.
+
+```sql
+SELECT 컬럼이름
+FROM 테이블
+ORDER BY 정렬조건
+LIMIT 조회할 개수(n)
 ```
 
 <br />
