@@ -98,6 +98,7 @@
 - [상위 n개 레코드 출력하기](#상위-n개-레코드-출력하기-limit)
 - [집계함수](#집계함수-count-sum-avg-min-max)
 - [중복행 제거하기](#중복-행-제거하기-distinct)
+- [임시 테이블 만들기](#임시-테이블-만들기-with)
 
 ### SQL 쿼리 실행 순서
 
@@ -671,6 +672,98 @@ FROM PLAYERS
 
 <br />
 
+[⬆ Back to SQL](#sql-문법-목차)
+<br />
+
+### 임시 테이블 만들기 (WITH, WITH RECURSIVE)
+
+#### WITH
+
+SQL을 다루다보면 새로운 데이터를 만들 때마다 테이블에 저장할 수 없습니다. WITH 절은 **SQL이 반복되어서 사용될 때 성능을 높이기 위해 사용**됩니다.
+테이블을 만들지 않고 테이블을 만든 것과 만든 효과를 내기 때문에 유용합니다. 하지만 메모리를 차지한다는 단점이 있습니다.
+
+WITH 절을 사용하는 이유이자 WITH 절의 장점은 temp라는 임시 테이블을 사용해서 장시간 걸리는 쿼리의 결과를 저장해놓고 저장해놓은 데이터를 엑세스하기 때문에 성능이 좋기 때문입니다. 그렇다면 모두 WITH 절로 사용하면 되지 않는가? 라는 질문에 답하면 아닙니다. WITH 절을 너무 남발해서 같은 시간에 여러 개의 WITH 절을 동시에 돌리면 temp(임시 테이블)가 견딜 수 있는 정도가 넘어가서 다같이 느려지기 때문입니다.
+
+```sql
+-- 기본 문법
+WITH 임시 테이블 이름 AS (
+  테이블에 저장할 데이터
+)
+
+SELECT 컬럼 목록 FROM 임시 테이블 이름
+```
+
+예를 들어 WITH는 다음과 같이 사용할 수 있습니다.
+
+```sql
+# UNION 결과 : 1,2 출력
+SELECT 1 AS num
+UNION
+SELECT 2 AS num;
+
+# WITH, UNION 결과 : 1,2 출력
+WITH test AS
+(
+  SELECT 1 AS num
+  UNION ALL
+  SELECT 2 AS num
+)
+
+SELECT * FROM test;
+
+# WITH, UNION 결과 : 1,2,2,2,... (emp테이블의 행수만큼 2가 반복됩니다.)
+WITH test AS
+(
+  SELECT 1 AS num
+  UNION ALL
+  SELECT 2 AS num FROM emp # 이 문장은 emp 테이블의 행수만큼 반복됩니다.
+)
+
+SELECT * FROM test;
+```
+
+#### WITH RECURSIVE
+
+프로그래밍에 재귀 함수가 있듯이, SQL에도 재귀 쿼리가 존재합니다. WITH RECURSIVE문을 작성하고 내부에 UNION을 통해 재귀를 구성하는 것입니다.
+
+```sql
+#기본 문법
+WITH RECURSIVE 테이블명 AS (
+  SELECT 초깃값 AS 컬럼이름
+  UNION [ALL]
+  SELECT 컬럼이름 계산식 FROM 테이블명 WHERE 제어문
+)
+
+SELECT 컬럼 목록 테이블명
+```
+
+WITH RECURSIVE 절의 특징은 다음과 같습니다.
+
+![with recursive](https://velog.velcdn.com/images%2Fcyanred9%2Fpost%2F9e362385-b421-4b65-90aa-3791fd6e50f2%2Fimage.png)
+
+1. 메모리 상에 가상의 테이블을 저장합니다.
+2. 반드시 UNION 사용해야합니다.
+3. 반드시 비반복문(Non-Recursive)도 최소한 1개 요구되고, 처음 한번만 실행됩니다.
+4. 서브 쿼리에서 바깥의 가상의 테이블을 참조하는 문장(반복문)이 반드시 필요합니다.
+5. 반복되는 문장은 반드시 정지조건(Termination condition)이 요구됩니다.
+6. 가상의 테이블을 구성하면서 그 자신(가상의 테이블)을 참조하여 값을 결정할 때 유용합니다.
+
+WITH RECURSIVE는 다음과 같이 사용할 수 있습니다.
+
+```sql
+WITH RECURSIVE COUNTER AS (
+  SELECT 1 NUM -- 재귀 초깃값
+  UNION ALL
+  SELECT NUM + 1 -- 재귀
+  FROM COUNTER
+  WHERE COUNTER < 5 -- 재귀 정지 조건
+)
+
+SELECT * FROM COUNTER -- NUM: 1 2 3 4 5
+```
+
+<br />
+
 [⬆ Back to Top](#목차)
 <br />
 
@@ -679,3 +772,4 @@ FROM PLAYERS
 - [혼공러들의 스터디 공간](https://hongong.hanbit.co.kr/sql-%EA%B8%B0%EB%B3%B8-%EB%AC%B8%EB%B2%95-joininner-outer-cross-self-join/)
 - [확장형 뇌 저장소](https://extbrain.tistory.com/56)
 - [공부하는 식빵맘님 블로그](https://ansohxxn.github.io/db/ch6/)
+- [Inpa Dev님 블로그](https://inpa.tistory.com/entry/MYSQL-%F0%9F%93%9A-WITH-%EC%9E%84%EC%8B%9C-%ED%85%8C%EC%9D%B4%EB%B8%94)
