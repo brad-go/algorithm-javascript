@@ -15,7 +15,7 @@
 
 ### Silver 5
 
-- [6550 - 부분 문자열](./String/부분%20문자열/problem.md)
+- [6550 - 부분 문자열](./Silver5/부분%20문자열/problem.md)
 
 <br />
 
@@ -26,11 +26,11 @@
 
 ### 문자열
 
-- [6550 - 부분 문자열](./String/부분%20문자열/problem.md)
+- [6550 - 부분 문자열](./Silver5/부분%20문자열/problem.md)
 
 ### Greedy
 
-- [6550 - 부분 문자열](./String/부분%20문자열/problem.md)
+- [6550 - 부분 문자열](./Silver5/부분%20문자열/problem.md)
 
 <br />
 
