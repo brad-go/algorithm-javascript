@@ -16,11 +16,11 @@
 
 ### Silver 4
 
-- [14584 - 암호 해독](./Silver4/암호%20해독/problem.md)
+- [14584 - 암호 해독](./Silver4/14584_암호%20해독/problem.md)
 
 ### Silver 5
 
-- [6550 - 부분 문자열](./Silver5/부분%20문자열/problem.md)
+- [6550 - 부분 문자열](./Silver5/6550_부분%20문자열/problem.md)
 
 <br />
 
@@ -31,16 +31,16 @@
 
 ### 문자열
 
-- [6550 - 부분 문자열](./Silver5/부분%20문자열/problem.md)
-- [14584 - 암호 해독](./Silver4/암호%20해독/problem.md)
+- [6550 - 부분 문자열](./Silver5/6550_부분%20문자열/problem.md)
+- [14584 - 암호 해독](./Silver4/14584_암호%20해독/problem.md)
 
 ### Greedy
 
-- [6550 - 부분 문자열](./Silver5/부분%20문자열/problem.md)
+- [6550 - 부분 문자열](./Silver5/6550_부분%20문자열/problem.md)
 
 ### 브루트포스(완전탐색)
 
-- [14584 - 암호 해독](./Silver4/암호%20해독/problem.md)
+- [14584 - 암호 해독](./Silver4/14584_암호%20해독/problem.md)
 
 <br />
 
