@@ -1021,7 +1021,9 @@ while (LCS[r][c] !== 0) {
 console.log(result.reverse());
 ```
 
-**[⬆ Back to Top](#목차)**
+<br />
+
+[⬆ Back to Top](#목차)
 <br />
 
 ## 참고
