@@ -6,6 +6,7 @@
 
 - [Gold 4](#gold-4)
 - [Gold 5](#gold-5)
+- [Silver 1](#silver-1)
 - [Silver 3](#silver-3)
 - [Silver 4](#silver-4)
 - [Silver 5](#silver-5)
@@ -37,6 +38,10 @@
 
 - [1240 - 노드사이의 거리](./Gold5/1240_노드사이의%20거리/problem.md)
 
+### Silver 1
+
+- [5525 - IOIOI](./Silver1/5525_IOIOI/problem.md)
+
 ### Silver 3
 
 - [2145 - 암호 해독](./Silver3/2149_암호%20해독/problem.md)
@@ -65,6 +70,7 @@
 - [6550 - 부분 문자열](./Silver5/6550_부분%20문자열/problem.md)
 - [14584 - 암호 해독](./Silver4/14584_암호%20해독/problem.md)
 - [2149 - 암호 해독](./Silver3/2149_암호%20해독/problem.md)
+- [5525 - IOIOI](./Silver1/5525_IOIOI/problem.md) <sup>다시 풀기</sup>
 
 ### 자료 구조
 
