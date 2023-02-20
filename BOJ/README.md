@@ -10,6 +10,7 @@
 - [Silver 3](#silver-3)
 - [Silver 4](#silver-4)
 - [Silver 5](#silver-5)
+- [Bronze 2](#bronze-2)
 
 #### 유형 별 분류
 
@@ -56,6 +57,10 @@
 
 - [6550 - 부분 문자열](./Silver5/6550_부분%20문자열/problem.md)
 
+### Bronze 2
+
+- [15829 - Hashing](./Bronze2/15829_Hashing/problem.md)
+
 <br />
 
 [⬆ Back to Top](#목차)
@@ -73,6 +78,7 @@
 - [14584 - 암호 해독](./Silver4/14584_암호%20해독/problem.md)
 - [2149 - 암호 해독](./Silver3/2149_암호%20해독/problem.md)
 - [5525 - IOIOI](./Silver1/5525_IOIOI/problem.md) <sup>다시 풀기</sup>
+- [15829 - Hashing](./Bronze2/15829_Hashing/problem.md)
 
 ### 자료 구조
 
@@ -116,6 +122,7 @@
 ### 해시
 
 - [2295 - 세 수의 합](./Gold4/2295_세%20수의%20합/problem.md)
+- [15829 - Hashing](./Bronze2/15829_Hashing/problem.md)
 
 ### 백트래킹
 
