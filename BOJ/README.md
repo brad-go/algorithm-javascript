@@ -7,6 +7,7 @@
 - [Gold 4](#gold-4)
 - [Gold 5](#gold-5)
 - [Silver 1](#silver-1)
+- [Silver 2](#silver-2)
 - [Silver 3](#silver-3)
 - [Silver 4](#silver-4)
 - [Silver 5](#silver-5)
@@ -32,8 +33,8 @@
 
 ### Gold 4
 
-- [2295 - 세 수의 합](./Gold4/2295_세%20수의%20합/problem.md)
-- [7662 - 이중 우선순위 큐](./Gold4/7662_이중%20우선순위%20큐/problem.md)
+- [2295 - 세 수의 합](./Gold4/2295_세%20수의%20합/problem.md) <sup>다시 풀기</sup>
+- [7662 - 이중 우선순위 큐](./Gold4/7662_이중%20우선순위%20큐/problem.md) <sup>다시 풀기</sup>
 - [1967 - 트리의 지름](./Gold4/1967_트리의%20지름/problem.md)
 
 ### Gold 5
@@ -42,7 +43,11 @@
 
 ### Silver 1
 
-- [5525 - IOIOI](./Silver1/5525_IOIOI/problem.md)
+- [5525 - IOIOI](./Silver1/5525_IOIOI/problem.md) <sup>다시 풀기</sup>
+
+### Silver 2
+
+- [1654 - 랜선 자르기](./Silver2/1654_랜선%20자르기/problem.md) <sup>다시 풀기</sup>
 
 ### Silver 3
 
@@ -82,7 +87,7 @@
 
 ### 자료 구조
 
-- [7662 - 이중 우선순위 큐](./Gold4/7662_이중%20우선순위%20큐/problem.md)
+- [7662 - 이중 우선순위 큐](./Gold4/7662_이중%20우선순위%20큐/problem.md) <sup>다시 풀기</sup>
 
 ### 그리디 알고리즘
 
@@ -108,7 +113,8 @@
 
 ### 이분 탐색
 
-- [2295 - 세 수의 합](./Gold4/2295_세%20수의%20합/problem.md)
+- [2295 - 세 수의 합](./Gold4/2295_세%20수의%20합/problem.md) <sup>다시 풀기</sup>
+- [1654 - 랜선 자르기](./Silver2/1654_랜선%20자르기/problem.md) <sup>다시 풀기</sup>
 
 ### 너비 우선 탐색(BFS)
 
@@ -130,7 +136,7 @@
 
 ### 우선순위 큐
 
-- [7662 - 이중 우선순위 큐](./Gold4/7662_이중%20우선순위%20큐/problem.md)
+- [7662 - 이중 우선순위 큐](./Gold4/7662_이중%20우선순위%20큐/problem.md) <sup>다시 풀기</sup>
 
 <br />
 
