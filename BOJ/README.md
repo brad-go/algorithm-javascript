@@ -52,6 +52,7 @@
 - [1149 - RGB거리](./Silver1/1149_RGB거리/problem.md)
 - [1932 - 정수 삼각형](./Silver1/1932_정수%20삼각형/problem.md)
 - [2667 - 단지번호붙이기](./Silver1/2667_단지번호붙이기/problem.md)
+- [1697 - 숨바꼭질](./Silver1/1697_숨바꼭질/problem.md) <sup>다시 풀기</sup>
 
 ### Silver 2
 
@@ -107,6 +108,7 @@
 - [11726 - 2xn 타일링](./Silver3/11726_2xn%20타일링/problem.md)
 - [1149 - RGB거리](./Silver1/1149_RGB거리/problem.md)
 - [1932 - 정수 삼각형](./Silver1/1932_정수%20삼각형/problem.md)
+- [1697 - 숨바꼭질](./Silver1/1697_숨바꼭질/problem.md) <sup>다시 풀기</sup>
 
 ### 문자열
 
@@ -140,6 +142,7 @@
 - [14940 - 쉬운 최단거리](./Silver1/14940_쉬운%20최단거리/problem.md)
 - [1260 - DFS와 BFS](./Silver2/1260_DFS와%20BFS/problem.md)
 - [2667 - 단지번호붙이기](./Silver1/2667_단지번호붙이기/problem.md)
+- [1697 - 숨바꼭질](./Silver1/1697_숨바꼭질/problem.md) <sup>다시 풀기</sup>
 
 ### 정렬
 
@@ -163,6 +166,7 @@
 - [14940 - 쉬운 최단거리](./Silver1/14940_쉬운%20최단거리/problem.md)
 - [1260 - DFS와 BFS](./Silver2/1260_DFS와%20BFS/problem.md)
 - [2667 - 단지번호붙이기](./Silver1/2667_단지번호붙이기/problem.md)
+- [1697 - 숨바꼭질](./Silver1/1697_숨바꼭질/problem.md) <sup>다시 풀기</sup>
 
 ### 깊이 우선 탐색(DFS)
 
