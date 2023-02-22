@@ -6,7 +6,7 @@ https://www.acmicpc.net/problem/1149
 
 ## 문제 분류
 
-: 문자열
+: 다이나믹 프로그래밍
 
 ## 소요 시간
 
