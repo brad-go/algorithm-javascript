@@ -51,6 +51,7 @@
 - [14940 - 쉬운 최단거리](./Silver1/14940_쉬운%20최단거리/problem.md)
 - [1149 - RGB거리](./Silver1/1149_RGB거리/problem.md)
 - [1932 - 정수 삼각형](./Silver1/1932_정수%20삼각형/problem.md)
+- [2667 - 단지번호붙이기](./Silver1/2667_단지번호붙이기/problem.md)
 
 ### Silver 2
 
@@ -138,6 +139,7 @@
 - [2644 - 촌수계산](./Silver2/2644_촌수계산/problem.md)
 - [14940 - 쉬운 최단거리](./Silver1/14940_쉬운%20최단거리/problem.md)
 - [1260 - DFS와 BFS](./Silver2/1260_DFS와%20BFS/problem.md)
+- [2667 - 단지번호붙이기](./Silver1/2667_단지번호붙이기/problem.md)
 
 ### 정렬
 
@@ -160,6 +162,7 @@
 - [2644 - 촌수계산](./Silver2/2644_촌수계산/problem.md)
 - [14940 - 쉬운 최단거리](./Silver1/14940_쉬운%20최단거리/problem.md)
 - [1260 - DFS와 BFS](./Silver2/1260_DFS와%20BFS/problem.md)
+- [2667 - 단지번호붙이기](./Silver1/2667_단지번호붙이기/problem.md)
 
 ### 깊이 우선 탐색(DFS)
 
@@ -167,6 +170,7 @@
 - [1240 - 노드사이의 거리](./Gold5/1240_노드사이의%20거리/problem.md)
 - [2644 - 촌수계산](./Silver2/2644_촌수계산/problem.md)
 - [1260 - DFS와 BFS](./Silver2/1260_DFS와%20BFS/problem.md)
+- [2667 - 단지번호붙이기](./Silver1/2667_단지번호붙이기/problem.md)
 
 ### 해시
 
