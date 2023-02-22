@@ -49,6 +49,7 @@
 
 - [5525 - IOIOI](./Silver1/5525_IOIOI/problem.md) <sup>다시 풀기</sup>
 - [14940 - 쉬운 최단거리](./Silver1/14940_쉬운%20최단거리/problem.md)
+- [1149 - RGB거리](./Silver1/1149_RGB거리/problem.md)
 
 ### Silver 2
 
@@ -101,6 +102,7 @@
 - [2579 - 계단 오르기](./Silver3/2579_계단%20오르기/problem.md)
 - [9095 - 1, 2, 3 더하기](./Silver3/9095_1,%202,%203%20더하기/problem.md)
 - [11726 - 2xn 타일링](./Silver3/11726_2xn%20타일링/problem.md)
+- [1149 - RGB거리](./Silver1/1149_RGB거리/problem.md)
 
 ### 문자열
 
