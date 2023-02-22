@@ -58,6 +58,7 @@
 - [1874 - 스택 수열](./Silver2/1874_스택%20수열/problem.md)
 - [2644 - 촌수계산](./Silver2/2644_촌수계산/problem.md)
 - [1182 - 부분수열의 합](./Silver2/1182_부분수열의%20합/problem.md) <sup>다시 풀기</sup>
+- [1260 - DFS와 BFS](./Silver2/1260_DFS와%20BFS/problem.md)
 
 ### Silver 3
 
@@ -136,6 +137,7 @@
 - [1240 - 노드사이의 거리](./Gold5/1240_노드사이의%20거리/problem.md)
 - [2644 - 촌수계산](./Silver2/2644_촌수계산/problem.md)
 - [14940 - 쉬운 최단거리](./Silver1/14940_쉬운%20최단거리/problem.md)
+- [1260 - DFS와 BFS](./Silver2/1260_DFS와%20BFS/problem.md)
 
 ### 정렬
 
@@ -157,12 +159,14 @@
 - [1240 - 노드사이의 거리](./Gold5/1240_노드사이의%20거리/problem.md)
 - [2644 - 촌수계산](./Silver2/2644_촌수계산/problem.md)
 - [14940 - 쉬운 최단거리](./Silver1/14940_쉬운%20최단거리/problem.md)
+- [1260 - DFS와 BFS](./Silver2/1260_DFS와%20BFS/problem.md)
 
 ### 깊이 우선 탐색(DFS)
 
 - [1967 - 트리의 지름](./Gold4/1967_트리의%20지름/problem.md)
 - [1240 - 노드사이의 거리](./Gold5/1240_노드사이의%20거리/problem.md)
 - [2644 - 촌수계산](./Silver2/2644_촌수계산/problem.md)
+- [1260 - DFS와 BFS](./Silver2/1260_DFS와%20BFS/problem.md)
 
 ### 해시
 
