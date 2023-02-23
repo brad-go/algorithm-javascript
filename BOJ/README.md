@@ -71,6 +71,7 @@
 - [2579 - 계단 오르기](./Silver3/2579_계단%20오르기/problem.md)
 - [9095 - 1, 2, 3 더하기](./Silver3/9095_1,%202,%203%20더하기/problem.md)
 - [11726 - 2xn 타일링](./Silver3/11726_2xn%20타일링/problem.md)
+- [1904 - 01타일](./Silver3/1904_01타일/problem.md)
 
 ### Silver 4
 
@@ -109,6 +110,7 @@
 - [1149 - RGB거리](./Silver1/1149_RGB거리/problem.md)
 - [1932 - 정수 삼각형](./Silver1/1932_정수%20삼각형/problem.md)
 - [1697 - 숨바꼭질](./Silver1/1697_숨바꼭질/problem.md) <sup>다시 풀기</sup>
+- [1904 - 01타일](./Silver3/1904_01타일/problem.md)
 
 ### 문자열
 
