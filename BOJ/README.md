@@ -54,6 +54,7 @@
 - [1932 - 정수 삼각형](./Silver1/1932_정수%20삼각형/problem.md)
 - [2667 - 단지번호붙이기](./Silver1/2667_단지번호붙이기/problem.md)
 - [1697 - 숨바꼭질](./Silver1/1697_숨바꼭질/problem.md) <sup>다시 풀기</sup>
+- [11057 - 오르막 수](./Silver1/11057_오르막%20수/problem.md)
 
 ### Silver 2
 
@@ -113,6 +114,7 @@
 - [1697 - 숨바꼭질](./Silver1/1697_숨바꼭질/problem.md) <sup>다시 풀기</sup>
 - [1904 - 01타일](./Silver3/1904_01타일/problem.md)
 - [2293 - 동전 1](./Gold5/2293_동전%201/problem.md) <sup>다시 풀기</sup>
+- [11057 - 오르막 수](./Silver1/11057_오르막%20수/problem.md)
 
 ### 문자열
 
