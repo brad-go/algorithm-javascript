@@ -79,6 +79,7 @@
 - [11726 - 2xn 타일링](./Silver3/11726_2xn%20타일링/problem.md)
 - [1904 - 01타일](./Silver3/1904_01타일/problem.md)
 - [15649 - N과 M (1)](<./Silver3/15649_N과%20M%20(1)/problem.md>)
+- [15650 - N과 M (2)](<./Silver3/15650_N과%20M%20(2)/problem.md>)
 
 ### Silver 4
 
@@ -153,6 +154,7 @@
 - [14584 - 암호 해독](./Silver4/14584_암호%20해독/problem.md)
 - [1182 - 부분수열의 합](./Silver2/1182_부분수열의%20합/problem.md) <sup>다시 풀기</sup>
 - [9663 - N-Queen](./Gold4/9663_N-Queen/problem.md) <sup>다시 풀기</sup>
+- [15650 - N과 M (2)](<./Silver3/15650_N과%20M%20(2)/problem.md>)
 
 ### 그래프
 
@@ -204,6 +206,7 @@
 ### 백트래킹
 
 - [15649 - N과 M (1)](<./Silver3/15649_N과%20M%20(1)/problem.md>)
+- [15650 - N과 M (2)](<./Silver3/15650_N과%20M%20(2)/problem.md>)
 - [15652 - N과 M (4)](<./Silver3/15652_N과%20M%20(4)/problem.md>)
 - [1182 - 부분수열의 합](./Silver2/1182_부분수열의%20합/problem.md) <sup>다시 풀기</sup>
 - [9663 - N-Queen](./Gold4/9663_N-Queen/problem.md) <sup>다시 풀기</sup>
