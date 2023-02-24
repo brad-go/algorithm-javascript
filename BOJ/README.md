@@ -87,6 +87,10 @@
 
 - [6550 - 부분 문자열](./Silver5/6550_부분%20문자열/problem.md)
 
+### Bronze 1
+
+- [1924 - 2007년](./Bronze1/1924_2007년/problem.md)
+
 ### Bronze 2
 
 - [15829 - Hashing](./Bronze2/15829_Hashing/problem.md)
@@ -105,6 +109,7 @@
 ### 구현
 
 - [2149 - 암호 해독](./Silver3/2149_암호%20해독/problem.md)
+- [1924 - 2007년](./Bronze1/1924_2007년/problem.md)
 
 ### 다이나믹 프로그래밍(DP)
 
