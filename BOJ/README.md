@@ -98,6 +98,7 @@
 ### Bronze 2
 
 - [15829 - Hashing](./Bronze2/15829_Hashing/problem.md)
+- [8958 - OX퀴즈](./Bronze2/8958_OX퀴즈/problem.md)
 
 <br />
 
@@ -114,6 +115,7 @@
 
 - [2149 - 암호 해독](./Silver3/2149_암호%20해독/problem.md)
 - [1924 - 2007년](./Bronze1/1924_2007년/problem.md)
+- [8958 - OX퀴즈](./Bronze2/8958_OX퀴즈/problem.md)
 
 ### 다이나믹 프로그래밍(DP)
 
@@ -138,6 +140,7 @@
 - [2149 - 암호 해독](./Silver3/2149_암호%20해독/problem.md)
 - [5525 - IOIOI](./Silver1/5525_IOIOI/problem.md) <sup>다시 풀기</sup>
 - [15829 - Hashing](./Bronze2/15829_Hashing/problem.md)
+- [8958 - OX퀴즈](./Bronze2/8958_OX퀴즈/problem.md)
 
 ### 자료 구조
 
