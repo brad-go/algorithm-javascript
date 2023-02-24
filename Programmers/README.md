@@ -63,6 +63,7 @@
 - [프렌즈4블록](./Level2/프렌즈4블록/problem.md)
 - [빛의 경로 사이클](./Level2/빛의%20경로%20사이클/problem.md)
 - [시소 짝꿍](./Level2/시소%20짝꿍/problem.md) <sup>다시 풀기</sup>
+- [혼자서 하는 틱택토](./Level2/혼자서%20하는%20틱택토/problem.md)
 
 #### LEVEL 3
 
@@ -159,6 +160,7 @@ LIFO, FIFO, push & pop 등 스택과 큐를 이용해 문제를 풀이합니다.
 - [예상 대진표](./Level2/예상%20대진표/problem.md)
 - [뉴스 클러스터링](./Level2/뉴스%20클러스터링/problem.md)
 - [프렌즈4블록](./Level2/프렌즈4블록/problem.md)
+- [혼자서 하는 틱택토](./Level2/혼자서%20하는%20틱택토/problem.md)
 
 #### 수학
 
