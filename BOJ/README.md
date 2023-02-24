@@ -40,6 +40,7 @@
 - [2295 - 세 수의 합](./Gold4/2295_세%20수의%20합/problem.md) <sup>다시 풀기</sup>
 - [7662 - 이중 우선순위 큐](./Gold4/7662_이중%20우선순위%20큐/problem.md) <sup>다시 풀기</sup>
 - [1967 - 트리의 지름](./Gold4/1967_트리의%20지름/problem.md)
+- [9663 - N-Queen](./Gold4/9663_N-Queen/problem.md) <sup>다시 풀기</sup>
 
 ### Gold 5
 
@@ -151,6 +152,7 @@
 
 - [14584 - 암호 해독](./Silver4/14584_암호%20해독/problem.md)
 - [1182 - 부분수열의 합](./Silver2/1182_부분수열의%20합/problem.md) <sup>다시 풀기</sup>
+- [9663 - N-Queen](./Gold4/9663_N-Queen/problem.md) <sup>다시 풀기</sup>
 
 ### 그래프
 
@@ -204,6 +206,7 @@
 - [15649 - N과 M (1)](<./Silver3/15649_N과%20M%20(1)/problem.md>)
 - [15652 - N과 M (4)](<./Silver3/15652_N과%20M%20(4)/problem.md>)
 - [1182 - 부분수열의 합](./Silver2/1182_부분수열의%20합/problem.md) <sup>다시 풀기</sup>
+- [9663 - N-Queen](./Gold4/9663_N-Queen/problem.md) <sup>다시 풀기</sup>
 
 ### 우선순위 큐
 
