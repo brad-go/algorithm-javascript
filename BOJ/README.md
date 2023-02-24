@@ -71,15 +71,16 @@
 ### Silver 3
 
 - [2145 - 암호 해독](./Silver3/2149_암호%20해독/problem.md)
-- [15652 N과 M (4)](<./Silver3/15652_N과%20M%20(4)/problem.md>)
+- [15649 - N과 M (1)](<./Silver3/15649_N과%20M%20(1)/problem.md>)
+- [15650 - N과 M (2)](<./Silver3/15650_N과%20M%20(2)/problem.md>)
+- [15651 - N과 M (3)](<./Silver3/15651_N과%20M%20(3)/problem.md>)
+- [15652 - N과 M (4)](<./Silver3/15652_N과%20M%20(4)/problem.md>)
 - [1448 - 삼각형 만들기](./Silver3/1448_삼각형%20만들기/problem.md)
 - [1463 - 1로 만들기](./Silver3/1463_1로%20만들기/problem.md)
 - [2579 - 계단 오르기](./Silver3/2579_계단%20오르기/problem.md)
 - [9095 - 1, 2, 3 더하기](./Silver3/9095_1,%202,%203%20더하기/problem.md)
 - [11726 - 2xn 타일링](./Silver3/11726_2xn%20타일링/problem.md)
 - [1904 - 01타일](./Silver3/1904_01타일/problem.md)
-- [15649 - N과 M (1)](<./Silver3/15649_N과%20M%20(1)/problem.md>)
-- [15650 - N과 M (2)](<./Silver3/15650_N과%20M%20(2)/problem.md>)
 
 ### Silver 4
 
@@ -207,6 +208,7 @@
 
 - [15649 - N과 M (1)](<./Silver3/15649_N과%20M%20(1)/problem.md>)
 - [15650 - N과 M (2)](<./Silver3/15650_N과%20M%20(2)/problem.md>)
+- [15651 - N과 M (3)](<./Silver3/15651_N과%20M%20(3)/problem.md>)
 - [15652 - N과 M (4)](<./Silver3/15652_N과%20M%20(4)/problem.md>)
 - [1182 - 부분수열의 합](./Silver2/1182_부분수열의%20합/problem.md) <sup>다시 풀기</sup>
 - [9663 - N-Queen](./Gold4/9663_N-Queen/problem.md) <sup>다시 풀기</sup>
