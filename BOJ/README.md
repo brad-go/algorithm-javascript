@@ -5,6 +5,7 @@
 #### 난이도 별 분류
 
 - [Gold 1](#gold-1)
+- [Gold 2](#gold-2)
 - [Gold 4](#gold-4)
 - [Gold 5](#gold-5)
 - [Silver 1](#silver-1)
@@ -40,6 +41,10 @@
 ### Gold 1
 
 - [13460 - 구슬 탈출 2](./Gold1/13460_구슬%20탈출%202/problem.md)
+
+### Gold 2
+
+- [12100 - 2048 (Easy)](<./Gold2/12100_2048%20(Easy)/problem.md>)
 
 ### Gold 4
 
@@ -124,6 +129,7 @@
 - [1924 - 2007년](./Bronze1/1924_2007년/problem.md)
 - [8958 - OX퀴즈](./Bronze2/8958_OX퀴즈/problem.md)
 - [13460 - 구슬 탈출 2](./Gold1/13460_구슬%20탈출%202/problem.md)
+- [12100 - 2048 (Easy)](<./Gold2/12100_2048%20(Easy)/problem.md>)
 
 ### 다이나믹 프로그래밍(DP)
 
@@ -168,6 +174,7 @@
 - [1182 - 부분수열의 합](./Silver2/1182_부분수열의%20합/problem.md) <sup>다시 풀기</sup>
 - [9663 - N-Queen](./Gold4/9663_N-Queen/problem.md) <sup>다시 풀기</sup>
 - [15650 - N과 M (2)](<./Silver3/15650_N과%20M%20(2)/problem.md>)
+- [12100 - 2048 (Easy)](<./Gold2/12100_2048%20(Easy)/problem.md>)
 
 ### 그래프
 
@@ -228,6 +235,7 @@
 - [15652 - N과 M (4)](<./Silver3/15652_N과%20M%20(4)/problem.md>)
 - [1182 - 부분수열의 합](./Silver2/1182_부분수열의%20합/problem.md) <sup>다시 풀기</sup>
 - [9663 - N-Queen](./Gold4/9663_N-Queen/problem.md) <sup>다시 풀기</sup>
+- [12100 - 2048 (Easy)](<./Gold2/12100_2048%20(Easy)/problem.md>)
 
 ### 우선순위 큐
 
