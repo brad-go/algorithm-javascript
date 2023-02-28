@@ -112,6 +112,7 @@
 
 - [15829 - Hashing](./Bronze2/15829_Hashing/problem.md)
 - [8958 - OX퀴즈](./Bronze2/8958_OX퀴즈/problem.md)
+- [13458 - 시험 감독](./Bronze2/13458_시험%20감독/problem.md)
 
 <br />
 
@@ -123,6 +124,7 @@
 ### 수학
 
 - [1448 - 삼각형 만들기](./Silver3/1448_삼각형%20만들기/problem.md)
+- [13458 - 시험 감독](./Bronze2/13458_시험%20감독/problem.md)
 
 ### 구현
 
