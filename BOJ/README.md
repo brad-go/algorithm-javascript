@@ -52,6 +52,7 @@
 - [7662 - 이중 우선순위 큐](./Gold4/7662_이중%20우선순위%20큐/problem.md) <sup>다시 풀기</sup>
 - [1967 - 트리의 지름](./Gold4/1967_트리의%20지름/problem.md)
 - [9663 - N-Queen](./Gold4/9663_N-Queen/problem.md) <sup>다시 풀기</sup>
+- [3190 - 뱀](./Gold4/3190_뱀/problem.md)
 
 ### Gold 5
 
@@ -130,6 +131,7 @@
 - [8958 - OX퀴즈](./Bronze2/8958_OX퀴즈/problem.md)
 - [13460 - 구슬 탈출 2](./Gold1/13460_구슬%20탈출%202/problem.md)
 - [12100 - 2048 (Easy)](<./Gold2/12100_2048%20(Easy)/problem.md>)
+- [3190 - 뱀](./Gold4/3190_뱀/problem.md)
 
 ### 다이나믹 프로그래밍(DP)
 
@@ -162,6 +164,7 @@
 - [2164 - 카드2](./Silver4/2164_카드2/problem.md)
 - [1874 - 스택 수열](./Silver2/1874_스택%20수열/problem.md)
 - [10815 - 숫자 카드](./Silver5/10815_숫자%20카드/problem.md)
+- [3190 - 뱀](./Gold4/3190_뱀/problem.md)
 
 ### 그리디 알고리즘
 
@@ -248,6 +251,7 @@
 ### 큐
 
 - [2164 - 카드2](./Silver4/2164_카드2/problem.md)
+- [3190 - 뱀](./Gold4/3190_뱀/problem.md)
 
 <br />
 
