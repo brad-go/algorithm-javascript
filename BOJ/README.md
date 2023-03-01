@@ -6,6 +6,7 @@
 
 - [Gold 1](#gold-1)
 - [Gold 2](#gold-2)
+- [Gold 3](#gold-3)
 - [Gold 4](#gold-4)
 - [Gold 5](#gold-5)
 - [Silver 1](#silver-1)
@@ -45,6 +46,10 @@
 ### Gold 2
 
 - [12100 - 2048 (Easy)](<./Gold2/12100_2048%20(Easy)/problem.md>)
+
+### Gold 3
+
+- [17135 - 캐슬 디펜스](./Gold3/17135_캐슬%20디펜스/problem.md)
 
 ### Gold 4
 
@@ -136,6 +141,7 @@
 - [12100 - 2048 (Easy)](<./Gold2/12100_2048%20(Easy)/problem.md>)
 - [3190 - 뱀](./Gold4/3190_뱀/problem.md)
 - [14499 - 주사위 굴리기](./Gold4/14499_주사위%20굴리기/problem.md)
+- [17135 - 캐슬 디펜스](./Gold3/17135_캐슬%20디펜스/problem.md)
 
 ### 다이나믹 프로그래밍(DP)
 
@@ -182,6 +188,7 @@
 - [9663 - N-Queen](./Gold4/9663_N-Queen/problem.md) <sup>다시 풀기</sup>
 - [15650 - N과 M (2)](<./Silver3/15650_N과%20M%20(2)/problem.md>)
 - [12100 - 2048 (Easy)](<./Gold2/12100_2048%20(Easy)/problem.md>)
+- [17135 - 캐슬 디펜스](./Gold3/17135_캐슬%20디펜스/problem.md)
 
 ### 그래프
 
@@ -193,6 +200,7 @@
 - [2667 - 단지번호붙이기](./Silver1/2667_단지번호붙이기/problem.md)
 - [1697 - 숨바꼭질](./Silver1/1697_숨바꼭질/problem.md) <sup>다시 풀기</sup>
 - [13460 - 구슬 탈출 2](./Gold1/13460_구슬%20탈출%202/problem.md)
+- [17135 - 캐슬 디펜스](./Gold3/17135_캐슬%20디펜스/problem.md)
 
 ### 정렬
 
@@ -220,6 +228,7 @@
 - [2667 - 단지번호붙이기](./Silver1/2667_단지번호붙이기/problem.md)
 - [1697 - 숨바꼭질](./Silver1/1697_숨바꼭질/problem.md) <sup>다시 풀기</sup>
 - [13460 - 구슬 탈출 2](./Gold1/13460_구슬%20탈출%202/problem.md)
+- [17135 - 캐슬 디펜스](./Gold3/17135_캐슬%20디펜스/problem.md)
 
 ### 깊이 우선 탐색(DFS)
 
