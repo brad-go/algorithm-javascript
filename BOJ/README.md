@@ -4,6 +4,7 @@
 
 #### 난이도 별 분류
 
+- [Platinum 5](#platinum-5)
 - [Gold 1](#gold-1)
 - [Gold 2](#gold-2)
 - [Gold 3](#gold-3)
@@ -38,6 +39,10 @@
 - [큐](#큐)
 
 ## 난이도 별 분류
+
+### Platinum 5
+
+- [5373 - 큐빙](./Platinum5/5373_큐빙/problem.md)
 
 ### Gold 1
 
@@ -164,6 +169,7 @@
 - [15684 - 사다리 조작](./Gold3/15684_사다리%20조작/problem.md)
 - [15685 - 드래곤 커브](./Gold4/15685_드래곤%20커브/problem.md)
 - [15686 - 치킨 배달](./Gold5/15686_치킨%20배달/problem.md)
+- [5373 - 큐빙](./Platinum5/5373_큐빙/problem.md)
 
 ### 다이나믹 프로그래밍(DP)
 
