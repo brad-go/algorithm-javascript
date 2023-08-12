@@ -15,6 +15,7 @@
 - [Silver 3](#silver-3)
 - [Silver 4](#silver-4)
 - [Silver 5](#silver-5)
+- [Bronze 1](#bronze-1)
 - [Bronze 2](#bronze-2)
 
 #### 유형 별 분류
@@ -145,6 +146,7 @@
 ### Bronze 1
 
 - [1924 - 2007년](./Bronze1/1924_2007년/problem.md)
+- [2309 - 일곱 난쟁이](./Bronze1/2309_일곱%20난쟁이/problem.md)
 
 ### Bronze 2
 
@@ -259,6 +261,7 @@
 - [17142 - 연구소 3](./Gold3/17142_연구소%203/problem.md)
 - [17779 - 게리멘더링](./Gold3/17779_게리멘더링%202/problem.md)
 - [17825 - 주사위 윷놀이](./Gold2/17825_주사위%20윷놀이/problem.md) <sup>다시 풀기</sup>
+- [2309 - 일곱 난쟁이](./Bronze1/2309_일곱%20난쟁이/problem.md)
 
 ### 그래프
 
@@ -283,6 +286,7 @@
 - [1448 - 삼각형 만들기](./Silver3/1448_삼각형%20만들기/problem.md)
 - [10815 - 숫자 카드](./Silver5/10815_숫자%20카드/problem.md)
 - [17140 - 이차원 배열과 연산](./Gold4/17140_이차원%20배열과%20연산/problem.md)
+- [2309 - 일곱 난쟁이](./Bronze1/2309_일곱%20난쟁이/problem.md)
 
 ### 트리
 
