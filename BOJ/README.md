@@ -156,6 +156,10 @@
 - [8958 - OX퀴즈](./Bronze2/8958_OX퀴즈/problem.md)
 - [13458 - 시험 감독](./Bronze2/13458_시험%20감독/problem.md)
 
+### Bronze 3
+
+- [10988 - 펠린드롬인지 확인하기](./Bronze3/10988_펠린드롬인지%20확인하기/problem.md)
+
 <br />
 
 [⬆ Back to Top](#목차)
@@ -207,6 +211,7 @@
 - [19237 - 어른 상어](./Gold2/19237_어른%20상어/problem.md)
 - [19238 - 스타트 택시](./Gold2/19238_스타트%20택시/problem.md)
 - [20057 - 마법사 상어와 토네이도](./Gold3/20057_마법사%20상어와%20토네이도/problem.md)
+- [10988 - 펠린드롬인지 확인하기](./Bronze3/10988_펠린드롬인지%20확인하기/problem.md)
 
 ### 다이나믹 프로그래밍(DP)
 
@@ -233,6 +238,7 @@
 - [5525 - IOIOI](./Silver1/5525_IOIOI/problem.md) <sup>다시 풀기</sup>
 - [15829 - Hashing](./Bronze2/15829_Hashing/problem.md)
 - [8958 - OX퀴즈](./Bronze2/8958_OX퀴즈/problem.md)
+- [10988 - 펠린드롬인지 확인하기](./Bronze3/10988_펠린드롬인지%20확인하기/problem.md)
 
 ### 자료 구조
 
